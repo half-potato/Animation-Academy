@@ -39,12 +39,12 @@ img {
 	padding-bottom:2em;
 	padding-left:2em;
 }
-
-
+ 
 /*------------ HEADER ------------*/
 #header {
 	background: #4e5944 url(../images/bg-header.jpg) repeat-x left bottom;
 	padding: 40px 0 46px;
+	width:100%;
 }
 /** logo **/
 .logo {
@@ -58,12 +58,19 @@ img {
 #menu{
 	position:absolute;
 	top:118px;
-	left:804px;
+	left:70%;
 	float:left;
 	display:block;
-	height:550px;
-	width:510px;
+	height:80%;
+	width:30%;
 	background-color:#96c8ac;
+	border:1px solid #000000;
+}
+.contents{
+  position:absolute;
+  width: 70%;
+  height: 80%;
+
 }
 
 h1 {
