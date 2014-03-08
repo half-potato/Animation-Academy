@@ -1,7 +1,7 @@
 var animationArray = new Array();
 var layerArray = new Array();
 
-function AnimationStep(type, color, objectName, width, height, x, y)
+function Shape(type, color, objectName, width, height, x, y)
 {
 	this.type = type;
 	this.color = color;
@@ -39,7 +39,7 @@ function AnimationStep(type, color, objectName, width, height, x, y)
 	}
 }
 
-layerArray[0] = new AnimationStep("box", 150, 150, 20, 20);
+layerArray[0] = new Shape("rectangle", "#000000", "box", 150, 150, 200, 200);
 
 function animate(array) {
 	var step = animationArray.shift(), i;
@@ -57,16 +57,18 @@ function addToCanvas(array) {
 	for (object in array) {
 		$('canvas').addLayer({
 			type: array[object].getType(),
-			fillStyle: array[object].getColor()
-		});
+			fillStyle: array[object].getColor(),
+			x: array[object].x(), y: array[object].y(),
+			width: array[object].width(), height: array[object].height()
+		}).drawLayers();
 	}
 }
 
-function redraw() {
-	$("canvas").clearCanvas();
+function redraw(array) {
+	$("canvas").clearCanvas().drawLayers();
 }
 
 $(document).ready(function() {
 	addToCanvas(layerArray);
-
+	redraw(layerArray);
 });
