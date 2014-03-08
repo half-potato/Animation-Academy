@@ -39,6 +39,10 @@ function Shape(type, color, objectName, width, height, x, y)
 	}
 }
 
+function AnimationStep(target, x, y, rotation) {
+
+}
+
 layerArray[0] = new Shape("rectangle", "#000000", "box", 150, 150, 200, 200);
 
 function animate(array) {
@@ -56,7 +60,7 @@ function addToCanvas(array) {
 	var object;
 	for (object in array) {
 		$('canvas').addLayer({
-			type: array[object].getType(),
+			type: array[object].type,
 			fillStyle: array[object].getColor(),
 			x: array[object].x(), y: array[object].y(),
 			width: array[object].width(), height: array[object].height()
