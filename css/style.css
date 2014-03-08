@@ -33,14 +33,7 @@ img {
 	width: 960px;
 	margin: 0 auto;
 }
-.clearfix:after {
-	clear:both;
-	content:"";
-	display:block;
-	line-height:0;
-	height:1%;
-	visibility:hidden;
-}
+
 
 .title {
 	width: 960px;
@@ -63,23 +56,14 @@ img {
 	font-family:Arial;
 }
 /*------------ CONTENTS ------------*/
-#contents {
-	position:absolute;
-	top:118px;
-	height: 80%;
-	width:70%;
-	background-color:#c42726;
-	display: block;
-}
-
 #menu{
 	position:absolute;
 	top:118px;
-	left:70%;
+	left:804px;
 	float:left;
 	display:block;
-	height: 80%;
-	width: 30%;
+	height:550px;
+	width:510px;
 	background-color:#96c8ac;
 }
 
@@ -102,46 +86,5 @@ p {
 	margin: 0 0 24px;
 }
 
-/*------------ FOOTER ------------*/
-#footer {
-	background: #d9d9d9 url(../images/bg-footer.png) repeat-x left top;
-	border-top: 2px solid #fff;
-}
-#footer .section {
-	float: left;
-	min-height: 146px;
-	width: 259px;
-	border-left: 1px solid #c2c2c2;
-	padding: 30px;
-}
-#footer .section h4 {
-	color: #626262;
-	font: bold 12px/24px Arial, Helvetica, sans-serif;
-	margin: 0;
-	text-transform: uppercase;
-}
-#footer .section p {
-	font-size: 12px;
-	margin: 0;
-}
-#footer .section:first-child {
-	border: 0;
-}
-#footer .contact p span {
-	text-transform: uppercase;
-}
-#footnote {
-	background: url(../images/bg-footnote.jpg) repeat-x left top;
-	border-top: 1px solid #fff;
-	padding: 6px 0 3px;
-}
-#footnote p {
-	color: #b5c1aa;
-	font: 11px/30px Arial, Helvetica, sans-serif;
-	margin: 0;
-	padding-right: 10px;
-	text-align: right;
-	text-transform: uppercase;
-}
 
 
