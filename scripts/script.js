@@ -79,7 +79,17 @@ function redraw(array) {
 
 //Temporary objects added
 animationArray[0] = new AnimationStep('rectangle', 30, 30, 0, false);
-addShape(new Shape("rectangle", "red", "box", 20, 20, 40, 20));
+
+function addRect(){
+	var color = document.getElementById("color");
+	var X = document.getElementById("X");
+	var Y = document.getElementById("Y");
+	var outputColor=color.value;
+	var outputX=X.value;
+	var outputY=Y.value;
+	addShape(new Shape("rectangle", outputColor, "box", 20, 20, outputX, outputY));
+	
+}
 
 $(document).ready(function() {
 	addToCanvas(layerArray);
