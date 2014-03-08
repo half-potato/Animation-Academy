@@ -40,7 +40,7 @@ function addToCanvas(array) {
 	for (object in array) {
 		$('canvas').addLayer({
 			type: array[object].type,
-			fillStyle: array[object].color,
+			fillStyle: array[object].style,
 			x: array[object].x,
 			y: array[object].y,
 			width: array[object].width,
@@ -79,7 +79,7 @@ function redraw(array) {
 
 //Temporary objects added
 animationArray[0] = new AnimationStep('rectangle', 30, 30, 0, false);
-addShape(new Shape("rectangle", "#000000", "box", 20, 20, 20, 20));
+addShape(new Shape("rectangle", "red", "box", 20, 20, 40, 20));
 
 $(document).ready(function() {
 	addToCanvas(layerArray);
