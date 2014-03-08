@@ -42,7 +42,7 @@ img {
  
 /*------------ HEADER ------------*/
 #header {
-	background: #4e5944 url(../images/bg-header.jpg) repeat-x left bottom;
+	background:#0F0F0F;
 	padding: 40px 0 46px;
 	width:100%;
 }
