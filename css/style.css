@@ -1,0 +1,147 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: center;
+}
+body {
+	background-color: #e2e2e2;
+	min-width: 960px;
+	margin: 0;
+}
+img {
+	display: block;
+	border: 0;
+}
+/** box-shadow **/
+
+
+.clearfix {
+	width: 960px;
+	margin: 0 auto;
+}
+.clearfix:after {
+	clear:both;
+	content:"";
+	display:block;
+	line-height:0;
+	height:1%;
+	visibility:hidden;
+}
+
+.title {
+	width: 960px;
+	padding-bottom:2em;
+	padding-left:2em;
+}
+
+
+/*------------ HEADER ------------*/
+#header {
+	background: #4e5944 url(../images/bg-header.jpg) repeat-x left bottom;
+	padding: 40px 0 46px;
+}
+/** logo **/
+.logo {
+	float: left;
+	display: inline-block;
+	color:white;
+	font-size:50px;
+	font-family:Arial;
+}
+/*------------ CONTENTS ------------*/
+#contents {
+	position:absolute;
+	top:118px;
+	height: 80%;
+	width:70%;
+	background-color:#c42726;
+	display: block;
+}
+
+#menu{
+	position:absolute;
+	top:118px;
+	left:70%;
+	float:left;
+	display:block;
+	height: 80%;
+	width: 30%;
+	background-color:#96c8ac;
+}
+
+h1 {
+	color: #57614e;
+	font: 29px/30px "Times New Roman", Times, serif;
+	margin: 0 0 12px;
+	text-transform: uppercase;
+}
+h2 {
+	color: #626262;
+	font: 19px/24px "Times New Roman", Times, serif;
+	letter-spacing: 2px;
+	margin: 0;
+	text-transform: uppercase;
+}
+p {
+	color: #626262;
+	font: 14px/24px Arial, Helvetica, sans-serif;
+	margin: 0 0 24px;
+}
+
+/*------------ FOOTER ------------*/
+#footer {
+	background: #d9d9d9 url(../images/bg-footer.png) repeat-x left top;
+	border-top: 2px solid #fff;
+}
+#footer .section {
+	float: left;
+	min-height: 146px;
+	width: 259px;
+	border-left: 1px solid #c2c2c2;
+	padding: 30px;
+}
+#footer .section h4 {
+	color: #626262;
+	font: bold 12px/24px Arial, Helvetica, sans-serif;
+	margin: 0;
+	text-transform: uppercase;
+}
+#footer .section p {
+	font-size: 12px;
+	margin: 0;
+}
+#footer .section:first-child {
+	border: 0;
+}
+#footer .contact p span {
+	text-transform: uppercase;
+}
+#footnote {
+	background: url(../images/bg-footnote.jpg) repeat-x left top;
+	border-top: 1px solid #fff;
+	padding: 6px 0 3px;
+}
+#footnote p {
+	color: #b5c1aa;
+	font: 11px/30px Arial, Helvetica, sans-serif;
+	margin: 0;
+	padding-right: 10px;
+	text-align: right;
+	text-transform: uppercase;
+}
+
+
