@@ -1,6 +1,7 @@
 var animationArray = new Array();
 var layerArray = new Array();
 
+//Shape class, contains information to be built into a layer
 function Shape(type, color, objectName, width, height, x, y)
 {
 	this.type = type;
@@ -12,12 +13,16 @@ function Shape(type, color, objectName, width, height, x, y)
 	this.y = y;
 }
 
-function AnimationStep(target, x, y, rotation) {
-
+//AnimationStep class; contains instructions for each step.
+function AnimationStep(target, x, y, rotation, hidden) {
+	this.target = target;
+	this.x = x;
+	this.y = y;
+	this.rotation = rotation;
+	this.hidden = hidden;
 }
 
-layerArray[0] = new Shape("rectangle", "#000000", "box", 50, 50, 20, 20);
-
+//TODO: Will take the animationArray and apply it the canvas
 function animate(array) {
 	var step = animationArray.shift(), i;
 	for (i = 0; i < step.length; i++) {
@@ -29,6 +34,7 @@ function animate(array) {
 	}
 }
 
+//Takes the array of Shape objects and turns them into layers, which are then added to the canvas and drawn.
 function addToCanvas(array) {
 	var object;
 	for (object in array) {
@@ -43,9 +49,24 @@ function addToCanvas(array) {
 	}
 }
 
+function addShape(shape) {
+	layerArray[layerArray.length] = shape;
+	$('canvas').addLayer({
+		type: shape.type,
+		fillStyle: shape.color,
+		x: shape.x, y: shape.y,
+		width: shape.width, height: shape.height
+	}).drawLayers();
+}
+
+//Clears canvas and redraws the layers (all objects are in layers, one layer per an object)
 function redraw(array) {
 	$("canvas").clearCanvas().drawLayers();
 }
+
+//Temporary objects added
+animationArray[0] = new AnimationStep('rectangle', 30, 30, 0, false);
+addShape(new Shape("rectangle", "#000000", "box", 20, 20, 20, 20));
 
 $(document).ready(function() {
 	addToCanvas(layerArray);
