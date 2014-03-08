@@ -10,40 +10,13 @@ function Shape(type, color, objectName, width, height, x, y)
 	this.height = height;
 	this.x = x;
 	this.y = y;
-
-	this.getType = function() {
-		return type;
-	}
-	this.getColor = function() {
-		return color;
-	}
-	this.getObjectName = function()
-	{
-		return objectName;
-	}
-	this.width = function()
-	{
-		return width;
-	}
-	this.height = function()
-	{
-		return height;
-	}
-	this.x = function()
-	{
-		return x;
-	}
-	this.y = function()
-	{
-		return y;
-	}
 }
 
 function AnimationStep(target, x, y, rotation) {
 
 }
 
-layerArray[0] = new Shape("rectangle", "#000000", "box", 150, 150, 200, 200);
+layerArray[0] = new Shape("rectangle", "#000000", "box", 50, 50, 20, 20);
 
 function animate(array) {
 	var step = animationArray.shift(), i;
@@ -61,9 +34,9 @@ function addToCanvas(array) {
 	for (object in array) {
 		$('canvas').addLayer({
 			type: array[object].type,
-			fillStyle: array[object].getColor(),
-			x: array[object].x(), y: array[object].y(),
-			width: array[object].width(), height: array[object].height()
+			fillStyle: array[object].color,
+			x: array[object].x, y: array[object].y,
+			width: array[object].width, height: array[object].height
 		}).drawLayers();
 	}
 }
