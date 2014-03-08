@@ -1,14 +1,22 @@
 var animationArray = new Array();
 var layerArray = new Array();
 
-function AnimationStep(objectName, width, height, x, y)
+function AnimationStep(type, color, objectName, width, height, x, y)
 {
+	this.type = type;
+	this.color = color;
 	this.objectName = objectName;
 	this.width = width;
 	this.height = height;
 	this.x = x;
 	this.y = y;
 
+	this.getType = function() {
+		return type;
+	}
+	this.getColor = function() {
+		return color;
+	}
 	this.getObjectName = function()
 	{
 		return objectName;
@@ -45,8 +53,13 @@ function animate(array) {
 }
 
 function addToCanvas(array) {
-	var
-	for
+	var object;
+	for (object in array) {
+		$('canvas').addLayer({
+			type: array[object].getType(),
+			fillStyle: array[object].getColor()
+		});
+	}
 }
 
 function redraw() {
@@ -54,11 +67,6 @@ function redraw() {
 }
 
 $(document).ready(function() {
-	$("canvas").drawRect({
-	  fillStyle: '#000',
-	  x: layerArray[0][0], y: 100,
-	  width: 200,
-	  height: 100
-	});
+	addToCanvas(layerArray);
 
 });
