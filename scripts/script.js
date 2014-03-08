@@ -35,8 +35,10 @@ function addToCanvas(array) {
 		$('canvas').addLayer({
 			type: array[object].type,
 			fillStyle: array[object].color,
-			x: array[object].x, y: array[object].y,
-			width: array[object].width, height: array[object].height
+			x: array[object].x, 
+			y: array[object].y,
+			width: array[object].width, 
+			height: array[object].height
 		}).drawLayers();
 	}
 }
