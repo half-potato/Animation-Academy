@@ -1,11 +1,11 @@
 var animationArray = new Array();
 var layerArray = new Array();
 
-//Shape class, contains information to be built into a layer
-function Shape(type, color, objectName, width, height, x, y)
+//Shape class, contains information to be built into a layer, if the type is image, then the style is the source
+function Shape(type, style, objectName, width, height, x, y)
 {
 	this.type = type;
-	this.color = color;
+	this.style = style;
 	this.objectName = objectName;
 	this.width = width;
 	this.height = height;
@@ -41,22 +41,35 @@ function addToCanvas(array) {
 		$('canvas').addLayer({
 			type: array[object].type,
 			fillStyle: array[object].color,
-			x: array[object].x, 
+			x: array[object].x,
 			y: array[object].y,
-			width: array[object].width, 
-			height: array[object].height
+			width: array[object].width,
+			height: array[object].height,
+			draggable: true
 		}).drawLayers();
 	}
 }
 
 function addShape(shape) {
-	layerArray[layerArray.length] = shape;
-	$('canvas').addLayer({
-		type: shape.type,
-		fillStyle: shape.color,
-		x: shape.x, y: shape.y,
-		width: shape.width, height: shape.height
-	}).drawLayers();
+	if (shape.type === "image") {
+		layerArray[layerArray.length] = shape;
+		$('canvas').addLayer({
+			type: shape.type,
+			source: shape.style,
+			x: shape.x, y: shape.y,
+			width: shape.width, height: shape.height,
+			draggable: true
+		}).drawLayers();
+	} else {
+		layerArray[layerArray.length] = shape;
+		$('canvas').addLayer({
+			type: shape.type,
+			fillStyle: shape.style,
+			x: shape.x, y: shape.y,
+			width: shape.width, height: shape.height,
+			draggable: true
+		}).drawLayers();
+	}
 }
 
 //Clears canvas and redraws the layers (all objects are in layers, one layer per an object)

@@ -39,7 +39,7 @@ img {
 	padding-bottom:2em;
 	padding-left:2em;
 }
- 
+
 /*------------ HEADER ------------*/
 #header {
 	background:#0F0F0F;
@@ -68,8 +68,6 @@ img {
 }
 .contents{
   position:absolute;
-  width: 70%;
-  height: 80%;
 
 }
 
