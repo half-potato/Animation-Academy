@@ -52,23 +52,24 @@
 					<br>
 					<br>
 					<h1>Animate</h1>
-					<select id="color">
-						
-					</select>
 					<br>
-					<select id="shape">
-						<option value="rectangle">rectangle</option>
-						<option value="ellipse">ellipse</option>
-						<option value="image">image</option>
+					<select id="colorAnimation">
+						<option value="#FFFFFF">White</option>
+						<option value="#FF0000">Red</option>
+						<option value="#FFCC00">Orange</option>
+						<option value="#FFFF00">Yellow</option>
+						<option value="#00FF00">Green</option>
+						<option value="#0000FF">Blue</option>
+						<option value="#663366">Indigo</option>
+						<option value="#FF00FF">Violet</option>
 					</select>
-					<br>
 					X:<INPUT type="text" value="0" id="X"><br>
 					Y:<INPUT type="text" value="0" id="Y"><br>
 					Width:<INPUT type="text" value="333" id="width"><br>
 					Height:<INPUT type="text" value="333" id="height"><br>
-					image source:<INPUT type="text" value="0" id="source"><br>
-					name:<INPUT type="text" value="0" id="name"><br>
-					<input type="button" onClick="addRect()" value="Add Object"/>
+					name:<INPUT type="text" value="0" id="nameAnimation"><br>
+					rotation:<INPUT type="text" value="0" id="rotation"><br>
+					<input type="button" onClick="animateObject()" value="Add Object"/>
                     <input type = "button" onClick = "animate(animationArray)" value = "Play"/>
 				</fieldset>
 			<form>
