@@ -280,7 +280,6 @@ function animatePage(){
 
 }
 
-
 function propertiesPage(){
 	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" onClick = "animatePage()">Animate</a></li><li><a href="#" class="selected">Properties</a></li> </ul><div id="menuWrapper"> <fieldset id="properties"> color: <select id="colorProperty"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <input type="text" value="0" id="XProperty"><br> Y: <input type="text" value="0" id="YProperty"><br> Width: <input type="text" value="333" id="widthProperty"><br> Height: <input type="text" value="333" id="heightProperty"><br> Rotation: <input type="text" value="0" id="rotationProperty"><br> </fieldset> </div>');
 	console.log("Hi");
@@ -290,23 +289,28 @@ function propertiesPage(){
 	var width = $("#widthProperty");
 	var height = $("#heightProperty");
 	var rotation = $("#rotationProperty");
-	//color.val($("canvas").getLayer(selectedObject).fillStyle);
-	x.val(10);
-	var widthH = $("canvas").getLayer(selectedObject).width;
-	console.log(width);
-	width.val(widthH);
+	color.val($("canvas").getLayer(selectedObject).fillStyle);
+	x.val($("canvas").getLayer(selectedObject).x);
+	y.val($("canvas").getLayer(selectedObject).y);
+	width.val($("canvas").getLayer(selectedObject).width);
 	height.val($("canvas").getLayer(selectedObject).height);
 	rotation.val($("canvas").getLayer(selectedObject).rotation);
 }
 
 function propertiesPanelUpdate() {
-	console.log("Hi");
-	var color = $("#colorProperty"), x = $("#XProperty"), y = $("#YProperty"), width = $("#widthProperty"), height = $("#heightProperty"), rotation = $("#rotationProperty"), selected = $("canvas").getLayer(selectedObject);
+	var color = $("#colorProperty");
+	var x = $("#XProperty");
+	var y = $("#YProperty");
+	var width = $("#widthProperty");
+	var height = $("#heightProperty");
+	var rotation = $("#rotationProperty");
+
 	$("#colorProperty").change(function() {
 
 		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
 	});
 	$("#XProperty").on("input", function() {
+		console.log(x.value);
 		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
 	});
 	$("#YProperty").on("input", function() {
@@ -327,7 +331,7 @@ setInterval(function() {
 	if(selectedObject!=="hi") {
 		propertiesPanelUpdate();
 	}
-}, 1);
+}, 100);
 //
 //     Startup
 //
