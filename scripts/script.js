@@ -63,6 +63,7 @@ function addShape(shape) {
 			source: shape.style,
 			x: shape.x,
 			y: shape.y,
+			name: shape.objectName,
 			draggable: true
 		}).drawLayers();
 	}
@@ -76,6 +77,7 @@ function addShape(shape) {
 			y: shape.y,
 			width: shape.width,
 			height: shape.height,
+			name: shape.objectName,
 			draggable: true
 		}).drawLayers();
 	}	else {
@@ -87,6 +89,7 @@ function addShape(shape) {
 			y: shape.y,
 			width: shape.width,
 			height: shape.height,
+			name: shape.objectName,
 			draggable: true
 		}).drawLayers();
 	}
