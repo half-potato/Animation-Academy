@@ -163,24 +163,14 @@ function redraw(array) {
 }
 
 //Temporary objects added
-<<<<<<< HEAD
-
-=======
->>>>>>> 43b2378a2595646769052843e7009ff1a66ca7ce
 animationArray[0] = new Array();
 animationArray[0][0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 1000);
 animationArray[1] = new Array();
 animationArray[1][0] = new AnimationStep('box', 30, 30, 0, "#36c", false, 1000);
 
-<<<<<<< HEAD
-=======
-animationArray[0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 1000);
-
-=======
 //
 //      Input Functions
 //
->>>>>>> 43b2378a2595646769052843e7009ff1a66ca7ce
 
 //adds shapes to canvas
 function addRect(){
