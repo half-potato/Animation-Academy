@@ -212,13 +212,8 @@ function animateObject(){
 	var outputName=name.value;
 	//checks if image or shape
 	//applies values to create new shape
-<<<<<<< HEAD
 	animationArray[animationArray.length] = new Array();
 	animationArray[animationArray.length - 1][0] = new AnimationStep(outputName, outputX, outputY, outputWidth, outputHeight, outputRotation, outputColor, false, 1000);
-=======
-	animationArray[i][0] = new AnimationStep(outputName, outputX, outputY, outputRotation, outputColor, false, 1000);
-	i++;
->>>>>>> FETCH_HEAD
 }
 
 //
