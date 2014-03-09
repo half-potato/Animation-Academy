@@ -9,7 +9,7 @@
 	<title>Animation-Academy</title>
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
-<body>
+<body onload="drawImage()">
 	<div id="header">
 		<div class="title">
 			<div class="logo">
@@ -18,12 +18,17 @@
 		</div>
 	</div>
 
-    <canvas width = "900" height = "920" class="contents" style="border:1px solid #000000;"></canvas>
+    <canvas id="canvas" width = "900" height = "920" class="contents" style="border:1px solid #000000;"></canvas>
 
 	<div id="menu">
-		<div id="menuWrapper">
+		<!--<ul id="nav">
+			<li><a href="#">Draw Image</a></li>
+			<li><a href="#">Animate</a></li>
+		</ul>
+		-->
+		
+		<!--<div id="menuWrapper">
 				<form action="">
-				<h1>Draw Image</h1>
 				
 				<fieldset>
 					color: <select id="color">
@@ -51,9 +56,13 @@
 					image source: <INPUT type="text" value="0" id="source"><br>
 					name: <INPUT type="text" value="0" id="name"><br>
 					<input type="button" onClick="addRect()" value="Add Object"/>
-					<br>
-					<br>
-					<h1>Animate</h1>
+				</fieldset>
+			</div>
+	</div>
+		-->
+		<!--
+				<div id="menuWrapper">
+				<fieldset>
 					
 					color: <select id="colorAnimation">
 						<option value="#FFFFFF">White</option>
@@ -84,8 +93,8 @@
 					<input type="button" onClick="animateObject()" value="Add Object"/>
                     <input type = "button" onClick = "animate(animationArray)" value = "Play"/>
 				</fieldset>
-			<form>
 			</div>
+			-->
 	</div>
 
 </body>
