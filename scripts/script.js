@@ -150,5 +150,4 @@ function addRect() {
 
 $(document).ready(function() {
 	addToCanvas(layerArray);
-	$("#hi").on(animate(animationArray));
 });
