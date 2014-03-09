@@ -249,11 +249,11 @@ function getCurrentLayer() {
 }
 
 function changeScale(selector, topEdge, rightEdge, bottomEdge, leftEdge) {
-	$("canvas").getLayer(selector).animate({
-		width: rightEdge + leftEdge,
-		height: topEdge + bottomEdge,
-		left: leftEdge/2 - rightEdge/2,
-		top: topEdge/2 - bottomEdge/2
+	$("canvas").setLayer(selector, {
+		width: ((rightEdge) + (leftEdge)),
+		height: ((topEdge) + (bottomEdge)),
+		left: += ((leftEdge/2) - (rightEdge/2)),
+		top: += ((topEdge/2) - (bottomEdge/2))
 	}, 0);
 }
 
