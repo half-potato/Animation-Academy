@@ -12,6 +12,10 @@ function Shape(type, style, objectName, width, height, x, y)
 	this.height = height;
 	this.x = x;
 	this.y = y;
+
+	this.getClass = function() {
+		return "Shape";
+	}
 }
 
 //AnimationStep class; contains instructions for each step. The last instruction's speed is the one that determines when the next step is executed
@@ -24,22 +28,49 @@ function AnimationStep(target, x, y, rotation, color, hidden, speed)
 	this.color = color;
 	this.hidden = hidden;
 	this.speed = speed;
+
+	this.getClass = function() {
+		return "AnimationStep";
+	}
 }
 
+function Delay(delay)
+{
+	this.delay = delay;
+
+	this.getClass = function() {
+		return "Delay";
+	}
+}
 //TODO: Will take the animationArray and apply it the canvas
 function animate(array) {
 	console.log("Animating");
-	var step = array.shift();
-	$("canvas").animateLayer(step.target, {
-		x: step.x, y: step.y,
-		fillStyle: step.color,
-		rotate: step.rotate
-	}, step.speed);
+	var arrayOfSteps = array.shift(), i, step;
+	for (i in arrayOfSteps) {
+		if (i == arrayOfSteps.length - 1) {
+			step = arrayOfSteps[i];
+			$("canvas").animateLayer(step.target, {
+				x: step.x, y: step.y,
+				fillStyle: step.color,
+				rotate: step.rotate
+			}, step.speed, function() {
+				setTimeout(animate(array), 1);
+			});
+		} else {
+			step = arrayOfSteps[i];
+			$("canvas").animateLayer(step.target, {
+				x: step.x, y: step.y,
+				fillStyle: step.color,
+				rotate: step.rotate
+			}, step.speed);
+		}
+	}
 }
 
 //Takes the array of Shape objects and turns them into layers, which are then added to the canvas and drawn.
-function addToCanvas(array)
+function reloadObjects(array)
 {
+	$("canvas").removeLayers();
 	var object;
 	for (object in array) {
 		$('canvas').addLayer({
@@ -101,7 +132,11 @@ function redraw(array) {
 }
 
 //Temporary objects added
-animationArray[0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 100);
+animationArray[0] = new Array();
+animationArray[0][0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 1000);
+animationArray[1] = new Array();
+animationArray[1][0] = new AnimationStep('box', 30, 30, 0, "#36c", false, 1000);
+
 
 //adds shapes to canvas
 function addRect(){
@@ -128,9 +163,9 @@ function addRect(){
 	}
 	//applies values to create new shape
 	addShape(new Shape(outputShape, outputColor, "box", outputHeight, outputWidth, outputX, outputY));
-	
+
 }
 
 $(document).ready(function() {
-	addToCanvas(layerArray);
+	addShape(new Shape("rectangle", "#e2e2e2", "delay", 1, 1, 0, 0));
 });
