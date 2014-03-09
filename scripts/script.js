@@ -1,5 +1,5 @@
 //TODO: Will take the animationArray and apply it the canvas
-var animationArray = [[],[]];
+var animationArray = new Array();
 var layerArray = new Array();
 
 //
