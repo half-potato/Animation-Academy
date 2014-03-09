@@ -385,21 +385,10 @@ function animatePage(){
 function propertiesPage(){
 	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" onClick = "animatePage()">Animate</a></li><li><a href="#" class="selected">Properties</a></li> </ul><div id="menuWrapper"> <fieldset id="properties"> color: <select id="colorProperty"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <input type="text" value="0" id="XProperty"><br> Y: <input type="text" value="0" id="YProperty"><br> Width: <input type="text" value="333" id="widthProperty"><br> Height: <input type="text" value="333" id="heightProperty"><br> Rotation: <input type="text" value="0" id="rotationProperty"><br> </fieldset> </div>');
 	console.log("Hi");
-	var color = $("#colorProperty");
-	var x = $("#XProperty");
-	var y = $("#YProperty");
-	var width = $("#widthProperty");
-	var height = $("#heightProperty");
-	var rotation = $("#rotationProperty");
-	color.val($("canvas").getLayer(selectedObject).fillStyle);
-	x.val($("canvas").getLayer(selectedObject).x);
-	y.val($("canvas").getLayer(selectedObject).y);
-	width.val($("canvas").getLayer(selectedObject).width);
-	height.val($("canvas").getLayer(selectedObject).height);
-	rotation.val($("canvas").getLayer(selectedObject).rotation);
+	propertiesPanelUpdate();
 }
 
-function propertiesPanelUpdate() {
+function propertiesPanelParse() {
 	var color = document.getElementById("colorProperty");
 	var x = document.getElementById("XProperty");
 	var y = document.getElementById("YProperty");
@@ -429,44 +418,35 @@ function propertiesPanelUpdate() {
 	});
 }
 
+function propertiesPanelUpdate() {
+	propertiesObject = selectedObject;
+	var color = $("#colorProperty");
+	var x = $("#XProperty");
+	var y = $("#YProperty");
+	var width = $("#widthProperty");
+	var height = $("#heightProperty");
+	var rotation = $("#rotationProperty");
+	color.val($("canvas").getLayer(selectedObject).fillStyle);
+	x.val($("canvas").getLayer(selectedObject).x);
+	y.val($("canvas").getLayer(selectedObject).y);
+	width.val($("canvas").getLayer(selectedObject).width);
+	height.val($("canvas").getLayer(selectedObject).height);
+	rotation.val($("canvas").getLayer(selectedObject).rotation);
+	propertiesPanelParse();
+}
+
 setInterval(function() {
 	//If nothing has been selected yet
 	if(selectedObject=="hi") {
 
 	//If its the first object selected
 	} else if(selectedObject!=="hi" && propertiesObject=="hi") {
-		propertiesObject = selectedObject;
-		var color = $("#colorProperty");
-		var x = $("#XProperty");
-		var y = $("#YProperty");
-		var width = $("#widthProperty");
-		var height = $("#heightProperty");
-		var rotation = $("#rotationProperty");
-		color.val($("canvas").getLayer(selectedObject).fillStyle);
-		x.val($("canvas").getLayer(selectedObject).x);
-		y.val($("canvas").getLayer(selectedObject).y);
-		width.val($("canvas").getLayer(selectedObject).width);
-		height.val($("canvas").getLayer(selectedObject).height);
-		rotation.val($("canvas").getLayer(selectedObject).rotation);
 		propertiesPanelUpdate();
 	//If a different object has been selected
 	} else if(selectedObject!=="hi" && propertiesObject!=="hi" && propertiesObject!==selectedObject) {
-		propertiesObject = selectedObject;
-		var color = $("#colorProperty");
-		var x = $("#XProperty");
-		var y = $("#YProperty");
-		var width = $("#widthProperty");
-		var height = $("#heightProperty");
-		var rotation = $("#rotationProperty");
-		color.val($("canvas").getLayer(selectedObject).fillStyle);
-		x.val($("canvas").getLayer(selectedObject).x);
-		y.val($("canvas").getLayer(selectedObject).y);
-		width.val($("canvas").getLayer(selectedObject).width);
-		height.val($("canvas").getLayer(selectedObject).height);
-		rotation.val($("canvas").getLayer(selectedObject).rotation);
 		propertiesPanelUpdate();
 	} else if(selectedObject!=="hi" && propertiesObject!=="hi" && propertiesObject==selectedObject) {
-		propertiesPanelUpdate();
+		propertiesPanelParse();
 	}
 }, 100);
 //
