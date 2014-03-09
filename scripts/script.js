@@ -453,51 +453,49 @@ var stepHTMLwidth = '"><br> Width: <INPUT type="text" value="333" id="';
 var stepHTMLheight = '"><br> Height: <INPUT type="text" value="333" id="';
 var stepHTMLend = '"><br>';
 
-function initAnimationPanel(array) {
+function initAnimationPanel() {
 	$("#containercontainer").append("<div id = 'container'></div>");
-	for (var i in array) {
+	for (var i in animationArray[currentFrame].steps) {
 		$("#container").append("<div id = 'step" + i + "'></div>");
 		$("#step" + i).append(stepHTMLname + currentFrame + "name" + i + stepHTMLcolor + currentFrame + "color" + i + stepHTMLx + currentFrame + "x" + i + stepHTMLy + currentFrame + "y" + i + stepHTMLwidth + currentFrame + "width" + i + stepHTMLheight + currentFrame + "height" + i + stepHTMLend);
-		$("#" + currentFrame + "x" + i).val(array[i].x);
-		$("#" + currentFrame + "y" + i).val(array[i].y);
-		$("#" + currentFrame + "width" + i).val(array[i].width);
-		$("#" + currentFrame + "height" + i).val(array[i].height);
-		$("#" + currentFrame + "color" + i).val(array[i].color);
-		$("#" + currentFrame + "name" + i).val(array[i].target);
+		$("#" + currentFrame + "x" + i).val(animationArray[currentFrame].steps[i].x);
+		$("#" + currentFrame + "y" + i).val(animationArray[currentFrame].steps[i].y);
+		$("#" + currentFrame + "width" + i).val(animationArray[currentFrame].steps[i].width);
+		$("#" + currentFrame + "height" + i).val(animationArray[currentFrame].steps[i].height);
+		$("#" + currentFrame + "color" + i).val(animationArray[currentFrame].steps[i].color);
+		$("#" + currentFrame + "name" + i).val(animationArray[currentFrame].steps[i].target);
 	}
 }
 
 //Goes through
-function parseAnimationPanel(array) {
+function parseAnimationPanel() {
 	var output = [];
-	console.log(array);
-	for (var i in array) {
+	for (var i in animationArray[currentFrame].steps) {
 		console.log(i);
-		array[i].x = $("#" + currentFrame + "x" + i + "").val();
-		console.log($("#" + currentFrame + "x" + i + "").val());
-		array[i].y = $("#" + currentFrame + "y" + i + "").val();
-		array[i].width = $("#" + currentFrame + "width" + i + "").val();
-		array[i].height = $("#" + currentFrame + "height" + i + "").val();
-		array[i].color = $("#" + currentFrame + "color" + i + "").val();
-		array[i].target = $("#" + currentFrame + "name" + i + "").val();
-		output[i] = new AnimationStep(array[i].target, array[i].x, array[i].y, array[i].width, array[i].height, 0, array[i].color, false, 1000);
+		animationArray[currentFrame].steps[i].x = parseInt($("#" + currentFrame + "x" + i + "").val());
+		animationArray[currentFrame].steps[i].y = parseInt($("#" + currentFrame + "y" + i + "").val());
+		animationArray[currentFrame].steps[i].width = parseInt($("#" + currentFrame + "width" + i + "").val());
+		animationArray[currentFrame].steps[i].height = parseInt($("#" + currentFrame + "height" + i + "").val());
+		animationArray[currentFrame].steps[i].color = parseInt($("#" + currentFrame + "color" + i + "").val());
+		animationArray[currentFrame].steps[i].target = parseInt($("#" + currentFrame + "name" + i + "").val());
+		output[i] = new AnimationStep(animationArray[currentFrame].steps[i].target, animationArray[currentFrame].steps[i].x, animationArray[currentFrame].steps[i].y, animationArray[currentFrame].steps[i].width, animationArray[currentFrame].steps[i].height, 0, animationArray[currentFrame].steps[i].color, false, 1000);
 	}
 	return output;
 }
 
 //Insert Frame.steps, execute on add step
-function updateAmountOfStepsAnimationPanel(array) {
+function updateAmountOfStepsAnimationPanel() {
 	$("#containercontainer").remove("#container");
 	$("#containercontainer").append("<div id = 'container'></div>");
-	for (var i in array) {
+	for (var i in animationArray[currentFrame].steps) {
 		$("#container").append("<div id = 'step" + i + "'></div>");
 		$("#step" + i).append(stepHTMLname + currentFrame + "name" + i + stepHTMLcolor + currentFrame + "color" + i + stepHTMLx + currentFrame + "x" + i + stepHTMLy + currentFrame + "y" + i + stepHTMLwidth + currentFrame + "width" + i + stepHTMLheight + currentFrame + "height" + i + stepHTMLend);
-		$("#" + currentFrame + "x" + i).val(array[i].x);
-		$("#" + currentFrame + "y" + i).val(array[i].y);
-		$("#" + currentFrame + "width" + i).val(array[i].width);
-		$("#" + currentFrame + "height" + i).val(array[i].height);
-		$("#" + currentFrame + "color" + i).val(array[i].color);
-		$("#" + currentFrame + "name" + i).val(array[i].target);
+		$("#" + 0 + "x" + 0 + "").val(animationArray[currentFrame].steps[i].x);
+		$("#" + 0 + "y" + 0 + "").val(animationArray[currentFrame].steps[i].y);
+		$("#" + 0 + "width" + 0 + "").val(animationArray[currentFrame].steps[i].width);
+		$("#" + 0 + "height" + 0 + "").val(animationArray[currentFrame].steps[i].height);
+		$("#" + 0 + "color" + 0 + "").val(animationArray[currentFrame].steps[i].color);
+		$("#" + 0 + "name" + 0 + "").val(animationArray[currentFrame].steps[i].target);
 	}
 	console.log(animationArray);
 }
