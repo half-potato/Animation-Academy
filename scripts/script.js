@@ -2,6 +2,7 @@
 var selectedObject = "hi";
 var animationArray = [];
 var layerArray = [];
+var currentFrame = 0;
 
 //holds mouse X and Y positions
 var mouseX;
@@ -71,29 +72,52 @@ function Delay(delay)
 
 //TODO: Will take the animationArray and apply it the canvas
 function animate(array) {
-	var arrayOfSteps = array.shift(), i, step;
-	for (i in arrayOfSteps) {
-		if (i == arrayOfSteps.length - 1) {
-			step = arrayOfSteps[i];
-			console.log(step);
-			if (step.getClass()==="delay") {
-				console.log("Delaying");
-				$("canvas").animateLayer("delay", {
-					x: "+=1"
-				}, step.delay);
+	var arrayOfSteps = array[currentFrame], i, step;
+	if (currentFrame !== array.length - 1) {
+		for (i in arrayOfSteps) {
+			if (i == arrayOfSteps.length - 1) {
+				step = arrayOfSteps[i];
+				console.log(step);
+				if (step.getClass()==="delay") {
+					console.log("Delaying");
+					$("canvas").animateLayer("delay", {
+						x: "+=1"
+					}, step.delay);
+				} else {
+					$("canvas").animateLayer(step.target, {
+						x: step.x, y: step.y,
+						fillStyle: step.color,
+						rotate: step.rotate,
+						height: step.height,
+						width: step.width,
+						visible: !step.hidden
+					}, step.speed, function() {
+						currentFrame++;
+						setTimeout(animate(array), 1);
+					});
+				}
 			} else {
-				$("canvas").animateLayer(step.target, {
-					x: step.x, y: step.y,
-					fillStyle: step.color,
-					rotate: step.rotate,
-					height: step.height,
-					width: step.width,
-					visible: !step.hidden
-				}, step.speed, function() {
-					setTimeout(animate(array), 1);
-				});
+				step = arrayOfSteps[i];
+				console.log(step);
+				if (step.getClass()==="delay") {
+					$("canvas").animateLayer("delay", {
+						x: "+=1"
+					}, step.delay);
+				} else {
+					//Problem
+					$("canvas").animateLayer(step.target, {
+						x: step.x, y: step.y,
+						fillStyle: step.color,
+						rotate: step.rotate,
+						height: step.height,
+						width: step.width,
+						visible: !step.hidden
+					}, step.speed);
+				}
 			}
-		} else {
+		}
+	} else {
+		for (i in arrayOfSteps) {
 			step = arrayOfSteps[i];
 			console.log(step);
 			if (step.getClass()==="delay") {
@@ -112,12 +136,8 @@ function animate(array) {
 				}, step.speed);
 			}
 		}
+		currentFrame = 0;
 	}
-}
-
-function play(array) {
-	var newArray = array;
-	animate(newArray);
 }
 
 //
@@ -279,6 +299,7 @@ function animateObject(){
 	//applies values to create new shape
 
 	console.log(X.value + ", " + Y.value);
+	console.log(animationArray);
 	animationArray[animationArray.length] = [];
 	animationArray[animationArray.length - 1][0] = new AnimationStep(outputName, outputX, outputY, outputWidth, outputHeight, outputRotation, outputColor, false, 1000);
 }
@@ -344,7 +365,7 @@ function getValue(){
 }
 
 function animatePage(){
-	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"><div id="menuWrapper"> <fieldset> <input type="image" class="arrow" id="saveform" src="left.png"/> <input type="range" class="slider" name="frames" id="frames" min="0" max="50"> <input type="image" class="arrow" id="saveform" src="right.png"/><br> color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XAnimate"><br> Y: <INPUT type="text" value="0" id="YAnimate"><br> Width: <INPUT type="text" value="333" id="widthAnimate"><br> Height: <INPUT type="text" value="333" id="heightAnimate"><br> Name: <INPUT type="text" value="0" id="nameAnimation"><br> Rotation: <INPUT type="text" value="0" id="rotation"><br> <input type="button" onClick="animateObject()" value="Add Object"/> <input type = "button" onClick = "play(animationArray)" value = "Play"/> </fieldset> </div>')
+	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"><div id="menuWrapper"> <fieldset> <input type="image" class="arrow" id="saveform" src="left.png"/> <input type="range" class="slider" name="frames" id="frames" min="0" max="50"> <input type="image" class="arrow" id="saveform" src="right.png"/><br> color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XAnimate"><br> Y: <INPUT type="text" value="0" id="YAnimate"><br> Width: <INPUT type="text" value="333" id="widthAnimate"><br> Height: <INPUT type="text" value="333" id="heightAnimate"><br> Name: <INPUT type="text" value="0" id="nameAnimation"><br> Rotation: <INPUT type="text" value="0" id="rotation"><br> <input type="button" onClick="animateObject()" value="Add Object"/> <input type = "button" onClick = "animate(animationArray)" value = "Play"/> </fieldset> </div>')
 	getValue();
 }
 
