@@ -133,7 +133,16 @@ function animate(array) {
 					height: step.height,
 					width: step.width,
 					visible: !step.hidden
-				}, step.speed);
+				}, step.speed, function() {
+					$("canvas").setLayer(step.target, {
+						x: step.x, y: step.y,
+						fillStyle: step.color,
+						rotate: step.rotate,
+						height: step.height,
+						width: step.width,
+						visible: !step.hidden
+					});
+				});
 			}
 		}
 		currentFrame = 0;
