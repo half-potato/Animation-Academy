@@ -146,7 +146,7 @@ function redraw(array) {
 //Temporary objects added
 animationArray[0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 100);
 
-function addRect(){
+function addRect() {
 	var color = document.getElementById("color");
 	var X = document.getElementById("X");
 	var Y = document.getElementById("Y");
@@ -155,7 +155,6 @@ function addRect(){
 	var outputX=parseInt(X.value);
 	var outputY=parseInt(Y.value);
 	var outputShape=shape.value;
-<<<<<<< HEAD
 	if(shape.value=="image"){
 		var outputColor=source.value;
 	}
@@ -163,10 +162,6 @@ function addRect(){
 		var outputColor=color.value;
 	}
 	addShape(new Shape(outputShape, outputColor, "box", 200, 200, outputX, outputY));
-	
-=======
-	addShape(new Shape(outputShape, outputColor, "box", 20, 20, outputX, outputY));
->>>>>>> a8ffd897b7acf5b55da6c73722cb9fcf3163ea1a
 }
 
 $(document).ready(function() {
