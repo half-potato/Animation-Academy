@@ -129,11 +129,17 @@ function redraw(array) {
 animationArray[0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 100);
 
 function addRect(){
+	//accesses html elements
 	var color = document.getElementById("color");
 	var X = document.getElementById("X");
 	var Y = document.getElementById("Y");
 	var shape = document.getElementById("shape");
 	var source = document.getElementById("source");
+	var width = document.getElementById("width");
+	var height = document.getElementById("height");
+	//sets variables equal to whats in the hmtl elements
+	var outputWidth=parseInt(width.value);
+	var outputHeight=parseInt(height.value);
 	var outputX=parseInt(X.value);
 	var outputY=parseInt(Y.value);
 	var outputShape=shape.value;
@@ -143,7 +149,8 @@ function addRect(){
 	else{
 		var outputColor=color.value;
 	}
-	addShape(new Shape(outputShape, outputColor, "box", 200, 200, outputX, outputY));
+	//applies values to create new shape
+	addShape(new Shape(outputShape, outputColor, "box", outputHeight, outputWidth, outputX, outputY));
 	
 }
 
