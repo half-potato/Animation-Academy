@@ -23,6 +23,7 @@
 
 	<div id="menu">
 				<form action="">
+				<h1>Draw Image</h1>
 				<fieldset>
 					<select id="color">
 						<option value="#FFFFFF">White</option>
@@ -46,6 +47,27 @@
 					Width:<INPUT type="text" value="333" id="width"><br>
 					Height:<INPUT type="text" value="333" id="height"><br>
 					image source:<INPUT type="text" value="0" id="source"><br>
+					name:<INPUT type="text" value="0" id="name"><br>
+					<input type="button" onClick="addRect()" value="Add Object"/>
+					<br>
+					<br>
+					<h1>Animate</h1>
+					<select id="color">
+						
+					</select>
+					<br>
+					<select id="shape">
+						<option value="rectangle">rectangle</option>
+						<option value="ellipse">ellipse</option>
+						<option value="image">image</option>
+					</select>
+					<br>
+					X:<INPUT type="text" value="0" id="X"><br>
+					Y:<INPUT type="text" value="0" id="Y"><br>
+					Width:<INPUT type="text" value="333" id="width"><br>
+					Height:<INPUT type="text" value="333" id="height"><br>
+					image source:<INPUT type="text" value="0" id="source"><br>
+					name:<INPUT type="text" value="0" id="name"><br>
 					<input type="button" onClick="addRect()" value="Add Object"/>
                     <input type = "button" onClick = "animate(animationArray)" value = "Play"/>
 				</fieldset>

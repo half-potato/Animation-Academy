@@ -61,7 +61,7 @@ img {
 	left:70%;
 	float:left;
 	display:block;
-	height:80%;
+	height:700px;
 	width:30%;
 	background-color:#96c8ac;
 	border:1px solid #000000;
@@ -71,9 +71,9 @@ img {
 }
 
 h1 {
-	color: #57614e;
+	color: Black;
 	font: 29px/30px "Times New Roman", Times, serif;
-	margin: 0 0 12px;
+	margin: 0 0 5px;
 	text-transform: uppercase;
 }
 h2 {

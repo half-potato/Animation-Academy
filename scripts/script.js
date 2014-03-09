@@ -101,7 +101,7 @@ function redraw(array) {
 }
 
 //Temporary objects added
-animationArray[0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 100);
+animationArray[0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 1000);
 
 //adds shapes to canvas
 function addRect(){
@@ -113,12 +113,14 @@ function addRect(){
 	var source = document.getElementById("source");
 	var width = document.getElementById("width");
 	var height = document.getElementById("height");
+	var name = document.getElementById("name");
 	//sets variables equal to whats in the hmtl elements
 	var outputWidth=parseInt(width.value);
 	var outputHeight=parseInt(height.value);
 	var outputX=parseInt(X.value);
 	var outputY=parseInt(Y.value);
 	var outputShape=shape.value;
+	var outputName=name.value;
 	//checks if image or shape
 	if(shape.value=="image"){
 		var outputColor=source.value;
@@ -127,7 +129,7 @@ function addRect(){
 		var outputColor=color.value;
 	}
 	//applies values to create new shape
-	addShape(new Shape(outputShape, outputColor, "box", outputHeight, outputWidth, outputX, outputY));
+	addShape(new Shape(outputShape, outputColor, outputName, outputHeight, outputWidth, outputX, outputY));
 	
 }
 
