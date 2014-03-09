@@ -6,6 +6,10 @@ var currentFrame = 0;
 var propertiesObject = "hi";
 var needsUpdate = false;
 var NUCLEOTIDE_WIDTH = 50, NUCLEOTIDE_HEIGHT = 90;
+var previousSelectedFrame = "hi";
+var selectedFrame = "hi";
+
+var stepHTML = '<div id = "name"></div> <br>X: <INPUT type="text" value="0" id="y"><br> Y: <INPUT type="text" value="0" id="y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> Color: <INPUT type="text" value="0" id="color"><br>'
 
 var shove = [];
 
@@ -412,45 +416,6 @@ function addRect(){
 }
 var i = 0;
 //Takes info and puts in animate array
-function animateObject(){
-	//accesses html elements
-	var name = document.getElementById("nameAnimation");
-	var X = document.getElementById("XAnimate");
-	var Y = document.getElementById("YAnimate");
-	var width = document.getElementById("widthAnimate");
-	var height = document.getElementById("heightAnimate");
-	var rotation = document.getElementById("rotation");
-	var color = document.getElementById("colorAnimation");
-	//sets variables equal to what's in the hmtl elements
-	var outputColor = color.value;
-	var outputRotation = rotation.value;
-	var outputWidth=parseInt(width.value);
-	var outputHeight=parseInt(height.value);
-	var outputX=parseInt(X.value);
-	var outputY=parseInt(Y.value);
-	var outputName=name.value;
-	//checks if image or shape
-	//applies values to create new shape
-	addFrame();
-	addStepTo(animationArray.length - 1, new AnimationStep(outputName, outputX, outputY, outputWidth, outputHeight, outputRotation, outputColor, false, 1000));
-}
-
-//Adds frame to the end
-function addFrame() {
-	if (animationArray[animationArray.length] == null) {
-		animationArray[animationArray.length] = new Frame([], []);
-	}
-
-}
-
-function addFrameToIndex(index) {
-	animationArray.splice(index, 0, new Frame([], []));
-}
-
-function addStepTo(index, step) {
-	console.log(animationArray[index].steps);
-	animationArray[index].steps[animationArray[index].steps.length] = step;
-}
 
 function getCurrentLayer() {
 	return $("canvas").getLayer(selectedObject);
@@ -480,75 +445,88 @@ function drawImage(){
 }
 
 var framePos;
-function getValue(){
-	$("#frames").prop("max", animationArray.length-1);
-	var name = document.getElementById("nameAnimation");
-	var x = document.getElementById("XAnimate");
-	var y = document.getElementById("YAnimate");
-	var width = document.getElementById("widthAnimate");
-	var height = document.getElementById("heightAnimate");
-	var rotation = document.getElementById("rotation");
-	var color = document.getElementById("colorAnimation");
-	var frame = document.getElementById("frames");
-	
-	framePos = frame.value;
-	console.log(animationArray.length);
-	console.log("Name "+animationArray[framePos].steps[0].target);
-	console.log("Array length "+animationArray.length);
-	console.log("frameMax "+frame.max);
-	console.log("frameValue "+frame.value);
-	console.log("x "+animationArray[framePos].steps[0].x);
-	console.log("y "+animationArray[framePos].steps[0].y);
-	console.log("color "+animationArray[framePos].steps[0].color);
-	console.log("widthAnimate "+animationArray[framePos].steps[0].width);
-	console.log("heightAnimate "+animationArray[framePos].steps[0].height);
 
-	//change whats in array
-	
-	$('#nameAnimation').val(animationArray[framePos].steps[0].target);
-	$('#XAnimate').val(animationArray[framePos].steps[0].x);
-	$('#YAnimate').val(animationArray[framePos].steps[0].y);
-	$('#widthAnimate').val(animationArray[framePos].steps[0].width);
-	$('#heightAnimate').val(animationArray[framePos].steps[0].height);
-	
-	if(animationArray[framePos].steps[0].color==="#ffffff" || animationArray[framePos].steps[0].color==="#FFFFFF" ){
-		$('#colorAnimation')[0].val("White");
+function initAnimationPanel(array) {
+	$("#containercontainer").append("<div id = 'container'></div>");
+	for (var i in array) {
+		$("#container").append("<div id = 'step" + i + "'></div>");
+		$("#step" + i).append(stepHTML);
+		$("#step" + i, "x").val(array[i].x);
+		$("#step" + i, "y").val(array[i].y);
+		$("#step" + i, "width").val(array[i].width);
+		$("#step" + i, "height").val(array[i].height);
+		$("#step" + i, "color").val(array[i].color);
+		$("#step" + i, "name").val(array[i].target);
 	}
-	else if(animationArray[framePos].steps[0].color==="#ff0000" || animationArray[framePos].steps[0].color==="##FF0000" ){
-		$('#colorAnimation')[1].val("Red");
-	}
-	else if(animationArray[framePos].steps[0].color==="#ffcc00" || animationArray[framePos].steps[0].color==="#FFCC00" ){
-		$('#colorAnimation')[2].val("Orange");
-	}
-	else if(animationArray[framePos].steps[0].color==="#ffff00" || animationArray[framePos].steps[0].color==="#FFFF00" ){
-		$('#colorAnimation')[3].val("Yellow");
-	}
-	else if(animationArray[framePos].steps[0].color==="#00ff00" || animationArray[framePos].steps[0].color==="#00FF00" ){
-		$('#colorAnimation')[4].val("Green");
-	}
-	else if(animationArray[framePos].steps[0].color==="#0000ff" || animationArray[framePos].steps[0].color==="#0000FF" ){
-		$('#colorAnimation')[5].val("Blue");
-	}
-	else if(animationArray[framePos].steps[0].color==="#663366" || animationArray[framePos].steps[0].color==="#663366" ){
-		$('#colorAnimation')[6].val("Indigo");
-	}
-	else if(animationArray[framePos].steps[0].color==="#ff00ff" || animationArray[framePos].steps[0].color==="#FF00FF" ){
-		$('#colorAnimation')[7].val("Violet");
-	}
-	else{
-		$('#colorAnimation')[8].val("I failed");
-	}
-
-
-	
 }
 
+function parseAnimationPanel(array) {
+	var output = [];
+	for (var i in array) {
+		array[i].x = $("#step" + i, "x").value;
+		array[i].y = $("#step" + i, "y").value;
+		array[i].width = $("#step" + i, "width").value;
+		array[i].height = $("#step" + i, "height").value;
+		array[i].color = $("#step" + i, "color").value;
+		array[i].target = $("#step" + i, "name").value;
+		output[i] = new AnimationStep(array[i].target, array[i].x, array[i].y, array[i].width, array[i].height, 0, array[i].color, false, 1000);
+	}
+	return output;
+}
+
+//Insert Frame.steps, execute on add step
+function updateAmountOfStepsAnimationPanel(array) {
+	$("#containercontainer").remove("#container");
+	$("#containercontainer").append("<div id = 'container'></div>");
+	for (var i in array) {
+		$("#container").append("<div id = 'step" + i + "'></div>");
+		$("#step" + i).append(stepHTML);
+		$("#step" + i, "x").val(array[i].x);
+		$("#step" + i, "y").val(array[i].y);
+		$("#step" + i, "width").val(array[i].width);
+		$("#step" + i, "height").val(array[i].height);
+		$("#step" + i, "color").val(array[i].color);
+		$("#step" + i, "name").val(array[i].target);
+	}
+}
+
+function animateObject(){
+	addStepTo(selectedFrame, new AnimationStep(selectedObject, 0, 0, 333, 333, 0, "#000000", false, 1000));
+	$("#frames").prop("max", animationArray.length-1)
+	updateAmountOfStepsAnimationPanel(arrayAnimation);
+}
+
+//Method on slider update update selected frame
+
+//Adds frame to the end
+function addFrame() {
+	if (animationArray[animationArray.length] == null) {
+		animationArray[animationArray.length] = new Frame([], []);
+	}
+
+}
+
+function addFrameToIndex(index) {
+	animationArray.splice(index, 0, new Frame([], []));
+}
+
+function addStepTo(index, step) {
+	console.log(animationArray[index].steps);
+	animationArray[index].steps[animationArray[index].steps.length] = step;
+}
 
 function animatePage(){
-	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"> <fieldset> <input type="image" class="arrow" id="saveform" src="left.png"/> <input type="range" class="slider" name="frames" id="frames" min="0" max="50"> <input type="image" class="arrow" id="saveform" src="right.png"/><br> color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" id="XAnimate"><br> Y: <INPUT type="text" id="YAnimate"><br> Width: <INPUT type="text" id="widthAnimate"><br> Height: <INPUT type="text" id="heightAnimate"><br> Name: <INPUT type="text" id="nameAnimation"><br> Rotation: <INPUT type="text" id="rotation"><br> <input type="button" onClick="animateObject()" value="Add Object"/> <input type = "button" onClick = "animate(animationArray)" value = "Play"/> </fieldset> </div>')
-}
+	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper">');
+		setInterval(function() {
+			$("#frames").change( function(){
+				console.log("Slider changed");
+				currentFrame = $("#frames").value;
+				initAnimationPanel(arrayAnimation[currentFrame].steps);
+			});
 
-setInterval( 'getValue()',1000);
+			parseAnimationPanel(arrayAnimation[currentFrame].steps);
+		}, 100);
+}
 
 function propertiesPage(){
 	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" onClick = "animatePage()">Animate</a></li><li><a href="#" class="selected">Properties</a></li> </ul><div id="menuWrapper"> <div id="selectedObject"></div> <fieldset id="properties"> <div id="selectedObject"></div> color: <select id="colorProperty"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XProperty"><br> Y: <INPUT type="text" value="0" id="YProperty"><br> Width: <INPUT type="text" value="333" id="widthProperty"><br> Height: <INPUT type="text" value="333" id="heightProperty"><br> Rotation: <INPUT type="text" value="0" id="rotationProperty"><br> </fieldset> </div>');
@@ -636,10 +614,8 @@ function save() {
 //     Startup
 //
 
-
-
-
 $(document).ready(function() {
 	addShape(new Shape("rectangle", "#e2e2e2", "delay", 1, 1, 0, 0));
 	$("#selectedObject").text("Unselected");
+	arrayAnimations[0] = new Frame(new AnimationStep("#delay", 0, 0, 333, 333, 0, "#000000", false, 1000), "delay");
 });
