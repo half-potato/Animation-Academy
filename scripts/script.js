@@ -445,19 +445,11 @@ function drawImage(){
 
 var framePos;
 
-var stepHTMLname = '<div id = "'
-var stepHTMLcolor = '" value = "name"></div> color: <select id="';
-var stepHTMLx = '"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option><option value="#FFCC00">Orange</option><option value="#FFFF00">Yellow</option><option value="#00FF00">Green</option><option value="#0000FF">Blue</option><option value="#663366">Indigo</option><option value="#FF00FF">Violet</option></select><br>X:<INPUT type="text" value="0" id="';
-var stepHTMLy = '"><br> Y: <INPUT type="text" value="0" id="';
-var stepHTMLwidth = '"><br> Width: <INPUT type="text" value="333" id="';
-var stepHTMLheight = '"><br> Height: <INPUT type="text" value="333" id="';
-var stepHTMLend = '"><br>';
-
 function initAnimationPanel() {
 	$("#containercontainer").append("<div id = 'container'></div>");
 	for (var i in animationArray[currentFrame].steps) {
 		$("#container").append("<div id = 'step" + i + "'></div>");
-		$("#step" + i).append(stepHTMLname + currentFrame + "name" + i + stepHTMLcolor + currentFrame + "color" + i + stepHTMLx + currentFrame + "x" + i + stepHTMLy + currentFrame + "y" + i + stepHTMLwidth + currentFrame + "width" + i + stepHTMLheight + currentFrame + "height" + i + stepHTMLend);
+		$("#step" + i).append(stepHTML);
 		$("#" + currentFrame + "x" + i).val(animationArray[currentFrame].steps[i].x);
 		$("#" + currentFrame + "y" + i).val(animationArray[currentFrame].steps[i].y);
 		$("#" + currentFrame + "width" + i).val(animationArray[currentFrame].steps[i].width);
@@ -471,32 +463,61 @@ function initAnimationPanel() {
 function parseAnimationPanel() {
 	var output = [];
 	for (var i in animationArray[currentFrame].steps) {
-		console.log(i);
-		animationArray[currentFrame].steps[i].x = parseInt($("#" + currentFrame + "x" + i + "").val());
-		animationArray[currentFrame].steps[i].y = parseInt($("#" + currentFrame + "y" + i + "").val());
-		animationArray[currentFrame].steps[i].width = parseInt($("#" + currentFrame + "width" + i + "").val());
-		animationArray[currentFrame].steps[i].height = parseInt($("#" + currentFrame + "height" + i + "").val());
-		animationArray[currentFrame].steps[i].color = parseInt($("#" + currentFrame + "color" + i + "").val());
-		animationArray[currentFrame].steps[i].target = parseInt($("#" + currentFrame + "name" + i + "").val());
+		animationArray[currentFrame].steps[i].x = $("#" + currentFrame + "x" + i + "").val();
+		animationArray[currentFrame].steps[i].y = $("#" + currentFrame + "y" + i + "").val();
+		animationArray[currentFrame].steps[i].width = $("#" + currentFrame + "width" + i + "").val();
+		animationArray[currentFrame].steps[i].height = $("#" + currentFrame + "height" + i + "").val();
+		animationArray[currentFrame].steps[i].color = $("#" + currentFrame + "color" + i + "").val();
+		animationArray[currentFrame].steps[i].target = $("#" + currentFrame + "name" + i + "").val();
 		output[i] = new AnimationStep(animationArray[currentFrame].steps[i].target, animationArray[currentFrame].steps[i].x, animationArray[currentFrame].steps[i].y, animationArray[currentFrame].steps[i].width, animationArray[currentFrame].steps[i].height, 0, animationArray[currentFrame].steps[i].color, false, 1000);
 	}
 	return output;
 }
 
+function parseAnimationPanel() {
+	var color = document.getElementById(currentFrame + "color" + i);
+	var x = document.getElementById(currentFrame + "x" + i);
+	var y = document.getElementById(currentFrame + "y" + i);
+	var width = document.getElementById(currentFrame + "width" + i);
+	var height = document.getElementById(currentFrame + "height" + i);
+	var rotation = document.getElementById(currentFrame + "rotation" + i);
+
+	$("#" + currentFrame + "x" + i).change(function() {
+
+		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
+	});
+	$("#XProperty").on("input", function() {
+		console.log(document.getElementById("XProperty").value);
+		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
+	});
+	$("#YProperty").on("input", function() {
+		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
+	});
+	$("#widthProperty").on("input", function() {
+		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
+	});
+	$("#heightProperty").on("input", function() {
+		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
+	});
+	$("#rotationProperty").on("input", function() {
+		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
+	});
+}
+
 //Insert Frame.steps, execute on add step
 function updateAmountOfStepsAnimationPanel() {
 	$("#containercontainer").remove("#container");
-	$("#containercontainer").append("<div id = 'container'></div>");
-	for (var i in animationArray[currentFrame].steps) {
-		$("#container").append("<div id = 'step" + i + "'></div>");
-		$("#step" + i).append(stepHTMLname + currentFrame + "name" + i + stepHTMLcolor + currentFrame + "color" + i + stepHTMLx + currentFrame + "x" + i + stepHTMLy + currentFrame + "y" + i + stepHTMLwidth + currentFrame + "width" + i + stepHTMLheight + currentFrame + "height" + i + stepHTMLend);
-		$("#" + 0 + "x" + 0 + "").val(animationArray[currentFrame].steps[i].x);
-		$("#" + 0 + "y" + 0 + "").val(animationArray[currentFrame].steps[i].y);
-		$("#" + 0 + "width" + 0 + "").val(animationArray[currentFrame].steps[i].width);
-		$("#" + 0 + "height" + 0 + "").val(animationArray[currentFrame].steps[i].height);
-		$("#" + 0 + "color" + 0 + "").val(animationArray[currentFrame].steps[i].color);
-		$("#" + 0 + "name" + 0 + "").val(animationArray[currentFrame].steps[i].target);
-	}
+		$("#containercontainer").append("<div id = 'container'></div>");
+		for (var i in animationArray[currentFrame].steps) {
+			$("#container").append("<div id = 'step" + i + "'></div>");
+			$("#step" + i).append(stepHTMLname + currentFrame + "name" + i + stepHTMLcolor + currentFrame + "color" + i + stepHTMLx + currentFrame + "x" + i + stepHTMLy + currentFrame + "y" + i + stepHTMLwidth + currentFrame + "width" + i + stepHTMLheight + currentFrame + "height" + i + stepHTMLend);
+			$("#" + currentFrame + "x" + i).val(animationArray[currentFrame].steps[i].x);
+			$("#" + currentFrame + "y" + i).val(animationArray[currentFrame].steps[i].y);
+			$("#" + currentFrame + "width" + i).val(animationArray[currentFrame].steps[i].width);
+			$("#" + currentFrame + "height" + i).val(animationArray[currentFrame].steps[i].height);
+			$("#" + currentFrame + "color" + i).val(animationArray[currentFrame].steps[i].color);
+			$("#" + currentFrame + "name" + i).val(animationArray[currentFrame].steps[i].target);
+		}
 	console.log(animationArray);
 }
 
