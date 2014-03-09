@@ -82,6 +82,7 @@ function addToCanvas(array)
 	}
 }
 
+//add shapes to layer and draws
 function addShape(shape) {
 	if (shape.type === "image") {
 		layerArray[layerArray.length] = shape;
@@ -128,6 +129,7 @@ function redraw(array) {
 //Temporary objects added
 animationArray[0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 100);
 
+//adds shapes to canvas
 function addRect(){
 	//accesses html elements
 	var color = document.getElementById("color");
@@ -143,6 +145,7 @@ function addRect(){
 	var outputX=parseInt(X.value);
 	var outputY=parseInt(Y.value);
 	var outputShape=shape.value;
+	//checks if image or shape
 	if(shape.value=="image"){
 		var outputColor=source.value;
 	}
