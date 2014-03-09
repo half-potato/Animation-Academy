@@ -22,7 +22,7 @@ $("#canvas").ready(function(){
 
 
 //Shape class, contains information to be built into a layer, if the type is image, then the style is the source
-function Shape(type, style, objectName, width, height, x, y)
+function Shape(type, style, objectName, width, height, x, y, arrayIndex)
 {
 	this.type = type;
 	this.style = style;
@@ -31,6 +31,7 @@ function Shape(type, style, objectName, width, height, x, y)
 	this.height = height;
 	this.x = x;
 	this.y = y;
+	this.arrayIndex = arrayIndex;
 
 	this.getClass = function() {
 		return "Shape";
@@ -100,6 +101,7 @@ function animate(array) {
 					x: "+=1"
 				}, step.delay);
 			} else {
+				//Problem
 				$("canvas").animateLayer(step.target, {
 					x: step.x, y: step.y,
 					fillStyle: step.color,
@@ -111,6 +113,11 @@ function animate(array) {
 			}
 		}
 	}
+}
+
+function play(array) {
+	var newArray = array;
+	animate(newArray);
 }
 
 //
@@ -174,6 +181,7 @@ function addShape(shape) {
 			}
 		}).drawLayers();
 	}	else {
+		shape.arrayIndex = layerArray.length;
 		layerArray[layerArray.length] = shape;
 		$('canvas').addLayer({
 			type: shape.type,
@@ -186,8 +194,6 @@ function addShape(shape) {
 			draggable: true,
 			click: function() {
 				selectedObject = shape.objectName;
-				var n = $("canvas").getLayer(selectedObject);
-				console.log(n);
                 $('canvas').addLayer({
                     type: "rectangle",
                     fillStyle: "#000000",
@@ -210,6 +216,9 @@ function addShape(shape) {
 						});
                     }
                 });
+				shape.x = $("canvas").getLayer(selectedObject).x;
+				shape.y = $("canvas").getLayer(selectedObject).y;
+				layerArray[shape.arrayIndex] = shape;
 			}
 		}).drawLayers();
 	}
@@ -272,7 +281,6 @@ function animateObject(){
 	console.log(X.value + ", " + Y.value);
 	animationArray[animationArray.length] = [];
 	animationArray[animationArray.length - 1][0] = new AnimationStep(outputName, outputX, outputY, outputWidth, outputHeight, outputRotation, outputColor, false, 1000);
-	changeScale("1", 10, 0, 0, 5);
 }
 
 function getCurrentLayer() {
@@ -307,8 +315,8 @@ console.log("HI");
 var framePos;
 function getValue(){
 	var name = document.getElementById("nameAnimation");
-	var x = $("#XAnimate");
-	var y = $("#YAnimate");
+	var x = document.getElementById("XAnimate");
+	var y = document.getElementById("YAnimate");
 	var width = document.getElementById("widthAnimate");
 	var height = document.getElementById("heightAnimate");
 	var rotation = document.getElementById("rotation");
@@ -316,11 +324,14 @@ function getValue(){
 	var frame = document.getElementById("frames");
 
 
-
-
-	$("frames").attr("max", animationArray.length);
+	$("#frames").prop("max", animationArray.length);
 
 	framePos=parseInt(frame.value);
+
+	console.log(framePos);
+	console.log(frame.max);
+	console.log(frame.value);
+	console.log(animationArray[framePos][0].name);
 
 	name.val(animationArray[framePos][0].name);
 	color.val(animationArray[framePos][0].color);
@@ -333,7 +344,7 @@ function getValue(){
 }
 
 function animatePage(){
-	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"><div id="menuWrapper"> <fieldset> <input type="image" class="arrow" id="saveform" src="left.png"/> <input type="range" class="slider" name="frames" id="frames" min="0" max="50"> <input type="image" class="arrow" id="saveform" src="right.png"/><br> color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XAnimate"><br> Y: <INPUT type="text" value="0" id="YAnimate"><br> Width: <INPUT type="text" value="333" id="widthAnimate"><br> Height: <INPUT type="text" value="333" id="heightAnimate"><br> Name: <INPUT type="text" value="0" id="nameAnimation"><br> Rotation: <INPUT type="text" value="0" id="rotation"><br> <input type="button" onClick="animateObject()" value="Add Object"/> <input type = "button" onClick = "animate(animationArray)" value = "Play"/> </fieldset> </div>')
+	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"><div id="menuWrapper"> <fieldset> <input type="image" class="arrow" id="saveform" src="left.png"/> <input type="range" class="slider" name="frames" id="frames" min="0" max="50"> <input type="image" class="arrow" id="saveform" src="right.png"/><br> color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XAnimate"><br> Y: <INPUT type="text" value="0" id="YAnimate"><br> Width: <INPUT type="text" value="333" id="widthAnimate"><br> Height: <INPUT type="text" value="333" id="heightAnimate"><br> Name: <INPUT type="text" value="0" id="nameAnimation"><br> Rotation: <INPUT type="text" value="0" id="rotation"><br> <input type="button" onClick="animateObject()" value="Add Object"/> <input type = "button" onClick = "play(animationArray)" value = "Play"/> </fieldset> </div>')
 	getValue();
 }
 

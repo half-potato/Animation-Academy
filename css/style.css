@@ -16,12 +16,6 @@ time, mark, audio, video {
   border: 0;
   font: inherit;
 }
-.arrow{
-	display:box;
-}
-.slider{
-	display:box;
-}
 #nav li a.selected {
 	color: #fafafa;
 }
@@ -29,7 +23,7 @@ time, mark, audio, video {
     width: 100%;
     margin: 0;
     padding: 10px 0 0 0;
-    list-style: none;  
+    list-style: none;
     background-color: #111;
     box-shadow: 0 2px 1px #9c9c9c;
 }
