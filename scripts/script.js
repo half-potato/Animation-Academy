@@ -9,7 +9,7 @@ var NUCLEOTIDE_WIDTH = 50, NUCLEOTIDE_HEIGHT = 90;
 var previousSelectedFrame = "hi";
 var selectedFrame = "hi";
 
-var stepHTML = '<div id = "name"></div> <br>X: color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option><option value="#FFCC00">Orange</option><option value="#FFFF00">Yellow</option><option value="#00FF00">Green</option><option value="#0000FF">Blue</option><option value="#663366">Indigo</option><option value="#FF00FF">Violet</option></select><INPUT type="text" value="0" id="x"><br> Y: <INPUT type="text" value="0" id="y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br>'
+var stepHTML = '<div id = "name"></div> color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option><option value="#FFCC00">Orange</option><option value="#FFFF00">Yellow</option><option value="#00FF00">Green</option><option value="#0000FF">Blue</option><option value="#663366">Indigo</option><option value="#FF00FF">Violet</option></select> <br>X: <INPUT type="text" value="0" id="x"><br> Y: <INPUT type="text" value="0" id="y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br>'
 
 var shove = [];
 
@@ -473,13 +473,13 @@ function initAnimationPanel() {
 function parseAnimationPanel() {
 	var output = [];
 	for (var i in animationArray[currentFrame].steps) {
-		console.log(i);
-		animationArray[currentFrame].steps[i].x = parseInt($("#container > #step" + i + " > #x").val());
-		animationArray[currentFrame].steps[i].y = parseInt($("#container > #step" + i + " > #y").val());
-		animationArray[currentFrame].steps[i].width = parseInt($("#container > #step" + i + " > #width").val());
-		animationArray[currentFrame].steps[i].height = parseInt($("#container > #step" + i + " > #height").val());
-		animationArray[currentFrame].steps[i].color = parseInt($("#container > #step" + i + " > #colorAnimation").val());
-		animationArray[currentFrame].steps[i].target = parseInt($("#container > #step" + i + " > #name").val());
+		console.log($("#container > #step" + i + " > #x").val());
+		animationArray[currentFrame].steps[i].x = $("#container > #step" + i + " > #x").val();
+		animationArray[currentFrame].steps[i].y = $("#container > #step" + i + " > #y").val();
+		animationArray[currentFrame].steps[i].width = $("#container > #step" + i + " > #width").val();
+		animationArray[currentFrame].steps[i].height = $("#container > #step" + i + " > #height").val();
+		animationArray[currentFrame].steps[i].color = $("#container > #step" + i + " > #colorAnimation").val();
+		animationArray[currentFrame].steps[i].target = $("#container > #step" + i + " > #name").val();
 		output[i] = new AnimationStep(animationArray[currentFrame].steps[i].target, animationArray[currentFrame].steps[i].x, animationArray[currentFrame].steps[i].y, animationArray[currentFrame].steps[i].width, animationArray[currentFrame].steps[i].height, 0, animationArray[currentFrame].steps[i].color, false, 1000);
 	}
 	return output;
@@ -499,12 +499,11 @@ function updateAmountOfStepsAnimationPanel() {
 		$("#container > #step" + i + " > #colorAnimation").val(animationArray[currentFrame].steps[i].color);
 		$("#container > #step" + i + " > #name").val(animationArray[currentFrame].steps[i].target);
 	}
-	console.log(animationArray);
 }
 
 //Adds a blueprint to the selected frame. Also adjusts the slider length. Auto updates panel
 function animateObject(){
-	console.log(currentFrame);
+
 	addStepTo(currentFrame, new AnimationStep(selectedObject, 0, 0, 333, 333, 0, "#000000", false, 1000));
 	$("#frames").prop("max", animationArray.length-1);
 	updateAmountOfStepsAnimationPanel(animationArray);
@@ -536,15 +535,11 @@ function animatePage(){
 		setInterval(function() {
 			$("#frames").change( function(){
 				currentFrame = $("#frames").value;
-				console.log(currentFrame);
-				console.log(animationArray[0].steps);
-				console.log(animationArray[currentFrame].steps);
 				initAnimationPanel(animationArray[currentFrame].steps);
 			});
 			//console.log("Parsing animation panel.");
 			parseAnimationPanel(animationArray[currentFrame].steps);
 		}, 1000);
-	initAnimationPanel(animationArray[0].steps);
 }
 
 function propertiesPage(){
@@ -635,6 +630,4 @@ function save() {
 $(document).ready(function() {
 	addShape(new Shape("rectangle", "#e2e2e2", "delay", 1, 1, 0, 0));
 	$("#selectedObject").text("Unselected");
-	animationArray[0] = new Frame([new AnimationStep("#delay", 0, 0, 333, 333, 0, "#000000", false, 1000)], "delay");
-	console.log(animationArray[0].steps);
 });
