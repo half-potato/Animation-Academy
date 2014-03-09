@@ -84,10 +84,12 @@ function addRect(){
 	var color = document.getElementById("color");
 	var X = document.getElementById("X");
 	var Y = document.getElementById("Y");
+	var shape = document.getElementById("shape");
 	var outputColor=color.value;
 	var outputX=X.value;
 	var outputY=Y.value;
-	addShape(new Shape("rectangle", outputColor, "box", 20, 20, outputX, outputY));
+	var outputShape=shape.value;
+	addShape(new Shape(outputShape, outputColor, "box", 20, 20, outputX, outputY));
 	
 }
 
