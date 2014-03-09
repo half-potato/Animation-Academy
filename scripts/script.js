@@ -115,6 +115,9 @@ $.jCanvas.extend({
 				case "G":
 					addShape(new Shape("image", "media/G.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
 					break;
+				case "U":
+					addShape(new Shape("image", "media/U.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
 				case "a":
 					addShape(new Shape("image", "media/A.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
 					break;
@@ -126,6 +129,9 @@ $.jCanvas.extend({
 					break;
 				case "g":
 					addShape(new Shape("image", "media/G.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+				case "u":
+					addShape(new Shape("image", "media/U.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
 					break;
 			}
 		}
@@ -146,28 +152,28 @@ $.jCanvas.extend({
 			nucleotide = sequence[nucleo];
 			switch (nucleotide) {
 				case "A":
-					addShape(new Shape("image", "media/A.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					addShape(new Shape("image", "media/A.png", "RNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
 					break;
 				case "U":
-					addShape(new Shape("image", "media/U.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					addShape(new Shape("image", "media/U.png", "RNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
 					break;
 				case "C":
-					addShape(new Shape("image", "media/C.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					addShape(new Shape("image", "media/C.png", "RNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
 					break;
 				case "G":
-					addShape(new Shape("image", "media/G.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					addShape(new Shape("image", "media/G.png", "RNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
 					break;
 				case "a":
-					addShape(new Shape("image", "media/A.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					addShape(new Shape("image", "media/A.png", "RNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
 					break;
 				case "u":
-					addShape(new Shape("image", "media/U.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					addShape(new Shape("image", "media/U.png", "RNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
 					break;
 				case "c":
-					addShape(new Shape("image", "media/C.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					addShape(new Shape("image", "media/C.png", "RNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
 					break;
 				case "g":
-					addShape(new Shape("image", "media/G.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					addShape(new Shape("image", "media/G.png", "RNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
 					break;
 			}
 		}
@@ -328,18 +334,11 @@ function addShape(shape) {
                 shape.height = $("canvas").getLayer(selectedObject).height;
 			}
 		}).drawLayers();
-	} else if (shape.type === "DNA") {
+	} else if (shape.type === "Nucleotides") {
 		$("canvas").drawDNA({
 			x: 100, y: 100,
-			sequence: ["A", "T", "G"],
+			sequence: ["A", "U", "G"],
 			name: 1,
-			layer: true
-		}).drawLayers();
-	} else if (shape.type === "RNA") {
-		$("canvas").drawRNA({
-			x: shape.x, y: shape.y,
-			sequence: ["A", "T", "G"],
-			name: shape.objectName,
 			layer: true
 		}).drawLayers();
 	} else if (shape.type === "ellipse") {
@@ -503,7 +502,7 @@ function changeProperties(selector, style, width, height, x, y) {
 }
 
 function drawImage(){
-	$("#menu").html('<ul id="nav"> <li><a href="#" class="selected">Draw Image</a></li> <li onClick = "animatePage()"><a href="#">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><form action=""> DNA Sequence: <INPUT type="text" value="0" id="DNA"><br> <fieldset> color: <select id="color"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> shape: <select id="shape"> <option value="rectangle">rectangle</option> <option value="ellipse">ellipse</option> <option value="image">image</option> </select> <br> X: <INPUT type="text" value="0" id="X"><br> Y: <INPUT type="text" value="0" id="Y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> Image: <INPUT type="text" value="0" id="source"><br> Name: <INPUT type="text" value="0" id="name"><br> <input type="button" onClick="addRect()" value="Add Object"/> <input type="button" onClick="addToArray()" value="Add DNA"/> </fieldset> </div> </div>');
+	$("#menu").html('<ul id="nav"> <li><a href="#" class="selected">Draw Image</a></li> <li onClick = "animatePage()"><a href="#">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><form action=""> DNA Sequence: <INPUT type="text" value="0" id="DNA"><br> <fieldset> color: <select id="color"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> shape: <select id="shape"> <option value="rectangle">rectangle</option> <option value="ellipse">ellipse</option> <option value="image">image</option> <option value="Nucleotides">Nucleotides</option> </select> <br> X: <INPUT type="text" value="0" id="X"><br> Y: <INPUT type="text" value="0" id="Y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> Image: <INPUT type="text" value="0" id="source"><br> Name: <INPUT type="text" value="0" id="name"><br> <input type="button" onClick="addRect()" value="Add Object"/> <input type="button" onClick="addToArray()" value="Add DNA"/> </fieldset> </div> </div>');
 }
 
 var framePos;
@@ -517,7 +516,7 @@ function getValue(){
 	var rotation = document.getElementById("rotation");
 	var color = document.getElementById("colorAnimation");
 	var frame = document.getElementById("frames");
-	
+
 
 	framePos=parseInt(frame.value);
 
@@ -531,9 +530,9 @@ function getValue(){
 	console.log("widthAnimate "+animationArray[framePos].steps[0].width);
 	console.log("heightAnimate "+animationArray[framePos].steps[0].height);
 	//console.log(animationArray[framePos][0].name);
-	
+
 	//change whats in array
-	
+
 	$('#nameAnimation').html(animationArray[framePos].steps[0].target);
 	if(animationArray[framePos].steps[0].color="#ffffff" || animationArray[framePos].steps[0].color="#FFFFFF" ){
 		$('#colorAnimation').html("White");
@@ -562,7 +561,7 @@ function getValue(){
 	else{
 		$('#colorAnimation').html("I failed");
 	}
-	
+
 	$('#XAnimate').html(animationArray[framePos].steps[0].x);
 	$('#YAnimate').html(animationArray[framePos].steps[0].y);
 	$('#widthAnimate').html(animationArray[framePos].steps[0].width);
