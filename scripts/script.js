@@ -132,7 +132,7 @@ function redraw(array) {
 }
 
 //Temporary objects added
-<<<<<<< HEAD
+
 animationArray[0] = new Array();
 animationArray[0][0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 1000);
 animationArray[1] = new Array();
@@ -140,7 +140,7 @@ animationArray[1][0] = new AnimationStep('box', 30, 30, 0, "#36c", false, 1000);
 
 =======
 animationArray[0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 1000);
->>>>>>> FETCH_HEAD
+
 
 //adds shapes to canvas
 function addRect(){
