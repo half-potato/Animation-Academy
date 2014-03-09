@@ -5,6 +5,7 @@ var layerArray = [];
 var currentFrame = 0;
 var propertiesObject = "hi";
 var needsUpdate = false;
+var NUCLEOTIDE_WIDTH = 50, NUCLEOTIDE_HEIGHT = 90;
 
 //holds mouse X and Y positions
 var mouseX;
@@ -84,6 +85,94 @@ function Delay(delay)
 		return "Delay";
 	}
 }
+
+//
+//      Extensions
+//
+
+$.jCanvas.extend({
+	name: "drawDNA",
+	type: "DNA",
+	props: {},
+	fn: function(ctx, params) {
+		var p = params;
+		var sequence = p.sequence;
+		var nucleo;
+		var nucleotide;
+
+		for (nucleo in sequence) {
+			nucleotide = sequence[nucleo];
+			switch (nucleotide) {
+				case "A":
+					addShape(new Shape("image", "media/A.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+				case "T":
+					addShape(new Shape("image", "media/T.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+				case "C":
+					addShape(new Shape("image", "media/C.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+				case "G":
+					addShape(new Shape("image", "media/G.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+				case "a":
+					addShape(new Shape("image", "media/A.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+				case "t":
+					addShape(new Shape("image", "media/T.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+				case "c":
+					addShape(new Shape("image", "media/C.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+				case "g":
+					addShape(new Shape("image", "media/G.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+			}
+		}
+	}
+});
+
+$.jCanvas.extend({
+	name: "drawRNA",
+	type: "RNA",
+	props: {},
+	fn: function(ctx, params) {
+		var p = params;
+		var sequence = p.sequence;
+		var nucleo;
+		var nucleotide;
+
+		for (nucleo in sequence) {
+			nucleotide = sequence[nucleo];
+			switch (nucleotide) {
+				case "A":
+					addShape(new Shape("image", "media/A.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+				case "U":
+					addShape(new Shape("image", "media/U.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+				case "C":
+					addShape(new Shape("image", "media/C.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+				case "G":
+					addShape(new Shape("image", "media/G.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+				case "a":
+					addShape(new Shape("image", "media/A.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+				case "u":
+					addShape(new Shape("image", "media/U.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+				case "c":
+					addShape(new Shape("image", "media/C.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+				case "g":
+					addShape(new Shape("image", "media/G.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
+					break;
+			}
+		}
+	}
+});
 
 //
 //      Animation Functions
@@ -239,9 +328,21 @@ function addShape(shape) {
                 shape.height = $("canvas").getLayer(selectedObject).height;
 			}
 		}).drawLayers();
-	}
-
-	else if (shape.type === "ellipse") {
+	} else if (shape.type === "DNA") {
+		$("canvas").drawDNA({
+			x: 100, y: 100,
+			sequence: ["A", "T", "G"],
+			name: 1,
+			layer: true
+		}).drawLayers();
+	} else if (shape.type === "RNA") {
+		$("canvas").drawRNA({
+			x: shape.x, y: shape.y,
+			sequence: ["A", "T", "G"],
+			name: shape.objectName,
+			layer: true
+		}).drawLayers();
+	} else if (shape.type === "ellipse") {
 		layerArray[layerArray.length] = shape;
 		$('canvas').addLayer({
 			type: shape.type,
@@ -557,6 +658,16 @@ setInterval(function() {
 		propertiesPanelParse();
 	}
 }, 100);
+
+//
+//     Saving
+//
+
+function save() {
+	localStorage.setItem("arrayAnimation", arrayAnimation);
+	localStorage.setItem("layerArray", layerArray);
+}
+
 //
 //     Startup
 //
@@ -590,5 +701,4 @@ function initPush (name){
 
 $(document).ready(function() {
 	addShape(new Shape("rectangle", "#e2e2e2", "delay", 1, 1, 0, 0));
-
 });
