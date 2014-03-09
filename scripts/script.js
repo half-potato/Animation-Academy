@@ -133,10 +133,19 @@ function addRect(){
 	var color = document.getElementById("color");
 	var X = document.getElementById("X");
 	var Y = document.getElementById("Y");
+	var shape = document.getElementById("shape");
 	var outputColor=color.value;
+<<<<<<< HEAD
 	var outputX = parseInt(X.value);
 	var outputY = parseInt(Y.value);
 	addShape(new Shape("ellipse", outputColor, "box", 20, 20, outputX, outputY));
+=======
+	var outputX=X.value;
+	var outputY=Y.value;
+	var outputShape=shape.value;
+	addShape(new Shape(outputShape, outputColor, "box", 20, 20, outputX, outputY));
+	
+>>>>>>> FETCH_HEAD
 }
 
 $(document).ready(function() {
