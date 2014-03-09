@@ -154,7 +154,7 @@ function addShape(shape) {
 			width: shape.width,
 			height: shape.height,
 			name: shape.objectName,
-			draggable: true
+			draggable: true,
 		}).drawLayers();
 	}
 }
@@ -198,8 +198,8 @@ function animateObject(){
 	var name = document.getElementById("nameAnimation");
 	var X = document.getElementById("XAnimate");
 	var Y = document.getElementById("YAnimate");
-	var width = document.getElementById("width");
-	var height = document.getElementById("height");
+	var width = document.getElementById("widthAnimate");
+	var height = document.getElementById("heightAnimate");
 	var rotation = document.getElementById("rotation");
 	var color = document.getElementById("colorAnimation");
 	//sets variables equal to what's in the hmtl elements
