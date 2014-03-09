@@ -2,6 +2,10 @@
 var animationArray = new Array();
 var layerArray = new Array();
 
+//
+//        Classes
+//
+
 //Shape class, contains information to be built into a layer, if the type is image, then the style is the source
 function Shape(type, style, objectName, width, height, x, y)
 {
@@ -19,11 +23,13 @@ function Shape(type, style, objectName, width, height, x, y)
 }
 
 //AnimationStep class; contains instructions for each step. The last instruction's speed is the one that determines when the next step is executed
-function AnimationStep(target, x, y, rotation, color, hidden, speed)
+function AnimationStep(target, x, y, width, height, rotation, color, hidden, speed)
 {
 	this.target = target;
 	this.x = x;
 	this.y = y;
+	this.width = width;
+	this.height = height;
 	this.rotation = rotation;
 	this.color = color;
 	this.hidden = hidden;
@@ -42,6 +48,11 @@ function Delay(delay)
 		return "Delay";
 	}
 }
+
+//
+//      Animation Functions
+//
+
 //TODO: Will take the animationArray and apply it the canvas
 function animate(array) {
 	console.log("Animating");
@@ -49,23 +60,43 @@ function animate(array) {
 	for (i in arrayOfSteps) {
 		if (i == arrayOfSteps.length - 1) {
 			step = arrayOfSteps[i];
-			$("canvas").animateLayer(step.target, {
-				x: step.x, y: step.y,
-				fillStyle: step.color,
-				rotate: step.rotate
-			}, step.speed, function() {
-				setTimeout(animate(array), 1);
-			});
+			if (step.getClass()==="delay") {
+				$("canvas").animateLayer("delay", {
+					x: "+=1"
+				}, step.delay);
+			} else {
+				$("canvas").animateLayer(step.target, {
+					x: step.x, y: step.y,
+					fillStyle: step.color,
+					rotate: step.rotate,
+					height: step.height,
+					width: step.width
+				}, step.speed, function() {
+					setTimeout(animate(array), 1);
+				});
+			}
 		} else {
 			step = arrayOfSteps[i];
-			$("canvas").animateLayer(step.target, {
-				x: step.x, y: step.y,
-				fillStyle: step.color,
-				rotate: step.rotate
-			}, step.speed);
+			if (step.getClass()==="delay") {
+				$("canvas").animateLayer("delay", {
+					x: "+=1"
+				}, step.delay);
+			} else {
+				$("canvas").animateLayer(step.target, {
+					x: step.x, y: step.y,
+					fillStyle: step.color,
+					rotate: step.rotate,
+					height: step.height,
+					width: step.width
+				}, step.speed);
+			}
 		}
 	}
 }
+
+//
+//      Shape Functions
+//
 
 //Takes the array of Shape objects and turns them into layers, which are then added to the canvas and drawn.
 function reloadObjects(array)
@@ -132,15 +163,24 @@ function redraw(array) {
 }
 
 //Temporary objects added
+<<<<<<< HEAD
 
+=======
+>>>>>>> 43b2378a2595646769052843e7009ff1a66ca7ce
 animationArray[0] = new Array();
 animationArray[0][0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 1000);
 animationArray[1] = new Array();
 animationArray[1][0] = new AnimationStep('box', 30, 30, 0, "#36c", false, 1000);
 
+<<<<<<< HEAD
 =======
 animationArray[0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 1000);
 
+=======
+//
+//      Input Functions
+//
+>>>>>>> 43b2378a2595646769052843e7009ff1a66ca7ce
 
 //adds shapes to canvas
 function addRect(){
@@ -168,13 +208,7 @@ function addRect(){
 		var outputColor=color.value;
 	}
 	//applies values to create new shape
-<<<<<<< HEAD
-	addShape(new Shape(outputShape, outputColor, "box", outputHeight, outputWidth, outputX, outputY));
-
-=======
 	addShape(new Shape(outputShape, outputColor, outputName, outputHeight, outputWidth, outputX, outputY));
-	
->>>>>>> FETCH_HEAD
 }
 
 //Takes info and puts in animate array
@@ -199,6 +233,10 @@ function animateObject(){
 	//applies values to create new shape
 	animationArray[animationArray.length-1] = new AnimationStep(outputName, outputX, outputY, outputRotation, outputColor, false, 1000);
 }
+
+//
+//     Startup
+//
 
 $(document).ready(function() {
 	addShape(new Shape("rectangle", "#e2e2e2", "delay", 1, 1, 0, 0));
