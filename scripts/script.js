@@ -402,11 +402,12 @@ function changeProperties(selector, style, width, height, x, y) {
 }
 
 function drawImage(){
-	$("#menu").html('<ul id="nav"> <li><a href="#" class="selected">Draw Image</a></li> <li onClick = "animatePage()"><a href="#">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"><fieldset> color: <select id="color"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> shape: <select id="shape"> <option value="rectangle">rectangle</option> <option value="ellipse">ellipse</option> <option value="image">image</option> </select> <br> X: <INPUT type="text" value="0" id="X"><br> Y: <INPUT type="text" value="0" id="Y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> image source: <INPUT type="text" value="0" id="source"><br> name: <INPUT type="text" value="0" id="name"><br> <input type="button" onClick="addRect()" value="Add Object"/> </fieldset> </div> </div>');
+	$("#menu").html('<ul id="nav"> <li><a href="#" class="selected">Draw Image</a></li> <li onClick = "animatePage()"><a href="#">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><form action=""> DNA Sequence: <INPUT type="text" value="0" id="DNA"><br> <fieldset> color: <select id="color"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> shape: <select id="shape"> <option value="rectangle">rectangle</option> <option value="ellipse">ellipse</option> <option value="image">image</option> </select> <br> X: <INPUT type="text" value="0" id="X"><br> Y: <INPUT type="text" value="0" id="Y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> Image: <INPUT type="text" value="0" id="source"><br> Name: <INPUT type="text" value="0" id="name"><br> <input type="button" onClick="addRect()" value="Add Object"/> <input type="button" onClick="addToArray()" value="Add DNA"/> </fieldset> </div> </div>');
 }
 
 var framePos;
 function getValue(){
+	$("#frames").prop("max", animationArray.length);
 	var name = document.getElementById("nameAnimation");
 	var x = document.getElementById("XAnimate");
 	var y = document.getElementById("YAnimate");
@@ -415,17 +416,57 @@ function getValue(){
 	var rotation = document.getElementById("rotation");
 	var color = document.getElementById("colorAnimation");
 	var frame = document.getElementById("frames");
-
-
-	$("#frames").prop("max", animationArray.length);
+	
 
 	framePos=parseInt(frame.value);
 
-	/*console.log(framePos);
-	console.log(frame.max);
-	console.log(frame.value);
-	console.log(animationArray[framePos][0].name);*/
-
+	console.log("framePos "+framePos);
+	console.log("frameMax "+frame.max);
+	console.log("frameValue "+frame.value);
+	console.log("target "+animationArray[framePos].steps[0].target);
+	console.log("x "+animationArray[framePos].steps[0].x);
+	console.log("y "+animationArray[framePos].steps[0].y);
+	console.log("color "+animationArray[framePos].steps[0].color);
+	console.log("widthAnimate "+animationArray[framePos].steps[0].width);
+	console.log("heightAnimate "+animationArray[framePos].steps[0].height);
+	//console.log(animationArray[framePos][0].name);
+	
+	//change whats in array
+	
+	$('#nameAnimation').html(animationArray[framePos].steps[0].target);
+	if(animationArray[framePos].steps[0].color="#ffffff" || animationArray[framePos].steps[0].color="#FFFFFF" ){
+		$('#colorAnimation').html("White");
+	}
+	else if(animationArray[framePos].steps[0].color="#ff0000" || animationArray[framePos].steps[0].color="##FF0000" ){
+		$('#colorAnimation').html("Red");
+	}
+	else if(animationArray[framePos].steps[0].color="#ffcc00" || animationArray[framePos].steps[0].color="#FFCC00" ){
+		$('#colorAnimation').html("Orange");
+	}
+	else if(animationArray[framePos].steps[0].color="#ffff00" || animationArray[framePos].steps[0].color="#FFFF00" ){
+		$('#colorAnimation').html("Yellow");
+	}
+	else if(animationArray[framePos].steps[0].color="#00ff00" || animationArray[framePos].steps[0].color="#00FF00" ){
+		$('#colorAnimation').html("Green");
+	}
+	else if(animationArray[framePos].steps[0].color="#0000ff" || animationArray[framePos].steps[0].color="#0000FF" ){
+		$('#colorAnimation').html("Blue");
+	}
+	else if(animationArray[framePos].steps[0].color="#663366" || animationArray[framePos].steps[0].color="#663366" ){
+		$('#colorAnimation').html("Indigo");
+	}
+	else if(animationArray[framePos].steps[0].color="#ff00ff" || animationArray[framePos].steps[0].color="#FF00FF" ){
+		$('#colorAnimation').html("Violet");
+	}
+	else{
+		$('#colorAnimation').html("I failed");
+	}
+	
+	$('#XAnimate').html(animationArray[framePos].steps[0].x);
+	$('#YAnimate').html(animationArray[framePos].steps[0].y);
+	$('#widthAnimate').html(animationArray[framePos].steps[0].width);
+	$('#heightAnimate').html(animationArray[framePos].steps[0].height);
+	$('#rotation').html(animationArray[framePos].steps[0].rotation);
 	/*name.val(animationArray[framePos][0].name);
 	color.val(animationArray[framePos][0].color);
 	x.val(animationArray[framePos][0].x);
@@ -433,15 +474,17 @@ function getValue(){
 	width.val(animationArray[framePos][0].width);
 	height.val(animationArray[framePos][0].height);
 	rotation.val(animationArray[framePos][0].rotation);
-	console.log(framePos);*/
+	console.log("fried chicken");
+	*/
 }
+
 
 function animatePage(){
 	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"><div id="menuWrapper"> <fieldset> <input type="image" class="arrow" id="saveform" src="left.png"/> <input type="range" class="slider" name="frames" id="frames" min="0" max="50"> <input type="image" class="arrow" id="saveform" src="right.png"/><br> color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XAnimate"><br> Y: <INPUT type="text" value="0" id="YAnimate"><br> Width: <INPUT type="text" value="333" id="widthAnimate"><br> Height: <INPUT type="text" value="333" id="heightAnimate"><br> Name: <INPUT type="text" value="0" id="nameAnimation"><br> Rotation: <INPUT type="text" value="0" id="rotation"><br> <input type="button" onClick="animateObject()" value="Add Object"/> <input type = "button" onClick = "animate(animationArray)" value = "Play"/> </fieldset> </div>')
 	getValue();
 }
 
-
+//setInterval( 'getValue()',1000);
 
 function propertiesPage(){
 	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" onClick = "animatePage()">Animate</a></li><li><a href="#" class="selected">Properties</a></li> </ul><div id="menuWrapper"> <fieldset id="properties"> color: <select id="colorProperty"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <input type="text" value="0" id="XProperty"><br> Y: <input type="text" value="0" id="YProperty"><br> Width: <input type="text" value="333" id="widthProperty"><br> Height: <input type="text" value="333" id="heightProperty"><br> Rotation: <input type="text" value="0" id="rotationProperty"><br> </fieldset> </div>');
@@ -517,6 +560,33 @@ setInterval(function() {
 //
 //     Startup
 //
+var shove = [];
+var DNA;
+var dnaOutput;
+
+function CreateValueDNA(){
+	this.arrayDNA;
+
+}
+
+function addToArray(){
+	DNA = document.getElementById("DNA");
+	dnaOutput = DNA.value;
+	for(var i = 0; i<dnaOutput.length; i++){
+		shove.push(dnaOutput[i]);
+	}
+	initPush(dnaOutput);
+
+}
+
+function initPush (name){
+	var name = new CreateValueDNA();
+	name.arrayDNA=shove;
+	shove = [];
+	console.log(name.arrayDNA);
+}
+
+
 
 $(document).ready(function() {
 	addShape(new Shape("rectangle", "#e2e2e2", "delay", 1, 1, 0, 0));
