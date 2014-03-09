@@ -1,7 +1,7 @@
 //TODO: Will take the animationArray and apply it the canvas
 var selectedObject = "hi";
-var animationArray = new Array();
-var layerArray = new Array();
+var animationArray = [];
+var layerArray = [];
 
 //holds mouse X and Y positions
 var mouseX;
@@ -87,6 +87,7 @@ function animate(array) {
 					rotate: step.rotate,
 					height: step.height,
 					width: step.width,
+					visible: !step.hidden
 				}, step.speed, function() {
 					setTimeout(animate(array), 1);
 				});
@@ -105,6 +106,7 @@ function animate(array) {
 					rotate: step.rotate,
 					height: step.height,
 					width: step.width,
+					visible: !step.hidden
 				}, step.speed);
 			}
 		}
@@ -186,6 +188,28 @@ function addShape(shape) {
 				selectedObject = shape.objectName;
 				var n = $("canvas").getLayer(selectedObject);
 				console.log(n);
+                $('canvas').addLayer({
+                    type: "rectangle",
+                    fillStyle: "#000000",
+                    x: shape.x,
+                    y: shape.y + 30,
+                    width: 50,
+                    height: 50,
+                    name: shape.objectName + "topHandle",
+                    draggable: true,
+                    click: function() {
+                        $('canvas').setLayer({
+							type: "rectangle",
+							fillStyle: "#000000",
+							x: shape.x,
+							y: shape.y + 30,
+							width: 50,
+							height: 50,
+							name: shape.objectName + "topHandle",
+							draggable: true,
+						});
+                    }
+                });
 			}
 		}).drawLayers();
 	}
@@ -244,7 +268,7 @@ function animateObject(){
 	var outputName=name.value;
 	//checks if image or shape
 	//applies values to create new shape
-	animationArray[animationArray.length] = new Array();
+	animationArray[animationArray.length] = [];
 	animationArray[animationArray.length - 1][0] = new AnimationStep(outputName, outputX, outputY, outputWidth, outputHeight, outputRotation, outputColor, false, 1000);
 	changeScale("1", 10, 0, 0, 5);
 }
