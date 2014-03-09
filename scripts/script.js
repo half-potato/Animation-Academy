@@ -3,6 +3,7 @@ var selectedObject = "hi";
 var animationArray = [];
 var layerArray = [];
 var currentFrame = 0;
+var propertiesObject = "hi";
 
 //holds mouse X and Y positions
 var mouseX;
@@ -223,6 +224,7 @@ function addShape(shape) {
 			draggable: true,
 			click: function() {
 				selectedObject = shape.objectName;
+				console.log(selectedObject);
                 $('canvas').addLayer({
                     type: "rectangle",
                     fillStyle: "#000000",
@@ -428,7 +430,42 @@ function propertiesPanelUpdate() {
 }
 
 setInterval(function() {
-	if(selectedObject!=="hi") {
+	//If nothing has been selected yet
+	if(selectedObject=="hi") {
+
+	//If its the first object selected
+	} else if(selectedObject!=="hi" && propertiesObject=="hi") {
+		propertiesObject = selectedObject;
+		var color = $("#colorProperty");
+		var x = $("#XProperty");
+		var y = $("#YProperty");
+		var width = $("#widthProperty");
+		var height = $("#heightProperty");
+		var rotation = $("#rotationProperty");
+		color.val($("canvas").getLayer(selectedObject).fillStyle);
+		x.val($("canvas").getLayer(selectedObject).x);
+		y.val($("canvas").getLayer(selectedObject).y);
+		width.val($("canvas").getLayer(selectedObject).width);
+		height.val($("canvas").getLayer(selectedObject).height);
+		rotation.val($("canvas").getLayer(selectedObject).rotation);
+		propertiesPanelUpdate();
+	//If a different object has been selected
+	} else if(selectedObject!=="hi" && propertiesObject!=="hi" && propertiesObject!==selectedObject) {
+		propertiesObject = selectedObject;
+		var color = $("#colorProperty");
+		var x = $("#XProperty");
+		var y = $("#YProperty");
+		var width = $("#widthProperty");
+		var height = $("#heightProperty");
+		var rotation = $("#rotationProperty");
+		color.val($("canvas").getLayer(selectedObject).fillStyle);
+		x.val($("canvas").getLayer(selectedObject).x);
+		y.val($("canvas").getLayer(selectedObject).y);
+		width.val($("canvas").getLayer(selectedObject).width);
+		height.val($("canvas").getLayer(selectedObject).height);
+		rotation.val($("canvas").getLayer(selectedObject).rotation);
+		propertiesPanelUpdate();
+	} else if(selectedObject!=="hi" && propertiesObject!=="hi" && propertiesObject==selectedObject) {
 		propertiesPanelUpdate();
 	}
 }, 100);
@@ -440,4 +477,3 @@ $(document).ready(function() {
 	addShape(new Shape("rectangle", "#e2e2e2", "delay", 1, 1, 0, 0));
 
 });
-
