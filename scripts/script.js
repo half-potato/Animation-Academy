@@ -55,12 +55,13 @@ function Delay(delay)
 
 //TODO: Will take the animationArray and apply it the canvas
 function animate(array) {
-	console.log("Animating");
 	var arrayOfSteps = array.shift(), i, step;
 	for (i in arrayOfSteps) {
 		if (i == arrayOfSteps.length - 1) {
 			step = arrayOfSteps[i];
+			console.log(step);
 			if (step.getClass()==="delay") {
+				console.log("Delaying");
 				$("canvas").animateLayer("delay", {
 					x: "+=1"
 				}, step.delay);
@@ -77,6 +78,7 @@ function animate(array) {
 			}
 		} else {
 			step = arrayOfSteps[i];
+			console.log(step);
 			if (step.getClass()==="delay") {
 				$("canvas").animateLayer("delay", {
 					x: "+=1"
@@ -157,17 +159,6 @@ function addShape(shape) {
 	}
 }
 
-//Clears canvas and redraws the layers (all objects are in layers, one layer per an object)
-function redraw(array) {
-	$("canvas").clearCanvas().drawLayers();
-}
-
-//Temporary objects added
-animationArray[0] = new Array();
-animationArray[0][0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 1000);
-animationArray[1] = new Array();
-animationArray[1][0] = new AnimationStep('box', 30, 30, 0, "#36c", false, 1000);
-
 //
 //      Input Functions
 //
@@ -205,8 +196,8 @@ function addRect(){
 function animateObject(){
 	//accesses html elements
 	var name = document.getElementById("nameAnimation");
-	var X = document.getElementById("X");
-	var Y = document.getElementById("Y");
+	var X = document.getElementById("XAnimate");
+	var Y = document.getElementById("YAnimate");
 	var width = document.getElementById("width");
 	var height = document.getElementById("height");
 	var rotation = document.getElementById("rotation");
@@ -221,7 +212,8 @@ function animateObject(){
 	var outputName=name.value;
 	//checks if image or shape
 	//applies values to create new shape
-	animationArray[animationArray.length-1] = new AnimationStep(outputName, outputX, outputY, outputRotation, outputColor, false, 1000);
+	animationArray[animationArray.length] = new Array();
+	animationArray[animationArray.length - 1][0] = new AnimationStep(outputName, outputX, outputY, outputWidth, outputHeight, outputRotation, outputColor, false, 1000);
 }
 
 //
