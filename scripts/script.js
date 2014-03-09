@@ -252,8 +252,8 @@ var i = 0;
 function animateObject(){
 	//accesses html elements
 	var name = document.getElementById("nameAnimation");
-	var X = $("#XAnimate");
-	var Y = $("#YAnimate");
+	var X = document.getElementById("XAnimate");
+	var Y = document.getElementById("YAnimate");
 	var width = document.getElementById("widthAnimate");
 	var height = document.getElementById("heightAnimate");
 	var rotation = document.getElementById("rotation");
@@ -268,6 +268,8 @@ function animateObject(){
 	var outputName=name.value;
 	//checks if image or shape
 	//applies values to create new shape
+
+	console.log(X.value + ", " + Y.value);
 	animationArray[animationArray.length] = [];
 	animationArray[animationArray.length - 1][0] = new AnimationStep(outputName, outputX, outputY, outputWidth, outputHeight, outputRotation, outputColor, false, 1000);
 	changeScale("1", 10, 0, 0, 5);
@@ -312,14 +314,14 @@ function getValue(){
 	var rotation = document.getElementById("rotation");
 	var color = document.getElementById("colorAnimation");
 	var frame = document.getElementById("frames");
-	
-	
-	
-	
+
+
+
+
 	$("frames").attr("max", animationArray.length);
-	
+
 	framePos=parseInt(frame.value);
-	
+
 	name.val(animationArray[framePos][0].name);
 	color.val(animationArray[framePos][0].color);
 	x.val(animationArray[framePos][0].x);
