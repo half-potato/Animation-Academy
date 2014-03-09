@@ -1,5 +1,5 @@
 //TODO: Will take the animationArray and apply it the canvas
-var animationArray = new Array();
+var animationArray = [[],[]];
 var layerArray = new Array();
 
 //
@@ -70,7 +70,7 @@ function animate(array) {
 					fillStyle: step.color,
 					rotate: step.rotate,
 					height: step.height,
-					width: step.width
+					width: step.width,
 				}, step.speed, function() {
 					setTimeout(animate(array), 1);
 				});
@@ -87,7 +87,7 @@ function animate(array) {
 					fillStyle: step.color,
 					rotate: step.rotate,
 					height: step.height,
-					width: step.width
+					width: step.width,
 				}, step.speed);
 			}
 		}
@@ -200,7 +200,7 @@ function addRect(){
 	//applies values to create new shape
 	addShape(new Shape(outputShape, outputColor, outputName, outputHeight, outputWidth, outputX, outputY));
 }
-
+var i = 0;
 //Takes info and puts in animate array
 function animateObject(){
 	//accesses html elements
@@ -221,7 +221,8 @@ function animateObject(){
 	var outputName=name.value;
 	//checks if image or shape
 	//applies values to create new shape
-	animationArray[animationArray.length-1] = new AnimationStep(outputName, outputX, outputY, outputRotation, outputColor, false, 1000);
+	animationArray[i][0] = new AnimationStep(outputName, outputX, outputY, outputRotation, outputColor, false, 1000);
+	i++;
 }
 
 //
