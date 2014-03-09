@@ -11,6 +11,9 @@ var NUCLEOTIDE_WIDTH = 50, NUCLEOTIDE_HEIGHT = 90;
 var mouseX;
 var mouseY;
 
+var shove = [];
+
+
 //
 //        Classes
 //
@@ -335,12 +338,19 @@ function addShape(shape) {
 			}
 		}).drawLayers();
 	} else if (shape.type === "Nucleotides") {
+			DNA = document.getElementById("DNA");
+		dnaOutput = DNA.value;
+		for(var i = 0; i<dnaOutput.length; i++){
+			shove.push(dnaOutput[i]);
+		}
+		console.log(shove);
 		$("canvas").drawDNA({
 			x: 100, y: 100,
-			sequence: ["A", "U", "G"],
+			sequence: shove,
 			name: 1,
 			layer: true
 		}).drawLayers();
+		shove = [];
 	} else if (shape.type === "ellipse") {
 		layerArray[layerArray.length] = shape;
 		$('canvas').addLayer({
@@ -502,7 +512,7 @@ function changeProperties(selector, style, width, height, x, y) {
 }
 
 function drawImage(){
-	$("#menu").html('<ul id="nav"> <li><a href="#" class="selected">Draw Image</a></li> <li onClick = "animatePage()"><a href="#">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><form action=""> DNA Sequence: <INPUT type="text" value="0" id="DNA"><br> <fieldset> color: <select id="color"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> shape: <select id="shape"> <option value="rectangle">rectangle</option> <option value="ellipse">ellipse</option> <option value="image">image</option> <option value="Nucleotides">Nucleotides</option> </select> <br> X: <INPUT type="text" value="0" id="X"><br> Y: <INPUT type="text" value="0" id="Y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> Image: <INPUT type="text" value="0" id="source"><br> Name: <INPUT type="text" value="0" id="name"><br> <input type="button" onClick="addRect()" value="Add Object"/> <input type="button" onClick="addToArray()" value="Add DNA"/> </fieldset> </div> </div>');
+	$("#menu").html('<ul id="nav"> <li><a href="#" class="selected">Draw Image</a></li> <li onClick = "animatePage()"><a href="#">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><form action=""> DNA Sequence: <INPUT type="text" value="0" id="DNA"><br> <fieldset> color: <select id="color"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> shape: <select id="shape"> <option value="rectangle">rectangle</option> <option value="ellipse">ellipse</option> <option value="image">image</option> <option value="Nucleotides">Nucleotides</option> </select> <br> X: <INPUT type="text" value="0" id="X"><br> Y: <INPUT type="text" value="0" id="Y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> Image: <INPUT type="text" value="0" id="source"><br> Name: <INPUT type="text" value="0" id="name"><br> <input type="button" onClick="addRect()" value="Add Object"/> </fieldset> </div> </div>');
 }
 
 var framePos;
@@ -670,31 +680,7 @@ function save() {
 //
 //     Startup
 //
-var shove = [];
-var DNA;
-var dnaOutput;
 
-function CreateValueDNA(){
-	this.arrayDNA;
-
-}
-
-function addToArray(){
-	DNA = document.getElementById("DNA");
-	dnaOutput = DNA.value;
-	for(var i = 0; i<dnaOutput.length; i++){
-		shove.push(dnaOutput[i]);
-	}
-	initPush(dnaOutput);
-
-}
-
-function initPush (name){
-	var name = new CreateValueDNA();
-	name.arrayDNA=shove;
-	shove = [];
-	console.log(name.arrayDNA);
-}
 
 
 
