@@ -21,10 +21,12 @@
     <canvas width = "900" height = 700 class="contents" style="border:1px solid #000000;"></canvas>
 
 	<div id="menu">
+		<div id="menuWrapper">
 				<form action="">
 				<h1>Draw Image</h1>
+				
 				<fieldset>
-					<select id="color">
+					color: <select id="color">
 						<option value="#FFFFFF">White</option>
 						<option value="#FF0000">Red</option>
 						<option value="#FFCC00">Orange</option>
@@ -35,24 +37,27 @@
 						<option value="#FF00FF">Violet</option>
 					</select>
 					<br>
-					<select id="shape">
+					
+					shape: <select id="shape">
 						<option value="rectangle">rectangle</option>
 						<option value="ellipse">ellipse</option>
 						<option value="image">image</option>
 					</select>
 					<br>
-					X:<INPUT type="text" value="0" id="X"><br>
-					Y:<INPUT type="text" value="0" id="Y"><br>
-					Width:<INPUT type="text" value="333" id="width"><br>
-					Height:<INPUT type="text" value="333" id="height"><br>
-					image source:<INPUT type="text" value="0" id="source"><br>
-					name:<INPUT type="text" value="0" id="name"><br>
+					X: <INPUT type="text" value="0" id="X"><br>
+					Y: <INPUT type="text" value="0" id="Y"><br>
+					Width: <INPUT type="text" value="333" id="width"><br>
+					Height: <INPUT type="text" value="333" id="height"><br>
+					image source: <INPUT type="text" value="0" id="source"><br>
+					name :<INPUT type="text" value="0" id="name"><br>
 					<input type="button" onClick="addRect()" value="Add Object"/>
 					<br>
 					<br>
-					<h1>Animate</h1>
 					<br>
-					<select id="colorAnimation">
+					<br>
+					<h1>Animate</h1>
+					
+					color: <select id="colorAnimation">
 						<option value="#FFFFFF">White</option>
 						<option value="#FF0000">Red</option>
 						<option value="#FFCC00">Orange</option>
@@ -62,16 +67,18 @@
 						<option value="#663366">Indigo</option>
 						<option value="#FF00FF">Violet</option>
 					</select>
-					X:<INPUT type="text" value="0" id="XAnimate"><br>
-					Y:<INPUT type="text" value="0" id="YAnimate"><br>
-					Width:<INPUT type="text" value="333" id="width"><br>
-					Height:<INPUT type="text" value="333" id="height"><br>
-					name:<INPUT type="text" value="0" id="nameAnimation"><br>
-					rotation:<INPUT type="text" value="0" id="rotation"><br>
+					<br>
+					X: <INPUT type="text" value="0" id="XAnimate"><br>
+					Y: <INPUT type="text" value="0" id="YAnimate"><br>
+					Width: <INPUT type="text" value="333" id="width"><br>
+					Height: <INPUT type="text" value="333" id="height"><br>
+					name: <INPUT type="text" value="0" id="nameAnimation"><br>
+					rotation: <INPUT type="text" value="0" id="rotation"><br>
 					<input type="button" onClick="animateObject()" value="Add Object"/>
                     <input type = "button" onClick = "animate(animationArray)" value = "Play"/>
 				</fieldset>
 			<form>
+			</div>
 	</div>
 
 </body>
