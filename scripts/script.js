@@ -102,11 +102,17 @@ function addRect(){
 	var X = document.getElementById("X");
 	var Y = document.getElementById("Y");
 	var shape = document.getElementById("shape");
-	var outputColor=color.value;
-	var outputX=X.value;
-	var outputY=Y.value;
+	var source = document.getElementById("source");
+	var outputX=parseInt(X.value);
+	var outputY=parseInt(Y.value);
 	var outputShape=shape.value;
-	addShape(new Shape(outputShape, outputColor, "box", 20, 20, outputX, outputY));
+	if(shape.value=="image"){
+		var outputColor=source.value;
+	}
+	else{
+		var outputColor=color.value;
+	}
+	addShape(new Shape(outputShape, outputColor, "box", 200, 200, outputX, outputY));
 	
 }
 
