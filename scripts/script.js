@@ -147,6 +147,10 @@ function addShape(shape) {
 			click: function() {
 				selectedObject = shape.objectName;
 				console.log(selectedObject);
+                shape.x = $("canvas").getLayer(selectedObject).x;
+                shape.y = $("canvas").getLayer(selectedObject).y;
+                shape.width = $("canvas").getLayer(selectedObject).width;
+                shape.height = $("canvas").getLayer(selectedObject).height;
 			}
 		}).drawLayers();
 	}
@@ -298,19 +302,19 @@ function propertiesPage(){
 }
 
 function propertiesPanelUpdate() {
-	var color = $("#colorProperty");
-	var x = $("#XProperty");
-	var y = $("#YProperty");
-	var width = $("#widthProperty");
-	var height = $("#heightProperty");
-	var rotation = $("#rotationProperty");
+	var color = document.getElementById("colorProperty");
+	var x = document.getElementById("XProperty");
+	var y = document.getElementById("YProperty");
+	var width = document.getElementById("widthProperty");
+	var height = document.getElementById("heightProperty");
+	var rotation = document.getElementById("rotationProperty");
 
 	$("#colorProperty").change(function() {
 
 		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
 	});
 	$("#XProperty").on("input", function() {
-		console.log(x.value);
+		console.log(document.getElementById("XProperty").value);
 		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
 	});
 	$("#YProperty").on("input", function() {
