@@ -9,7 +9,7 @@ var NUCLEOTIDE_WIDTH = 50, NUCLEOTIDE_HEIGHT = 90;
 var previousSelectedFrame = "hi";
 var selectedFrame = "hi";
 
-var stepHTML = '<div id = "name"></div> <br>X: <INPUT type="text" value="0" id="y"><br> Y: <INPUT type="text" value="0" id="y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> Color: <INPUT type="text" value="0" id="color"><br>'
+var stepHTML = '<div id = "name"></div> <br>X: color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option><option value="#FFCC00">Orange</option><option value="#FFFF00">Yellow</option><option value="#00FF00">Green</option><option value="#0000FF">Blue</option><option value="#663366">Indigo</option><option value="#FF00FF">Violet</option></select><INPUT type="text" value="0" id="y"><br> Y: <INPUT type="text" value="0" id="y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> Color: <INPUT type="text" value="0" id="color"><br>'
 
 var shove = [];
 
@@ -460,6 +460,7 @@ function initAnimationPanel(array) {
 	}
 }
 
+//Goes through
 function parseAnimationPanel(array) {
 	var output = [];
 	for (var i in array) {
@@ -490,10 +491,11 @@ function updateAmountOfStepsAnimationPanel(array) {
 	}
 }
 
+//Adds a blueprint to the selected frame. Also adjusts the slider length. Auto updates panel
 function animateObject(){
 	addStepTo(selectedFrame, new AnimationStep(selectedObject, 0, 0, 333, 333, 0, "#000000", false, 1000));
 	$("#frames").prop("max", animationArray.length-1)
-	updateAmountOfStepsAnimationPanel(arrayAnimation);
+	updateAmountOfStepsAnimationPanel(animationArray);
 }
 
 //Method on slider update update selected frame
@@ -510,21 +512,22 @@ function addFrameToIndex(index) {
 	animationArray.splice(index, 0, new Frame([], []));
 }
 
+//Adds the step variables to the index frame
 function addStepTo(index, step) {
 	console.log(animationArray[index].steps);
 	animationArray[index].steps[animationArray[index].steps.length] = step;
 }
 
 function animatePage(){
-	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper">');
+	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"><div id = "containercontainer"></div></div>');
 		setInterval(function() {
 			$("#frames").change( function(){
 				console.log("Slider changed");
 				currentFrame = $("#frames").value;
-				initAnimationPanel(arrayAnimation[currentFrame].steps);
+				initAnimationPanel(animationArray[currentFrame].steps);
 			});
-
-			parseAnimationPanel(arrayAnimation[currentFrame].steps);
+			console.log("Parsing animation panel.");
+			parseAnimationPanel(animationArray[currentFrame].steps);
 		}, 100);
 }
 
@@ -617,5 +620,6 @@ function save() {
 $(document).ready(function() {
 	addShape(new Shape("rectangle", "#e2e2e2", "delay", 1, 1, 0, 0));
 	$("#selectedObject").text("Unselected");
-	arrayAnimations[0] = new Frame(new AnimationStep("#delay", 0, 0, 333, 333, 0, "#000000", false, 1000), "delay");
+	animationArray[0] = new Frame(new AnimationStep("#delay", 0, 0, 333, 333, 0, "#000000", false, 1000), "delay");
+	updateAmountOfStepsAnimationPanel(animationArray);
 });
