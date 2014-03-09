@@ -58,11 +58,11 @@ img {
 #menu{
 	position:absolute;
 	top:118px;
-	left:70%;
+	left:920px;
 	float:left;
 	display:block;
-	height:700px;
-	width:30%;
+	height:720px;
+	width:420px;
 	background-color:#96c8ac;
 	border:1px solid #000000;
 	font-weight:bold;
