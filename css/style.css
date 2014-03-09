@@ -16,6 +16,60 @@ time, mark, audio, video {
   border: 0;
   font: inherit;
 }
+
+#nav li.selected {
+	color:red;
+}
+#nav {
+    width: 100%;
+    margin: 0;
+    padding: 10px 0 0 0;
+    list-style: none;  
+    background-color: #111;
+    box-shadow: 0 2px 1px #9c9c9c;
+}
+
+#nav li {
+    float: left;
+    padding: 0 0 10px 0;
+    position: relative;
+}
+
+#nav a {
+    float: left;
+    height: 25px;
+    padding: 0 25px;
+    color: #999;
+    text-transform: uppercase;
+    font: bold 12px/25px Arial, Helvetica;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #000;
+}
+
+#nav li:hover > a {
+    color: #fafafa;
+}
+
+#nav li:hover > ul {
+    display: block;
+}
+
+/* Clear floated elements */
+#nav:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+
+
+
+
+
+
 body {
 	background-color: #e2e2e2;
 	min-width: 960px;
@@ -61,8 +115,13 @@ img {
 	left:920px;
 	float:left;
 	display:block;
+<<<<<<< HEAD
 	height:700px;
 	width:300px;
+=======
+	height:920px;
+	width:420px;
+>>>>>>> FETCH_HEAD
 	background-color:#96c8ac;
 	border:1px solid #000000;
 	font-weight:bold;

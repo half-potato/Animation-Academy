@@ -3,9 +3,23 @@ var selectedObject;
 var animationArray = new Array();
 var layerArray = new Array();
 
+//holds mouse X and Y positions
+var mouseX;
+var mouseY;
+
 //
 //        Classes
 //
+
+//sends mouse positions to variables
+$("#canvas").ready(function(){
+  $("#canvas").mousemove(function(e){
+     mouseX=e.pageX;
+	 mouseY=e.pageY-118;
+	 console.log(mouseY);
+  });
+});
+
 
 //Shape class, contains information to be built into a layer, if the type is image, then the style is the source
 function Shape(type, style, objectName, width, height, x, y)
@@ -243,6 +257,10 @@ function changeScale(selector, topEdge, rightEdge, bottomEdge, leftEdge) {
 	}, 0);
 }
 
+function drawImage(){
+console.log("HI");
+	$("#menu").html('<ul id="nav"> <li  ><a href="#" >Draw Image</a></li> <li><a href="#">Animate</a></li> </ul><div id="menuWrapper"> <form action=""> <fieldset> color: <select id="color"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> shape: <select id="shape"> <option value="rectangle">rectangle</option> <option value="ellipse">ellipse</option> <option value="image">image</option> </select> <br> X: <INPUT type="text" value="0" id="X"><br> Y: <INPUT type="text" value="0" id="Y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> image source: <INPUT type="text" value="0" id="source"><br> name: <INPUT type="text" value="0" id="name"><br> <input type="button" onClick="addRect()" value="Add Object"/> </fieldset> </div> </div>');
+}
 //
 //     Startup
 //
@@ -250,3 +268,4 @@ function changeScale(selector, topEdge, rightEdge, bottomEdge, leftEdge) {
 $(document).ready(function() {
 	addShape(new Shape("rectangle", "#e2e2e2", "delay", 1, 1, 0, 0));
 });
+
