@@ -17,8 +17,8 @@ time, mark, audio, video {
   font: inherit;
 }
 
-#nav li.selected {
-	color:red;
+#nav li a.selected {
+	color: #fafafa;
 }
 #nav {
     width: 100%;
@@ -98,7 +98,7 @@ img {
 #header {
 	background:#0F0F0F;
 	padding: 40px 0 46px;
-	width:100%;
+	width:1342px;
 }
 /** logo **/
 .logo {
