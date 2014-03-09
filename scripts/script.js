@@ -82,22 +82,6 @@ function addToCanvas(array)
 	}
 }
 
-//Takes the array of Shape objects and turns them into layers, which are then added to the canvas and drawn.
-function addToCanvas(array) {
-	var object;
-	for (object in array) {
-		$('canvas').addLayer({
-			type: array[object].type,
-			fillStyle: array[object].style,
-			x: array[object].x,
-			y: array[object].y,
-			width: array[object].width,
-			height: array[object].height,
-			draggable: true
-		}).drawLayers();
-	}
-}
-
 function addShape(shape) {
 	if (shape.type === "image") {
 		layerArray[layerArray.length] = shape;
