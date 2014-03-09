@@ -9,7 +9,7 @@
 	<title>Animation Academy</title>
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
-<body onload="drawImage()">
+<body onload="animatePage()">
 	<div id="header">
 		<div class="title">
 			<div class="logo">
@@ -21,12 +21,12 @@
     <canvas id="canvas" width = "900" height = "920" class="contents" style="border:1px solid #000000;"></canvas>
 
 	<div id="menu">
-		<!--<ul id="nav">
+		<ul id="nav">
 			<li><a href="#" class="selected" DEPENDING ON WHICH>Draw Image</a></li>
 			<li><a href="#">Animate</a></li>
 			<li><a href="#">Properties</a></li>
 		</ul>
-		-->
+		
 
 		<!--<div id="menuWrapper">
 				<form action="">
@@ -65,10 +65,12 @@
 			</div>
 	</div>
 		-->
-		<!--
-            <div id="menuWrapper">
+		
+            <!--<div id="menuWrapper">
 				<fieldset>
-
+					<input type="image" class="arrow" id="saveform" src="left.png"/>
+					<input type="range" class="slider" name="frames" id="frames" min="0" max="50">
+					<input type="image" class="arrow" id="saveform" src="right.png"/><br>
 					color: <select id="colorAnimation">
 						<option value="#FFFFFF">White</option>
 						<option value="#FF0000">Red</option>

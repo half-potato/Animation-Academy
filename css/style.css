@@ -16,7 +16,12 @@ time, mark, audio, video {
   border: 0;
   font: inherit;
 }
-
+.arrow{
+	display:box;
+}
+.slider{
+	display:box;
+}
 #nav li a.selected {
 	color: #fafafa;
 }

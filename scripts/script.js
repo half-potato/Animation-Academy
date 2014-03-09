@@ -278,11 +278,40 @@ console.log("HI");
 	$("#menu").html('<ul id="nav"> <li><a href="#" class="selected">Draw Image</a></li> <li onClick = "animatePage()"><a href="#">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"><fieldset> color: <select id="color"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> shape: <select id="shape"> <option value="rectangle">rectangle</option> <option value="ellipse">ellipse</option> <option value="image">image</option> </select> <br> X: <INPUT type="text" value="0" id="X"><br> Y: <INPUT type="text" value="0" id="Y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> image source: <INPUT type="text" value="0" id="source"><br> name: <INPUT type="text" value="0" id="name"><br> <input type="button" onClick="addRect()" value="Add Object"/> </fieldset> </div> </div>');
 }
 
+var framePos;
+function getValue(){
+	var name = document.getElementById("nameAnimation");
+	var x = $("#XAnimate");
+	var y = $("#YAnimate");
+	var width = document.getElementById("widthAnimate");
+	var height = document.getElementById("heightAnimate");
+	var rotation = document.getElementById("rotation");
+	var color = document.getElementById("colorAnimation");
+	var frame = document.getElementById("frames");
+	
+	
+	
+	
+	$("frames").attr("max", animationArray.length);
+	
+	framePos=parseInt(frame.value);
+	
+	name.val(animationArray[framePos][0].name);
+	color.val(animationArray[framePos][0].color);
+	x.val(animationArray[framePos][0].x);
+	y.val(animationArray[framePos][0].y);
+	width.val(animationArray[framePos][0].width);
+	height.val(animationArray[framePos][0].height);
+	rotation.val(animationArray[framePos][0].rotation);
+	console.log(framePos);
+}
 
 function animatePage(){
-	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"><div id="menuWrapper"> <fieldset> color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XAnimate"><br> Y: <INPUT type="text" value="0" id="YAnimate"><br> Width: <INPUT type="text" value="333" id="widthAnimate"><br> Height: <INPUT type="text" value="333" id="heightAnimate"><br> Name: <INPUT type="text" value="0" id="nameAnimation"><br> Rotation: <INPUT type="text" value="0" id="rotation"><br> <input type="button" onClick="animateObject()" value="Add Object"/> <input type = "button" onClick = "animate(animationArray)" value = "Play"/> </fieldset> </div>');
-
+	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"><div id="menuWrapper"> <fieldset> <input type="image" class="arrow" id="saveform" src="left.png"/> <input type="range" class="slider" name="frames" id="frames" min="0" max="50"> <input type="image" class="arrow" id="saveform" src="right.png"/><br> color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XAnimate"><br> Y: <INPUT type="text" value="0" id="YAnimate"><br> Width: <INPUT type="text" value="333" id="widthAnimate"><br> Height: <INPUT type="text" value="333" id="heightAnimate"><br> Name: <INPUT type="text" value="0" id="nameAnimation"><br> Rotation: <INPUT type="text" value="0" id="rotation"><br> <input type="button" onClick="animateObject()" value="Add Object"/> <input type = "button" onClick = "animate(animationArray)" value = "Play"/> </fieldset> </div>')
+	getValue();
 }
+
+
 
 function propertiesPage(){
 	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" onClick = "animatePage()">Animate</a></li><li><a href="#" class="selected">Properties</a></li> </ul><div id="menuWrapper"> <fieldset id="properties"> color: <select id="colorProperty"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <input type="text" value="0" id="XProperty"><br> Y: <input type="text" value="0" id="YProperty"><br> Width: <input type="text" value="333" id="widthProperty"><br> Height: <input type="text" value="333" id="heightProperty"><br> Rotation: <input type="text" value="0" id="rotationProperty"><br> </fieldset> </div>');
