@@ -4,6 +4,7 @@
     <script src = "scripts/jquery.min.js"></script>
     <script src = "scripts/jCanvas.min.js"></script>
     <script src = "scripts/script.js"></script>
+    <script src = "scripts/jCanvasHandles.js"></script>
 	<meta charset="UTF-8">
 	<title>Animation Academy</title>
 	<link rel="stylesheet" href="css/style.css" type="text/css">
@@ -20,12 +21,13 @@
     <canvas id="canvas" width = "900" height = "920" class="contents" style="border:1px solid #000000;"></canvas>
 
 	<div id="menu">
+		<!--
 		<ul id="nav">
 			<li><a href="#" class="selected" DEPENDING ON WHICH>Draw Image</a></li>
 			<li><a href="#">Animate</a></li>
 			<li><a href="#">Properties</a></li>
 		</ul>
-
+		-->
 
 		<div id="menuWrapper">
 				<!--
@@ -57,7 +59,6 @@
 					Image: <INPUT type="text" value="0" id="source"><br>
 					Name: <INPUT type="text" value="0" id="name"><br>
 					<input type="button" onClick="addRect()" value="Add Object"/>
-                    <input type="button" onClick="reverseDNA()" value="Reverse DNA"/>
 
 				</fieldset>
 			</div>
@@ -66,31 +67,43 @@
 
             <!--<div id="menuWrapper">
 				<fieldset>
-					<input type="image" class="arrow" id="saveform" src="left.png"/>
-					<input type="range" class="slider" name="frames" id="frames" min="0" max="50">
-					<input type="image" class="arrow" id="saveform" src="right.png"/><br>
-
-                    <div id = "containercontainer"></div>
+					color: <select id="colorAnimation">
+						<option value="#FFFFFF">White</option>
+						<option value="#FF0000">Red</option>
+						<option value="#FFCC00">Orange</option>
+						<option value="#FFFF00">Yellow</option>
+						<option value="#00FF00">Green</option>
+						<option value="#0000FF">Blue</option>
+						<option value="#663366">Indigo</option>
+						<option value="#FF00FF">Violet</option>
+					</select>
+					<br>
+					X: <INPUT type="text"  id="XAnimate"><br>
+					Y: <INPUT type="text"  id="YAnimate"><br>
+					Width: <INPUT type="text"  id="widthAnimate"><br>
+					Height: <INPUT type="text" id="heightAnimate"><br>
+					Name: <INPUT type="text"  id="nameAnimation"><br>
+					Rotation: <INPUT type="text" id="rotation"><br>
 
 					<input type="button" onClick="animateObject()" value="Add Object"/>
                     <input type = "button" onClick = "animate(animationArray)" value = "Play"/>
+					
 				</fieldset>
 			</div>
-
-			<div id=""></div>
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
+			
+			<div id="colorUpdate"></div>
+			<div id="XUpdate"></div>
+			<div id="YUpdate"></div>
+			<div id="widthUpdate"></div>
+			<div id="heightUpdate"></div>
+			<div id="nameUpdate"></div>
 			-->
 
 			<!--
 				<div id="menuWrapper">
 
+				<div id="selectedObject"></div>
 				<fieldset id="properties">
-                    <div id="selectedObject">Unselected</div>
 
 					color: <select id="colorProperty">
 						<option value="#FFFFFF">White</option>

@@ -6,16 +6,28 @@ var currentFrame = 0;
 var propertiesObject = "hi";
 var needsUpdate = false;
 var NUCLEOTIDE_WIDTH = 50, NUCLEOTIDE_HEIGHT = 90;
-var previousSelectedFrame = "hi";
-var selectedFrame = "hi";
+var framePos;
 
-var stepHTML = '<div id = "name"></div> <br>X: color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option><option value="#FFCC00">Orange</option><option value="#FFFF00">Yellow</option><option value="#00FF00">Green</option><option value="#0000FF">Blue</option><option value="#663366">Indigo</option><option value="#FF00FF">Violet</option></select><INPUT type="text" value="0" id="y"><br> Y: <INPUT type="text" value="0" id="y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> Color: <INPUT type="text" value="0" id="color"><br>'
+//holds mouse X and Y positions
+var mouseX;
+var mouseY;
 
 var shove = [];
+
 
 //
 //        Classes
 //
+
+//sends mouse positions to variables
+$("#canvas").ready(function(){
+  $("#canvas").mousemove(function(e){
+     mouseX=e.pageX;
+	 mouseY=e.pageY-118;
+	 //console.log(mouseY);
+  });
+});
+
 
 //Shape class, contains information to be built into a layer, if the type is image, then the style is the source
 function Shape(type, style, objectName, width, height, x, y, arrayIndex)
@@ -35,14 +47,13 @@ function Shape(type, style, objectName, width, height, x, y, arrayIndex)
 }
 
 //AnimationStep class; contains instructions for each step. The last instruction's speed is the one that determines when the next step is executed
-function AnimationStep(target, x, y, width, height, rotation, color, hidden, speed)
+function AnimationStep(target, x, y, width, height, color, hidden, speed)
 {
 	this.target = target;
 	this.x = x;
 	this.y = y;
 	this.width = width;
 	this.height = height;
-	this.rotation = rotation;
 	this.color = color;
 	this.hidden = hidden;
 	this.speed = speed;
@@ -79,6 +90,10 @@ function Delay(delay)
 }
 
 //
+//      Extensions
+//
+
+//
 //      Animation Functions
 //
 
@@ -102,7 +117,6 @@ function animate(array) {
 					$("canvas").animateLayer(step.target, {
 						x: step.x, y: step.y,
 						fillStyle: step.color,
-						rotate: step.rotate,
 						height: step.height,
 						width: step.width,
 						visible: !step.hidden
@@ -123,7 +137,6 @@ function animate(array) {
 					$("canvas").animateLayer(step.target, {
 						x: step.x, y: step.y,
 						fillStyle: step.color,
-						rotate: step.rotate,
 						height: step.height,
 						width: step.width,
 						visible: !step.hidden
@@ -145,7 +158,6 @@ function animate(array) {
 					$("canvas").animateLayer(step.target, {
 						x: step.x, y: step.y,
 						fillStyle: step.color,
-						rotate: step.rotate,
 						height: step.height,
 						width: step.width,
 						visible: !step.hidden
@@ -158,7 +170,6 @@ function animate(array) {
 								$("canvas").setLayer(step.target, {
 									x: step.x, y: step.y,
 									fillStyle: step.color,
-									rotate: step.rotate,
 									height: step.height,
 									width: step.width,
 									visible: !step.hidden
@@ -178,7 +189,6 @@ function animate(array) {
 					$("canvas").animateLayer(step.target, {
 						x: step.x, y: step.y,
 						fillStyle: step.color,
-						rotate: step.rotate,
 						height: step.height,
 						width: step.width,
 						visible: !step.hidden
@@ -340,52 +350,6 @@ function addShape(shape) {
 //      Input Functions
 //
 
-function reverseDNA() {
-	var output = [], stringOutput;
-	DNA = document.getElementById("DNA");
-	dnaOutput = DNA.value;
-	for(var i = 0; i<dnaOutput.length; i++){
-		shove.push(dnaOutput[i]);
-	}
-
-	for (var n in shove) {
-		switch (shove[n]) {
-			case "A":
-				output[n] = T;
-				break;
-			case "T":
-				output[n] = A;
-				break;
-			case "a":
-				output[n] = T;
-				break;
-			case "t":
-				output[n] = A;
-				break;
-			case "C":
-				output[n] = G;
-				break;
-			case "G":
-				output[n] = C;
-				break;
-			case "G":
-				output[n] = C;
-				break;
-			case "c":
-				output[n] = G;
-				break;
-		}
-	}
-
-	for (var n in output) {
-		if(n == output.length - 1) {
-			stringOutput += output[n];
-		} else {
-			stringOutput += output[n] + " ";
-		}
-	}
-}
-
 //adds shapes to canvas
 function addRect(){
 	//accesses html elements
@@ -416,6 +380,43 @@ function addRect(){
 }
 var i = 0;
 //Takes info and puts in animate array
+function animateObject(){
+	//accesses html elements
+	var name = document.getElementById("nameAnimation");
+	var X = document.getElementById("XAnimate");
+	var Y = document.getElementById("YAnimate");
+	var width = document.getElementById("widthAnimate");
+	var height = document.getElementById("heightAnimate");
+	var color = document.getElementById("colorAnimation");
+	//sets variables equal to what's in the hmtl elements
+	var outputColor = color.value;
+	var outputWidth=parseInt(width.value);
+	var outputHeight=parseInt(height.value);
+	var outputX=parseInt(X.value);
+	var outputY=parseInt(Y.value);
+	var outputName=name.value;
+	//checks if image or shape
+	//applies values to create new shape
+	addFrame();
+	addStepTo(animationArray.length - 1, new AnimationStep(outputName, outputX, outputY, outputWidth, outputHeight, outputColor, false, 1000));
+}
+
+//Adds frame to the end
+function addFrame() {
+	if (animationArray[animationArray.length] == null) {
+		animationArray[animationArray.length] = new Frame([], []);
+	}
+
+}
+
+function addFrameToIndex(index) {
+	animationArray.splice(index, 0, new Frame([], []));
+}
+
+function addStepTo(index, step) {
+	console.log(animationArray[index].steps);
+	animationArray[index].steps[animationArray[index].steps.length] = step;
+}
 
 function getCurrentLayer() {
 	return $("canvas").getLayer(selectedObject);
@@ -430,6 +431,7 @@ function changeScale(selector, topEdge, rightEdge, bottomEdge, leftEdge) {
 	});
 }
 
+//Problem
 function changeProperties(selector, style, width, height, x, y) {
 	$("canvas").setLayer(selector, {
 		width: width,
@@ -440,99 +442,87 @@ function changeProperties(selector, style, width, height, x, y) {
 	}).drawLayers();
 }
 
+
 function drawImage(){
-	$("#menu").html('<ul id="nav"> <li><a href="#" class="selected">Draw Image</a></li> <li onClick = "animatePage()"><a href="#">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><form action=""> DNA Sequence: <INPUT type="text" value="0" id="DNA"><br> <fieldset> color: <select id="color"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> shape: <select id="shape"> <option value="rectangle">rectangle</option> <option value="ellipse">ellipse</option> <option value="image">image</option> <option value="Nucleotides">Nucleotides</option> </select> <br> X: <INPUT type="text" value="0" id="X"><br> Y: <INPUT type="text" value="0" id="Y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> Image: <INPUT type="text" value="0" id="source"><br> Name: <INPUT type="text" value="0" id="name"><br> <input type="button" onClick="addRect()" value="Add Object"/> <input type="button" onClick="reverseDNA()" value="Reverse DNA"/> </fieldset> </div> </div>');
+	$("#menu").html('<ul id="nav"> <li><a href="#" class="selected">Draw Image</a></li> <li onClick = "animatePage()"><a href="#">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><form action=""> DNA Sequence: <INPUT type="text" value="0" id="DNA"><br> <fieldset> color: <select id="color"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> shape: <select id="shape"> <option value="rectangle">rectangle</option> <option value="ellipse">ellipse</option> <option value="image">image</option> <option value="Nucleotides">Nucleotides</option> </select> <br> X: <INPUT type="text" value="0" id="X"><br> Y: <INPUT type="text" value="0" id="Y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> Image: <INPUT type="text" value="0" id="source"><br> Name: <INPUT type="text" value="0" id="name"><br><input type="button" onClick="addRect()" value="Add Object"/> </fieldset> </div> </div>');
 }
 
-var framePos;
 
-function initAnimationPanel(array) {
-	$("#containercontainer").append("<div id = 'container'></div>");
-	for (var i in array) {
-		$("#container").append("<div id = 'step" + i + "'></div>");
-		$("#step" + i).append(stepHTML);
-		$("#step" + i, "x").val(array[i].x);
-		$("#step" + i, "y").val(array[i].y);
-		$("#step" + i, "width").val(array[i].width);
-		$("#step" + i, "height").val(array[i].height);
-		$("#step" + i, "color").val(array[i].color);
-		$("#step" + i, "name").val(array[i].target);
+function getValue(){
+	/*$("#frames").prop("max", animationArray.length-1);
+	var name = document.getElementById("nameAnimation");
+	var x = document.getElementById("XAnimate");
+	var y = document.getElementById("YAnimate");
+	var width = document.getElementById("widthAnimate");
+	var height = document.getElementById("heightAnimate");
+	var rotation = document.getElementById("rotation");
+	var color = document.getElementById("colorAnimation");
+	var frame = document.getElementById("frames");
+	
+	framePos = frame.value;
+	
+	console.log(animationArray.length);
+	console.log("Name "+animationArray[framePos].steps[0].target);
+	console.log("Array length "+animationArray.length);
+	console.log("frameMax "+frame.max);
+	console.log("frameValue "+frame.value);
+	console.log("x "+animationArray[framePos].steps[0].x);
+	console.log("y "+animationArray[framePos].steps[0].y);
+	console.log("color "+animationArray[framePos].steps[0].color);
+	console.log("widthAnimate "+animationArray[framePos].steps[0].width);
+	console.log("heightAnimate "+animationArray[framePos].steps[0].height);
+	console.log("color "+animationArray[framePos].steps[0].color);
+	
+	//change whats in array
+	
+	
+	$('#nameUpdate').html(animationArray[framePos].steps[0].target);
+	$('#XUpdate').html(animationArray[framePos].steps[0].x);
+	$('#YUpdate').html(animationArray[framePos].steps[0].y);
+	$('#widthUpdate').html(animationArray[framePos].steps[0].width);
+	$('#heightUpdate').html(animationArray[framePos].steps[0].height);
+	
+	if(animationArray[framePos].steps[0].color==="#ffffff" || animationArray[framePos].steps[0].color==="#FFFFFF" ){
+		$('#colorUpdate').html("White");
 	}
-}
-
-//Goes through
-function parseAnimationPanel(array) {
-	var output = [];
-	for (var i in array) {
-		array[i].x = $("#step" + i, "x").value;
-		array[i].y = $("#step" + i, "y").value;
-		array[i].width = $("#step" + i, "width").value;
-		array[i].height = $("#step" + i, "height").value;
-		array[i].color = $("#step" + i, "color").value;
-		array[i].target = $("#step" + i, "name").value;
-		output[i] = new AnimationStep(array[i].target, array[i].x, array[i].y, array[i].width, array[i].height, 0, array[i].color, false, 1000);
+	else if(animationArray[framePos].steps[0].color==="#ffcc00" || animationArray[framePos].steps[0].color==="#FFCC00" ){
+		$('#colorUpdate').html("Orange");
 	}
-	return output;
-}
-
-//Insert Frame.steps, execute on add step
-function updateAmountOfStepsAnimationPanel(array) {
-	$("#containercontainer").remove("#container");
-	$("#containercontainer").append("<div id = 'container'></div>");
-	for (var i in array) {
-		$("#container").append("<div id = 'step" + i + "'></div>");
-		$("#step" + i).append(stepHTML);
-		$("#step" + i, "x").val(array[i].x);
-		$("#step" + i, "y").val(array[i].y);
-		$("#step" + i, "width").val(array[i].width);
-		$("#step" + i, "height").val(array[i].height);
-		$("#step" + i, "color").val(array[i].color);
-		$("#step" + i, "name").val(array[i].target);
+	else if(animationArray[framePos].steps[0].color==="#ff0000" || animationArray[framePos].steps[0].color==="#FF0000" ){
+		$('#colorUpdate').html("Red");
 	}
-}
-
-//Adds a blueprint to the selected frame. Also adjusts the slider length. Auto updates panel
-function animateObject(){
-	addStepTo(selectedFrame, new AnimationStep(selectedObject, 0, 0, 333, 333, 0, "#000000", false, 1000));
-	$("#frames").prop("max", animationArray.length-1)
-	updateAmountOfStepsAnimationPanel(animationArray);
-}
-
-//Method on slider update update selected frame
-
-//Adds frame to the end
-function addFrame() {
-	if (animationArray[animationArray.length] == null) {
-		animationArray[animationArray.length] = new Frame([], []);
+	else if(animationArray[framePos].steps[0].color==="#ffff00" || animationArray[framePos].steps[0].color==="#FFFF00" ){
+		$('#colorUpdate').html("Yellow");
 	}
+	else if(animationArray[framePos].steps[0].color==="#00ff00" || animationArray[framePos].steps[0].color==="#00FF00" ){
+		$('#colorUpdate').html("Green");
+	}
+	else if(animationArray[framePos].steps[0].color==="#0000ff" || animationArray[framePos].steps[0].color==="#0000FF" ){
+		$('#colorUpdate').html("Blue");
+	}
+	else if(animationArray[framePos].steps[0].color==="#663366" || animationArray[framePos].steps[0].color==="#663366" ){
+		$('#colorUpdate').html("Indigo");
+	}
+	else if(animationArray[framePos].steps[0].color==="#ff00ff" || animationArray[framePos].steps[0].color==="#FF00FF" ){
+		$('#colorUpdate').html("Violet");
+	}
+	else{
+		console.log("I failed");
+	}
+	*/
 
+	
 }
 
-function addFrameToIndex(index) {
-	animationArray.splice(index, 0, new Frame([], []));
-}
-
-//Adds the step variables to the index frame
-function addStepTo(index, step) {
-	console.log(animationArray[index].steps);
-	animationArray[index].steps[animationArray[index].steps.length] = step;
-}
 
 function animatePage(){
-	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"><div id = "containercontainer"></div></div>');
-		setInterval(function() {
-			$("#frames").change( function(){
-				console.log("Slider changed");
-				currentFrame = $("#frames").value;
-				initAnimationPanel(animationArray[currentFrame].steps);
-			});
-			console.log("Parsing animation panel.");
-			parseAnimationPanel(animationArray[currentFrame].steps);
-		}, 100);
+	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"> <fieldset>  color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" id="XAnimate"><br> Y: <INPUT type="text" id="YAnimate"><br> Width: <INPUT type="text" id="widthAnimate"><br> Height: <INPUT type="text" id="heightAnimate"><br> Name: <INPUT type="text" id="nameAnimation"><br> <input type="button" onClick="animateObject()" value="Add Object"/>  <input type = "button" onClick = "animate(animationArray)" value = "Play"/> </fieldset> </div> <div id="colorUpdate"></div> <div id="XUpdate"></div> <div id="YUpdate"></div> <div id="widthUpdate"></div> <div id="heightUpdate"></div> <div id="nameUpdate"></div>')
 }
 
+setInterval( 'getValue()',50);
+
 function propertiesPage(){
-	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" onClick = "animatePage()">Animate</a></li><li><a href="#" class="selected">Properties</a></li> </ul><div id="menuWrapper"> <div id="selectedObject"></div> <fieldset id="properties"> <div id="selectedObject"></div> color: <select id="colorProperty"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XProperty"><br> Y: <INPUT type="text" value="0" id="YProperty"><br> Width: <INPUT type="text" value="333" id="widthProperty"><br> Height: <INPUT type="text" value="333" id="heightProperty"><br> Rotation: <INPUT type="text" value="0" id="rotationProperty"><br> </fieldset> </div>');
+	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" onClick = "animatePage()">Animate</a></li><li><a href="#" class="selected">Properties</a></li> </ul><div id="menuWrapper"> <div id = "nameProperty"></div><br><div id="selectedObject"></div> <fieldset id="properties"> color: <select id="colorProperty"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XProperty"><br> Y: <INPUT type="text" value="0" id="YProperty"><br> Width: <INPUT type="text" value="333" id="widthProperty"><br> Height: <INPUT type="text" value="333" id="heightProperty"><br> Name: <INPUT type="text" value="0" id="name"><br></fieldset> </div>');
 	console.log("Hi");
 	propertiesPanelUpdate();
 }
@@ -543,7 +533,7 @@ function propertiesPanelParse() {
 	var y = document.getElementById("YProperty");
 	var width = document.getElementById("widthProperty");
 	var height = document.getElementById("heightProperty");
-	var rotation = document.getElementById("rotationProperty");
+	var name = document.getElementById("nameProperty");
 
 	$("#colorProperty").change(function() {
 
@@ -562,9 +552,10 @@ function propertiesPanelParse() {
 	$("#heightProperty").on("input", function() {
 		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
 	});
-	$("#rotationProperty").on("input", function() {
+	$("#nameProperty").on("input", function() {
 		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
 	});
+
 }
 
 function propertiesPanelUpdate() {
@@ -575,15 +566,15 @@ function propertiesPanelUpdate() {
 	var y = $("#YProperty");
 	var width = $("#widthProperty");
 	var height = $("#heightProperty");
-	var rotation = $("#rotationProperty");
+	var name = $("#nameProperty");
 	color.val($("canvas").getLayer(selectedObject).fillStyle);
 	x.val($("canvas").getLayer(selectedObject).x);
 	y.val($("canvas").getLayer(selectedObject).y);
 	width.val($("canvas").getLayer(selectedObject).width);
 	height.val($("canvas").getLayer(selectedObject).height);
-	rotation.val($("canvas").getLayer(selectedObject).rotation);
+	name.html($("canvas").getLayer(selectedObject).name);
 	propertiesPanelParse();
-	$("#selectedObject").text(selectedObject);
+	console.log($("canvas").getLayer(selectedObject).name);
 }
 
 setInterval(function() {
@@ -617,9 +608,9 @@ function save() {
 //     Startup
 //
 
+
+
+
 $(document).ready(function() {
 	addShape(new Shape("rectangle", "#e2e2e2", "delay", 1, 1, 0, 0));
-	$("#selectedObject").text("Unselected");
-	animationArray[0] = new Frame(new AnimationStep("#delay", 0, 0, 333, 333, 0, "#000000", false, 1000), "delay");
-	updateAmountOfStepsAnimationPanel(animationArray);
 });
