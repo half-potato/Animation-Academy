@@ -104,9 +104,9 @@ function addShape(shape) {
 		$('canvas').addLayer({
 			type: shape.type,
 			source: shape.style,
-			x: shape.x, 
+			x: shape.x,
 			y: shape.y,
-			width: shape.width, 
+			width: shape.width,
 			height: shape.height,
 			draggable: true
 		}).drawLayers();
@@ -117,9 +117,9 @@ function addShape(shape) {
 		$('canvas').addLayer({
 			type: shape.type,
 			fillStyle: shape.style,
-			x: shape.x, 
+			x: shape.x,
 			y: shape.y,
-			width: shape.width, 
+			width: shape.width,
 			height: shape.height,
 			draggable: true
 		}).drawLayers();
@@ -129,7 +129,7 @@ function addShape(shape) {
 		$('canvas').addLayer({
 			type: shape.type,
 			fillStyle: shape.style,
-			x: shape.x, 
+			x: shape.x,
 			y: shape.y,
 			width: shape.width,
 			height: shape.height,
@@ -152,17 +152,10 @@ function addRect(){
 	var Y = document.getElementById("Y");
 	var shape = document.getElementById("shape");
 	var outputColor=color.value;
-<<<<<<< HEAD
-	var outputX = parseInt(X.value);
-	var outputY = parseInt(Y.value);
-	addShape(new Shape("ellipse", outputColor, "box", 20, 20, outputX, outputY));
-=======
 	var outputX=X.value;
 	var outputY=Y.value;
 	var outputShape=shape.value;
 	addShape(new Shape(outputShape, outputColor, "box", 20, 20, outputX, outputY));
-	
->>>>>>> FETCH_HEAD
 }
 
 $(document).ready(function() {
