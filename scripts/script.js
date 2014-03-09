@@ -90,8 +90,6 @@ function addShape(shape) {
 			source: shape.style,
 			x: shape.x,
 			y: shape.y,
-			width: shape.width,
-			height: shape.height,
 			draggable: true
 		}).drawLayers();
 	}
@@ -130,7 +128,7 @@ function redraw(array) {
 //Temporary objects added
 animationArray[0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 100);
 
-function addRect() {
+function addRect(){
 	var color = document.getElementById("color");
 	var X = document.getElementById("X");
 	var Y = document.getElementById("Y");
@@ -146,6 +144,7 @@ function addRect() {
 		var outputColor=color.value;
 	}
 	addShape(new Shape(outputShape, outputColor, "box", 200, 200, outputX, outputY));
+	
 }
 
 $(document).ready(function() {
