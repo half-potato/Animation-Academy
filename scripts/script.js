@@ -104,18 +104,35 @@ function addShape(shape) {
 		$('canvas').addLayer({
 			type: shape.type,
 			source: shape.style,
-			x: shape.x, y: shape.y,
-			width: shape.width, height: shape.height,
+			x: shape.x, 
+			y: shape.y,
+			width: shape.width, 
+			height: shape.height,
 			draggable: true
 		}).drawLayers();
-	} else {
+	}
+
+	else if (shape.type === "ellipse") {
+		layerArray[layerArray.length] = shape;
+		$('canvas').addLayer({
+			type: shape.type,
+			fillStyle: shape.style,
+			x: shape.x, 
+			y: shape.y,
+			width: shape.width, 
+			height: shape.height,
+			draggable: true
+		}).drawLayers();
+	}	else {
 		layerArray[layerArray.length] = shape;
 		console.log("Adding shape");
 		$('canvas').addLayer({
 			type: shape.type,
 			fillStyle: shape.style,
-			x: shape.x, y: shape.y,
-			width: shape.width, height: shape.height,
+			x: shape.x, 
+			y: shape.y,
+			width: shape.width,
+			height: shape.height,
 			draggable: true
 		}).drawLayers();
 	}
