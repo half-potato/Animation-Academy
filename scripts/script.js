@@ -1,5 +1,5 @@
 //TODO: Will take the animationArray and apply it the canvas
-var selectedObject;
+var selectedObject = "hi";
 var animationArray = new Array();
 var layerArray = new Array();
 
@@ -217,7 +217,7 @@ function addRect(){
 		var outputColor=color.value;
 	}
 	//applies values to create new shape
-	addShape(new Shape(outputShape, outputColor, outputName, outputHeight, outputWidth, outputX, outputY));
+	addShape(new Shape(outputShape, outputColor, outputName, outputWidth, outputHeight, outputX, outputY));
 }
 var i = 0;
 //Takes info and puts in animate array
@@ -258,13 +258,15 @@ function changeScale(selector, topEdge, rightEdge, bottomEdge, leftEdge) {
 	});
 }
 
+//Problem
 function changeProperties(selector, style, width, height, x, y) {
 	$("canvas").setLayer(selector, {
 		width: width,
 		height: height,
-		fillStyle: "#36c",
-		x: x, y: y
-	});
+		fillStyle: style,
+		x: x, y: y,
+		draggable: true
+	}).drawLayers();
 }
 
 function drawImage(){
@@ -280,35 +282,28 @@ function animatePage(){
 
 
 function propertiesPage(){
-	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" onClick = "animatePage()">Animate</a></li><li><a href="#" class="selected">Properties</a></li> </ul><div id="menuWrapper"> <fieldset id="properties"> color: <select id="colorProperty"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XProperty"><br> Y: <INPUT type="text" value="0" id="YProperty"><br> Width: <INPUT type="text" value="333" id="widthProperty><br> Height: <INPUT type="text" value="333" id="heightProperty"><br> Rotation: <INPUT type="text" value="0" id="rotationProperty"><br> </fieldset> </div>');
+	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" onClick = "animatePage()">Animate</a></li><li><a href="#" class="selected">Properties</a></li> </ul><div id="menuWrapper"> <fieldset id="properties"> color: <select id="colorProperty"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <input type="text" value="0" id="XProperty"><br> Y: <input type="text" value="0" id="YProperty"><br> Width: <input type="text" value="333" id="widthProperty"><br> Height: <input type="text" value="333" id="heightProperty"><br> Rotation: <input type="text" value="0" id="rotationProperty"><br> </fieldset> </div>');
 	console.log("Hi");
-	var color = $("#colorProperty"), x = $("#XProperty"), y = $("#YProperty"), width = $("#widthProperty"), height = $("#heightProperty"), rotation = $("#rotationProperty"), selected = $("canvas").getLayer(selectedObject);
-	color.value = selected.fillStyle, x.value = 10, width.value = selected.width, height.value = selected.height, rotation.value = selected.rotation;
-	$("#colorProperty").on("input", function() {
-		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
-	});
-	$("#XProperty").on("input", function() {
-		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
-	});
-	$("#YProperty").on("input", function() {
-		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
-	});
-	$("#widthProperty").on("input", function() {
-		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
-	});
-	$("#heightProperty").on("input", function() {
-		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
-	});
-	$("#rotationProperty").on("input", function() {
-		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
-	});
+	var color = $("#colorProperty");
+	var x = $("#XProperty");
+	var y = $("#YProperty");
+	var width = $("#widthProperty");
+	var height = $("#heightProperty");
+	var rotation = $("#rotationProperty");
+	//color.val($("canvas").getLayer(selectedObject).fillStyle);
+	x.val(10);
+	var widthH = $("canvas").getLayer(selectedObject).width;
+	console.log(width);
+	width.val(widthH);
+	height.val($("canvas").getLayer(selectedObject).height);
+	rotation.val($("canvas").getLayer(selectedObject).rotation);
 }
 
 function propertiesPanelUpdate() {
 	console.log("Hi");
 	var color = $("#colorProperty"), x = $("#XProperty"), y = $("#YProperty"), width = $("#widthProperty"), height = $("#heightProperty"), rotation = $("#rotationProperty"), selected = $("canvas").getLayer(selectedObject);
-	color.value = $("canvas").getLayer(selectedObject).fillStyle, x.value = 10, width.value = $("canvas").getLayer(selectedObject).width, height.value = $("canvas").getLayer(selectedObject).height, rotation.value = $("canvas").getLayer(selectedObject).rotation;
-	$("#colorProperty").on("input", function() {
+	$("#colorProperty").change(function() {
+
 		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
 	});
 	$("#XProperty").on("input", function() {
@@ -329,7 +324,7 @@ function propertiesPanelUpdate() {
 }
 
 setInterval(function() {
-	if(selectedObject!==null) {
+	if(selectedObject!=="hi") {
 		propertiesPanelUpdate();
 	}
 }, 1);
