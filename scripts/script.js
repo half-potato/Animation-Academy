@@ -249,12 +249,21 @@ function getCurrentLayer() {
 }
 
 function changeScale(selector, topEdge, rightEdge, bottomEdge, leftEdge) {
-	$("canvas").getLayer(selector).animate({
-		width: rightEdge + leftEdge,
-		height: topEdge + bottomEdge,
-		left: leftEdge/2 - rightEdge/2,
-		top: topEdge/2 - bottomEdge/2
-	}, 0);
+	$("canvas").setLayer(selector, {
+		width: ((rightEdge) + (leftEdge)),
+		height: ((topEdge) + (bottomEdge)),
+		left: += ((leftEdge/2) - (rightEdge/2)),
+		top: += ((topEdge/2) - (bottomEdge/2))
+	});
+}
+
+function changeProperties(selector, style, width, height, x, y) {
+	$("canvas").setLayer(selector, {
+		width: width,
+		height: height,
+		fillStyle: style,
+		x: x, y: y
+	});
 }
 
 function drawImage(){
@@ -265,7 +274,7 @@ console.log("HI");
 
 function animatePage(){
 	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"><div id="menuWrapper"> <fieldset> color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XAnimate"><br> Y: <INPUT type="text" value="0" id="YAnimate"><br> Width: <INPUT type="text" value="333" id="widthAnimate"><br> Height: <INPUT type="text" value="333" id="heightAnimate"><br> Name: <INPUT type="text" value="0" id="nameAnimation"><br> Rotation: <INPUT type="text" value="0" id="rotation"><br> <input type="button" onClick="animateObject()" value="Add Object"/> <input type = "button" onClick = "animate(animationArray)" value = "Play"/> </fieldset> </div>');
-	
+
 }
 
 
