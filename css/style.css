@@ -115,8 +115,13 @@ img {
 	left:920px;
 	float:left;
 	display:block;
+<<<<<<< HEAD
+	height:700px;
+	width:300px;
+=======
 	height:920px;
 	width:420px;
+>>>>>>> FETCH_HEAD
 	background-color:#96c8ac;
 	border:1px solid #000000;
 	font-weight:bold;
