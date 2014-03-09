@@ -4,6 +4,7 @@ var animationArray = [];
 var layerArray = [];
 var currentFrame = 0;
 var propertiesObject = "hi";
+var needsUpdate = false;
 
 //holds mouse X and Y positions
 var mouseX;
@@ -58,6 +59,23 @@ function AnimationStep(target, x, y, width, height, rotation, color, hidden, spe
 	}
 }
 
+function Frame(steps, objects) {
+	this.objects = objects;
+	this.steps = steps;
+
+	this.autoObjects = function() {
+		var i;
+		objects = [];
+		for(i in steps) {
+			objects[objects.length] = steps[i].target;
+		}
+	}
+
+	this.getClass = function() {
+		return "Frame";
+	}
+}
+
 function Delay(delay)
 {
 	this.delay = delay;
@@ -73,7 +91,7 @@ function Delay(delay)
 
 //TODO: Will take the animationArray and apply it the canvas
 function animate(array) {
-	var arrayOfSteps = array[currentFrame], i, step;
+	var arrayOfSteps = array[currentFrame].steps, i, step, n;
 	if (currentFrame !== array.length - 1) {
 		for (i in arrayOfSteps) {
 			if (i == arrayOfSteps.length - 1) {
@@ -83,7 +101,10 @@ function animate(array) {
 					console.log("Delaying");
 					$("canvas").animateLayer("delay", {
 						x: "+=1"
-					}, step.delay);
+					}, step.delay, function() {
+						currentFrame++;
+						setTimeout(animate(array), 1);
+					});
 				} else {
 					$("canvas").animateLayer(step.target, {
 						x: step.x, y: step.y,
@@ -118,32 +139,58 @@ function animate(array) {
 			}
 		}
 	} else {
+		console.log(arrayOfSteps);
 		for (i in arrayOfSteps) {
 			step = arrayOfSteps[i];
-			console.log(step);
-			if (step.getClass()==="delay") {
-				$("canvas").animateLayer("delay", {
-					x: "+=1"
-				}, step.delay);
-			} else {
-				//Problem
-				$("canvas").animateLayer(step.target, {
-					x: step.x, y: step.y,
-					fillStyle: step.color,
-					rotate: step.rotate,
-					height: step.height,
-					width: step.width,
-					visible: !step.hidden
-				}, step.speed, function() {
-					$("canvas").setLayer(step.target, {
+			if (i == arrayOfSteps.length - 1) {
+				if (step.getClass()==="delay") {
+					$("canvas").animateLayer("delay", {
+						x: "+=1"
+					}, step.delay);
+				} else {
+					//Problem
+					$("canvas").animateLayer(step.target, {
 						x: step.x, y: step.y,
 						fillStyle: step.color,
 						rotate: step.rotate,
 						height: step.height,
 						width: step.width,
 						visible: !step.hidden
+					}, step.speed, function() {
+						i = 0;
+						for (i in array) {
+							arrayOfSteps = array[i].steps;
+							for (n in arrayOfSteps) {
+								step = arrayOfSteps[n];
+								$("canvas").setLayer(step.target, {
+									x: step.x, y: step.y,
+									fillStyle: step.color,
+									rotate: step.rotate,
+									height: step.height,
+									width: step.width,
+									visible: !step.hidden
+								});
+							}
+						}
+						i = 0;
 					});
-				});
+				}
+			} else {
+				if (step.getClass()==="delay") {
+					$("canvas").animateLayer("delay", {
+						x: "+=1"
+					}, step.delay);
+				} else {
+					//Problem
+					$("canvas").animateLayer(step.target, {
+						x: step.x, y: step.y,
+						fillStyle: step.color,
+						rotate: step.rotate,
+						height: step.height,
+						width: step.width,
+						visible: !step.hidden
+					}, step.speed);
+				}
 			}
 		}
 		currentFrame = 0;
@@ -225,7 +272,7 @@ function addShape(shape) {
 			click: function() {
 				selectedObject = shape.objectName;
 				console.log(selectedObject);
-                $('canvas').addLayer({
+                /*$('canvas').addLayer({
                     type: "rectangle",
                     fillStyle: "#000000",
                     x: shape.x,
@@ -246,10 +293,11 @@ function addShape(shape) {
 							draggable: true,
 						});
                     }
-                });
+                });*/
 				shape.x = $("canvas").getLayer(selectedObject).x;
 				shape.y = $("canvas").getLayer(selectedObject).y;
 				layerArray[shape.arrayIndex] = shape;
+				needsUpdate = true;
 			}
 		}).drawLayers();
 	}
@@ -308,11 +356,25 @@ function animateObject(){
 	var outputName=name.value;
 	//checks if image or shape
 	//applies values to create new shape
+	addFrame();
+	addStepTo(animationArray.length - 1, new AnimationStep(outputName, outputX, outputY, outputWidth, outputHeight, outputRotation, outputColor, false, 1000));
+}
 
-	console.log(X.value + ", " + Y.value);
-	console.log(animationArray);
-	animationArray[animationArray.length] = [];
-	animationArray[animationArray.length - 1][0] = new AnimationStep(outputName, outputX, outputY, outputWidth, outputHeight, outputRotation, outputColor, false, 1000);
+//Adds frame to the end
+function addFrame() {
+	if (animationArray[animationArray.length] == null) {
+		animationArray[animationArray.length] = new Frame([], []);
+	}
+
+}
+
+function addFrameToIndex(index) {
+	animationArray.splice(index, 0, new Frame([], []));
+}
+
+function addStepTo(index, step) {
+	console.log(animationArray[index].steps);
+	animationArray[index].steps[animationArray[index].steps.length] = step;
 }
 
 function getCurrentLayer() {
@@ -340,7 +402,6 @@ function changeProperties(selector, style, width, height, x, y) {
 }
 
 function drawImage(){
-console.log("HI");
 	$("#menu").html('<ul id="nav"> <li><a href="#" class="selected">Draw Image</a></li> <li onClick = "animatePage()"><a href="#">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"><fieldset> color: <select id="color"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> shape: <select id="shape"> <option value="rectangle">rectangle</option> <option value="ellipse">ellipse</option> <option value="image">image</option> </select> <br> X: <INPUT type="text" value="0" id="X"><br> Y: <INPUT type="text" value="0" id="Y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> image source: <INPUT type="text" value="0" id="source"><br> name: <INPUT type="text" value="0" id="name"><br> <input type="button" onClick="addRect()" value="Add Object"/> </fieldset> </div> </div>');
 }
 
@@ -360,19 +421,19 @@ function getValue(){
 
 	framePos=parseInt(frame.value);
 
-	console.log(framePos);
+	/*console.log(framePos);
 	console.log(frame.max);
 	console.log(frame.value);
-	console.log(animationArray[framePos][0].name);
+	console.log(animationArray[framePos][0].name);*/
 
-	name.val(animationArray[framePos][0].name);
+	/*name.val(animationArray[framePos][0].name);
 	color.val(animationArray[framePos][0].color);
 	x.val(animationArray[framePos][0].x);
 	y.val(animationArray[framePos][0].y);
 	width.val(animationArray[framePos][0].width);
 	height.val(animationArray[framePos][0].height);
 	rotation.val(animationArray[framePos][0].rotation);
-	console.log(framePos);
+	console.log(framePos);*/
 }
 
 function animatePage(){
@@ -419,6 +480,7 @@ function propertiesPanelParse() {
 }
 
 function propertiesPanelUpdate() {
+	needsUpdate = false;
 	propertiesObject = selectedObject;
 	var color = $("#colorProperty");
 	var x = $("#XProperty");
@@ -436,6 +498,9 @@ function propertiesPanelUpdate() {
 }
 
 setInterval(function() {
+	if (needsUpdate) {
+		propertiesPanelUpdate();
+	}
 	//If nothing has been selected yet
 	if(selectedObject=="hi") {
 
