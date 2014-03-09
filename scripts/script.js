@@ -517,7 +517,7 @@ function drawImage(){
 
 var framePos;
 function getValue(){
-	$("#frames").prop("max", animationArray.length);
+	$("#frames").prop("max", animationArray.length-1);
 	var name = document.getElementById("nameAnimation");
 	var x = document.getElementById("XAnimate");
 	var y = document.getElementById("YAnimate");
@@ -526,75 +526,65 @@ function getValue(){
 	var rotation = document.getElementById("rotation");
 	var color = document.getElementById("colorAnimation");
 	var frame = document.getElementById("frames");
-
-
-	framePos=parseInt(frame.value);
-
-	console.log("framePos "+framePos);
+	
+	framePos = frame.value;
+	console.log(animationArray.length);
+	console.log("Name "+animationArray[framePos].steps[0].target);
+	console.log("Array length "+animationArray.length);
 	console.log("frameMax "+frame.max);
 	console.log("frameValue "+frame.value);
-	console.log("target "+animationArray[framePos].steps[0].target);
 	console.log("x "+animationArray[framePos].steps[0].x);
 	console.log("y "+animationArray[framePos].steps[0].y);
 	console.log("color "+animationArray[framePos].steps[0].color);
 	console.log("widthAnimate "+animationArray[framePos].steps[0].width);
 	console.log("heightAnimate "+animationArray[framePos].steps[0].height);
-	//console.log(animationArray[framePos][0].name);
 
 	//change whats in array
-
-	$('#nameAnimation').html(animationArray[framePos].steps[0].target);
-	if(animationArray[framePos].steps[0].color="#ffffff" || animationArray[framePos].steps[0].color="#FFFFFF" ){
-		$('#colorAnimation').html("White");
+	
+	$('#nameAnimation').val(animationArray[framePos].steps[0].target);
+	$('#XAnimate').val(animationArray[framePos].steps[0].x);
+	$('#YAnimate').val(animationArray[framePos].steps[0].y);
+	$('#widthAnimate').val(animationArray[framePos].steps[0].width);
+	$('#heightAnimate').val(animationArray[framePos].steps[0].height);
+	
+	if(animationArray[framePos].steps[0].color==="#ffffff" || animationArray[framePos].steps[0].color==="#FFFFFF" ){
+		$('#colorAnimation')[0].val("White");
 	}
-	else if(animationArray[framePos].steps[0].color="#ff0000" || animationArray[framePos].steps[0].color="##FF0000" ){
-		$('#colorAnimation').html("Red");
+	else if(animationArray[framePos].steps[0].color==="#ff0000" || animationArray[framePos].steps[0].color==="##FF0000" ){
+		$('#colorAnimation')[1].val("Red");
 	}
-	else if(animationArray[framePos].steps[0].color="#ffcc00" || animationArray[framePos].steps[0].color="#FFCC00" ){
-		$('#colorAnimation').html("Orange");
+	else if(animationArray[framePos].steps[0].color==="#ffcc00" || animationArray[framePos].steps[0].color==="#FFCC00" ){
+		$('#colorAnimation')[2].val("Orange");
 	}
-	else if(animationArray[framePos].steps[0].color="#ffff00" || animationArray[framePos].steps[0].color="#FFFF00" ){
-		$('#colorAnimation').html("Yellow");
+	else if(animationArray[framePos].steps[0].color==="#ffff00" || animationArray[framePos].steps[0].color==="#FFFF00" ){
+		$('#colorAnimation')[3].val("Yellow");
 	}
-	else if(animationArray[framePos].steps[0].color="#00ff00" || animationArray[framePos].steps[0].color="#00FF00" ){
-		$('#colorAnimation').html("Green");
+	else if(animationArray[framePos].steps[0].color==="#00ff00" || animationArray[framePos].steps[0].color==="#00FF00" ){
+		$('#colorAnimation')[4].val("Green");
 	}
-	else if(animationArray[framePos].steps[0].color="#0000ff" || animationArray[framePos].steps[0].color="#0000FF" ){
-		$('#colorAnimation').html("Blue");
+	else if(animationArray[framePos].steps[0].color==="#0000ff" || animationArray[framePos].steps[0].color==="#0000FF" ){
+		$('#colorAnimation')[5].val("Blue");
 	}
-	else if(animationArray[framePos].steps[0].color="#663366" || animationArray[framePos].steps[0].color="#663366" ){
-		$('#colorAnimation').html("Indigo");
+	else if(animationArray[framePos].steps[0].color==="#663366" || animationArray[framePos].steps[0].color==="#663366" ){
+		$('#colorAnimation')[6].val("Indigo");
 	}
-	else if(animationArray[framePos].steps[0].color="#ff00ff" || animationArray[framePos].steps[0].color="#FF00FF" ){
-		$('#colorAnimation').html("Violet");
+	else if(animationArray[framePos].steps[0].color==="#ff00ff" || animationArray[framePos].steps[0].color==="#FF00FF" ){
+		$('#colorAnimation')[7].val("Violet");
 	}
 	else{
-		$('#colorAnimation').html("I failed");
+		$('#colorAnimation')[8].val("I failed");
 	}
 
-	$('#XAnimate').html(animationArray[framePos].steps[0].x);
-	$('#YAnimate').html(animationArray[framePos].steps[0].y);
-	$('#widthAnimate').html(animationArray[framePos].steps[0].width);
-	$('#heightAnimate').html(animationArray[framePos].steps[0].height);
-	$('#rotation').html(animationArray[framePos].steps[0].rotation);
-	/*name.val(animationArray[framePos][0].name);
-	color.val(animationArray[framePos][0].color);
-	x.val(animationArray[framePos][0].x);
-	y.val(animationArray[framePos][0].y);
-	width.val(animationArray[framePos][0].width);
-	height.val(animationArray[framePos][0].height);
-	rotation.val(animationArray[framePos][0].rotation);
-	console.log("fried chicken");
-	*/
+
+	
 }
 
 
 function animatePage(){
-	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"><div id="menuWrapper"> <fieldset> <input type="image" class="arrow" id="saveform" src="left.png"/> <input type="range" class="slider" name="frames" id="frames" min="0" max="50"> <input type="image" class="arrow" id="saveform" src="right.png"/><br> color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XAnimate"><br> Y: <INPUT type="text" value="0" id="YAnimate"><br> Width: <INPUT type="text" value="333" id="widthAnimate"><br> Height: <INPUT type="text" value="333" id="heightAnimate"><br> Name: <INPUT type="text" value="0" id="nameAnimation"><br> Rotation: <INPUT type="text" value="0" id="rotation"><br> <input type="button" onClick="animateObject()" value="Add Object"/> <input type = "button" onClick = "animate(animationArray)" value = "Play"/> </fieldset> </div>')
-	getValue();
+	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"> <fieldset> <input type="image" class="arrow" id="saveform" src="left.png"/> <input type="range" class="slider" name="frames" id="frames" min="0" max="50"> <input type="image" class="arrow" id="saveform" src="right.png"/><br> color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" id="XAnimate"><br> Y: <INPUT type="text" id="YAnimate"><br> Width: <INPUT type="text" id="widthAnimate"><br> Height: <INPUT type="text" id="heightAnimate"><br> Name: <INPUT type="text" id="nameAnimation"><br> Rotation: <INPUT type="text" id="rotation"><br> <input type="button" onClick="animateObject()" value="Add Object"/> <input type = "button" onClick = "animate(animationArray)" value = "Play"/> </fieldset> </div>')
 }
 
-//setInterval( 'getValue()',1000);
+setInterval( 'getValue()',1000);
 
 function propertiesPage(){
 	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" onClick = "animatePage()">Animate</a></li><li><a href="#" class="selected">Properties</a></li> </ul><div id="menuWrapper"> <div id="selectedObject"></div> <fieldset id="properties"> color: <select id="colorProperty"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XProperty"><br> Y: <INPUT type="text" value="0" id="YProperty"><br> Width: <INPUT type="text" value="333" id="widthProperty><br> Height: <INPUT type="text" value="333" id="heightProperty"><br> Rotation: <INPUT type="text" value="0" id="rotationProperty"><br> <input type="button" onClick="animateObject()" value="Add Object"/> </fieldset> </div>');
