@@ -1,4 +1,5 @@
 //TODO: Will take the animationArray and apply it the canvas
+var selectedObject;
 var animationArray = new Array();
 var layerArray = new Array();
 
@@ -128,7 +129,11 @@ function addShape(shape) {
 			x: shape.x,
 			y: shape.y,
 			name: shape.objectName,
-			draggable: true
+			draggable: true,
+			click: function() {
+				selectedObject = shape.objectName;
+				console.log(selectedObject);
+			}
 		}).drawLayers();
 	}
 
@@ -142,7 +147,11 @@ function addShape(shape) {
 			width: shape.width,
 			height: shape.height,
 			name: shape.objectName,
-			draggable: true
+			draggable: true,
+			click: function() {
+				selectedObject = shape.objectName;
+				console.log(selectedObject);
+			}
 		}).drawLayers();
 	}	else {
 		layerArray[layerArray.length] = shape;
@@ -155,6 +164,10 @@ function addShape(shape) {
 			height: shape.height,
 			name: shape.objectName,
 			draggable: true,
+			click: function() {
+				selectedObject = shape.objectName;
+				console.log(selectedObject);
+			}
 		}).drawLayers();
 	}
 }
@@ -214,6 +227,20 @@ function animateObject(){
 	//applies values to create new shape
 	animationArray[animationArray.length] = new Array();
 	animationArray[animationArray.length - 1][0] = new AnimationStep(outputName, outputX, outputY, outputWidth, outputHeight, outputRotation, outputColor, false, 1000);
+	changeScale("1", 10, 0, 0, 5);
+}
+
+function getCurrentLayer() {
+	return $("canvas").getLayer(selectedObject);
+}
+
+function changeScale(selector, topEdge, rightEdge, bottomEdge, leftEdge) {
+	$("canvas").getLayer(selector).animate({
+		width: rightEdge + leftEdge,
+		height: topEdge + bottomEdge,
+		left: leftEdge/2 - rightEdge/2,
+		top: topEdge/2 - bottomEdge/2
+	}, 0);
 }
 
 //
