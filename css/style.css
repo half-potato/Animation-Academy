@@ -58,16 +58,63 @@ img {
 #menu{
 	position:absolute;
 	top:118px;
-	left:70%;
+	left:920px;
 	float:left;
 	display:block;
 	height:700px;
-	width:30%;
+	width:420px;
 	background-color:#96c8ac;
 	border:1px solid #000000;
+	font-weight:bold;
+	font-family:Arial;
 }
 .contents{
   position:absolute;
+}
+					/* The CSS */
+select {
+	padding:3px;
+	margin: 5px;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	border-radius:4px;
+	background: #f8f8f8;
+	color:#888;
+	border:none;
+	outline:none;
+	display: inline-block;
+}
+
+input[type=text]{
+	background-color: white;
+	height: 28px;
+	padding-left:10px;
+	width: 191px;
+	margin-bottom:5px;
+}
+input[type=button]{
+	background-color: #1E1E1E;
+	color: #979797;
+	height: 24px;
+	width: 103px;
+	color: #bbbbbb;
+	text-transform:uppercase;
+	box-shadow:-1px 2px #6E6B6A inset;
+}
+input[type=button]:active{
+	background-color: #171717;
+}
+input:focus {
+	outline: none;
+}
+
+input[type=button], input[type=text]{
+	border: 0;
+	border-radius:5px;
+	font-family: Sansation,Arial;
+}
+#menuWrapper{
+	padding:10px;
 }
 
 h1 {
