@@ -1,27 +1,3 @@
-var animationArray = new Array();
-var layerArray = new Array();
-
-//Shape class, contains information to be built into a layer, if the type is image, then the style is the source
-function Shape(type, style, objectName, width, height, x, y)
-{
-	this.type = type;
-	this.style = style;
-	this.objectName = objectName;
-	this.width = width;
-	this.height = height;
-	this.x = x;
-	this.y = y;
-}
-
-//AnimationStep class; contains instructions for each step.
-function AnimationStep(target, x, y, rotation, hidden) {
-	this.target = target;
-	this.x = x;
-	this.y = y;
-	this.rotation = rotation;
-	this.hidden = hidden;
-}
-
 //TODO: Will take the animationArray and apply it the canvas
 var animationArray = new Array();
 var layerArray = new Array();
@@ -53,16 +29,12 @@ function AnimationStep(target, x, y, rotation, color, hidden, speed)
 //TODO: Will take the animationArray and apply it the canvas
 function animate(array) {
 	console.log("Animating");
-	var arrayOfSteps = array.shift(), i;
-	for (i in arrayOfSteps)
-	{
-		var step = arrayOfSteps[i];
-		$("canvas").animateLayer(step.target, {
-			x: step.x, y: step.y,
-			fillStyle: step.color,
-			rotate: step.rotate
-		}, step.speed, animate(array));
-	}
+	var step = array.shift();
+	$("canvas").animateLayer(step.target, {
+		x: step.x, y: step.y,
+		fillStyle: step.color,
+		rotate: step.rotate
+	}, step.speed);
 }
 
 //Takes the array of Shape objects and turns them into layers, which are then added to the canvas and drawn.
@@ -107,7 +79,6 @@ function addShape(shape) {
 		}).drawLayers();
 	}	else {
 		layerArray[layerArray.length] = shape;
-		console.log("Adding shape");
 		$('canvas').addLayer({
 			type: shape.type,
 			fillStyle: shape.style,
