@@ -132,11 +132,15 @@ function redraw(array) {
 }
 
 //Temporary objects added
+<<<<<<< HEAD
 animationArray[0] = new Array();
 animationArray[0][0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 1000);
 animationArray[1] = new Array();
 animationArray[1][0] = new AnimationStep('box', 30, 30, 0, "#36c", false, 1000);
 
+=======
+animationArray[0] = new AnimationStep('box', 30, 30, 0, "#000000", false, 1000);
+>>>>>>> FETCH_HEAD
 
 //adds shapes to canvas
 function addRect(){
@@ -148,12 +152,14 @@ function addRect(){
 	var source = document.getElementById("source");
 	var width = document.getElementById("width");
 	var height = document.getElementById("height");
-	//sets variables equal to whats in the hmtl elements
+	var name = document.getElementById("name");
+	//sets variables equal to what's in the hmtl elements
 	var outputWidth=parseInt(width.value);
 	var outputHeight=parseInt(height.value);
 	var outputX=parseInt(X.value);
 	var outputY=parseInt(Y.value);
 	var outputShape=shape.value;
+	var outputName=name.value;
 	//checks if image or shape
 	if(shape.value=="image"){
 		var outputColor=source.value;
@@ -162,8 +168,36 @@ function addRect(){
 		var outputColor=color.value;
 	}
 	//applies values to create new shape
+<<<<<<< HEAD
 	addShape(new Shape(outputShape, outputColor, "box", outputHeight, outputWidth, outputX, outputY));
 
+=======
+	addShape(new Shape(outputShape, outputColor, outputName, outputHeight, outputWidth, outputX, outputY));
+	
+>>>>>>> FETCH_HEAD
+}
+
+//Takes info and puts in animate array
+function animateObject(){
+	//accesses html elements
+	var name = document.getElementById("nameAnimation");
+	var X = document.getElementById("X");
+	var Y = document.getElementById("Y");
+	var width = document.getElementById("width");
+	var height = document.getElementById("height");
+	var rotation = document.getElementById("rotation");
+	var color = document.getElementById("colorAnimation");
+	//sets variables equal to what's in the hmtl elements
+	var outputColor = color.value;
+	var outputRotation = rotation.value;
+	var outputWidth=parseInt(width.value);
+	var outputHeight=parseInt(height.value);
+	var outputX=parseInt(X.value);
+	var outputY=parseInt(Y.value);
+	var outputName=name.value;
+	//checks if image or shape
+	//applies values to create new shape
+	animationArray[animationArray.length-1] = new AnimationStep(outputName, outputX, outputY, outputRotation, outputColor, false, 1000);
 }
 
 $(document).ready(function() {
