@@ -4,7 +4,6 @@
     <script src = "scripts/jquery.min.js"></script>
     <script src = "scripts/jCanvas.min.js"></script>
     <script src = "scripts/script.js"></script>
-    <script src = "scripts/jCanvasHandles.js"></script>
 	<meta charset="UTF-8">
 	<title>Animation Academy</title>
 	<link rel="stylesheet" href="css/style.css" type="text/css">
@@ -58,6 +57,7 @@
 					Image: <INPUT type="text" value="0" id="source"><br>
 					Name: <INPUT type="text" value="0" id="name"><br>
 					<input type="button" onClick="addRect()" value="Add Object"/>
+                    <input type="button" onClick="reverseDNA()" value="Reverse DNA"/>
 
 				</fieldset>
 			</div>
@@ -104,8 +104,8 @@
 			<!--
 				<div id="menuWrapper">
 
-				<div id="selectedObject"></div>
 				<fieldset id="properties">
+                    <div id="selectedObject">Unselected</div>
 
 					color: <select id="colorProperty">
 						<option value="#FFFFFF">White</option>

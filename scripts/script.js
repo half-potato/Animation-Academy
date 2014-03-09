@@ -7,26 +7,11 @@ var propertiesObject = "hi";
 var needsUpdate = false;
 var NUCLEOTIDE_WIDTH = 50, NUCLEOTIDE_HEIGHT = 90;
 
-//holds mouse X and Y positions
-var mouseX;
-var mouseY;
-
 var shove = [];
-
 
 //
 //        Classes
 //
-
-//sends mouse positions to variables
-$("#canvas").ready(function(){
-  $("#canvas").mousemove(function(e){
-     mouseX=e.pageX;
-	 mouseY=e.pageY-118;
-	 //console.log(mouseY);
-  });
-});
-
 
 //Shape class, contains information to be built into a layer, if the type is image, then the style is the source
 function Shape(type, style, objectName, width, height, x, y, arrayIndex)
@@ -88,100 +73,6 @@ function Delay(delay)
 		return "Delay";
 	}
 }
-
-//
-//      Extensions
-//
-
-$.jCanvas.extend({
-	name: "drawDNA",
-	type: "DNA",
-	props: {},
-	fn: function(ctx, params) {
-		var p = params;
-		var sequence = p.sequence;
-		var nucleo;
-		var nucleotide;
-
-		for (nucleo in sequence) {
-			nucleotide = sequence[nucleo];
-			switch (nucleotide) {
-				case "A":
-					addShape(new Shape("image", "media/A.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-				case "T":
-					addShape(new Shape("image", "media/T.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-				case "C":
-					addShape(new Shape("image", "media/C.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-				case "G":
-					addShape(new Shape("image", "media/G.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-				case "U":
-					addShape(new Shape("image", "media/U.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-				case "a":
-					addShape(new Shape("image", "media/A.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-				case "t":
-					addShape(new Shape("image", "media/T.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-				case "c":
-					addShape(new Shape("image", "media/C.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-				case "g":
-					addShape(new Shape("image", "media/G.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-				case "u":
-					addShape(new Shape("image", "media/U.png", "DNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-			}
-		}
-	}
-});
-
-$.jCanvas.extend({
-	name: "drawRNA",
-	type: "RNA",
-	props: {},
-	fn: function(ctx, params) {
-		var p = params;
-		var sequence = p.sequence;
-		var nucleo;
-		var nucleotide;
-
-		for (nucleo in sequence) {
-			nucleotide = sequence[nucleo];
-			switch (nucleotide) {
-				case "A":
-					addShape(new Shape("image", "media/A.png", "RNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-				case "U":
-					addShape(new Shape("image", "media/U.png", "RNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-				case "C":
-					addShape(new Shape("image", "media/C.png", "RNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-				case "G":
-					addShape(new Shape("image", "media/G.png", "RNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-				case "a":
-					addShape(new Shape("image", "media/A.png", "RNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-				case "u":
-					addShape(new Shape("image", "media/U.png", "RNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-				case "c":
-					addShape(new Shape("image", "media/C.png", "RNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-				case "g":
-					addShape(new Shape("image", "media/G.png", "RNA" + p.name + nucleo, 50, 90, p.x + (nucleo * NUCLEOTIDE_WIDTH), p.y, 1));
-					break;
-			}
-		}
-	}
-});
 
 //
 //      Animation Functions
@@ -338,18 +229,47 @@ function addShape(shape) {
 			}
 		}).drawLayers();
 	} else if (shape.type === "Nucleotides") {
-			DNA = document.getElementById("DNA");
+		DNA = document.getElementById("DNA");
 		dnaOutput = DNA.value;
 		for(var i = 0; i<dnaOutput.length; i++){
 			shove.push(dnaOutput[i]);
 		}
-		console.log(shove);
-		$("canvas").drawDNA({
-			x: 100, y: 100,
-			sequence: shove,
-			name: 1,
-			layer: true
-		}).drawLayers();
+		for (nucleo in shove) {;
+			switch (shove[nucleo]) {
+				case "A":
+					addShape(new Shape("image", "media/A.png", "DNA" + shape.objectName + "" + nucleo, 50, 90, shape.x + (nucleo * NUCLEOTIDE_WIDTH), shape.y, 1));
+					break;
+				case "T":
+					addShape(new Shape("image", "media/T.png", "DNA" + shape.objectName + "" + nucleo, 50, 90, shape.x + (nucleo * NUCLEOTIDE_WIDTH), shape.y, 1));
+					break;
+				case "C":
+					addShape(new Shape("image", "media/C.png", "DNA" + shape.objectName + "" + nucleo, 50, 90, shape.x + (nucleo * NUCLEOTIDE_WIDTH), shape.y, 1));
+					break;
+				case "G":
+					addShape(new Shape("image", "media/G.png", "DNA" + shape.objectName + "" + nucleo, 50, 90, shape.x + (nucleo * NUCLEOTIDE_WIDTH), shape.y, 1));
+					break;
+				case "U":
+					addShape(new Shape("image", "media/U.png", "DNA" + shape.objectName + "" + nucleo, 50, 90, shape.x + (nucleo * NUCLEOTIDE_WIDTH), shape.y, 1));
+					break;
+				case "a":
+					addShape(new Shape("image", "media/A.png", "DNA" + shape.objectName + "" + nucleo, 50, 90, shape.x + (nucleo * NUCLEOTIDE_WIDTH), shape.y, 1));
+					break;
+				case "t":
+					addShape(new Shape("image", "media/T.png", "DNA" + shape.objectName + "" + nucleo, 50, 90, shape.x + (nucleo * NUCLEOTIDE_WIDTH), shape.y, 1));
+					break;
+				case "c":
+					addShape(new Shape("image", "media/C.png", "DNA" + shape.objectName + "" + nucleo, 50, 90, shape.x + (nucleo * NUCLEOTIDE_WIDTH), shape.y, 1));
+					break;
+				case "g":
+					addShape(new Shape("image", "media/G.png", "DNA" + shape.objectName + "" + nucleo, 50, 90, shape.x + (nucleo * NUCLEOTIDE_WIDTH), shape.y, 1));
+					break;
+				case "u":
+					addShape(new Shape("image", "media/U.png", "DNA" + shape.objectName + "" + nucleo, 50, 90, shape.x + (nucleo * NUCLEOTIDE_WIDTH), shape.y, 1));
+					break;
+				default:
+					break;
+			}
+		}
 		shove = [];
 	} else if (shape.type === "ellipse") {
 		layerArray[layerArray.length] = shape;
@@ -381,7 +301,6 @@ function addShape(shape) {
 			draggable: true,
 			click: function() {
 				selectedObject = shape.objectName;
-				console.log(selectedObject);
                 /*$('canvas').addLayer({
                     type: "rectangle",
                     fillStyle: "#000000",
@@ -416,6 +335,52 @@ function addShape(shape) {
 //
 //      Input Functions
 //
+
+function reverseDNA() {
+	var output = [], stringOutput;
+	DNA = document.getElementById("DNA");
+	dnaOutput = DNA.value;
+	for(var i = 0; i<dnaOutput.length; i++){
+		shove.push(dnaOutput[i]);
+	}
+
+	for (var n in shove) {
+		switch (shove[n]) {
+			case "A":
+				output[n] = T;
+				break;
+			case "T":
+				output[n] = A;
+				break;
+			case "a":
+				output[n] = T;
+				break;
+			case "t":
+				output[n] = A;
+				break;
+			case "C":
+				output[n] = G;
+				break;
+			case "G":
+				output[n] = C;
+				break;
+			case "G":
+				output[n] = C;
+				break;
+			case "c":
+				output[n] = G;
+				break;
+		}
+	}
+
+	for (var n in output) {
+		if(n == output.length - 1) {
+			stringOutput += output[n];
+		} else {
+			stringOutput += output[n] + " ";
+		}
+	}
+}
 
 //adds shapes to canvas
 function addRect(){
@@ -500,7 +465,6 @@ function changeScale(selector, topEdge, rightEdge, bottomEdge, leftEdge) {
 	});
 }
 
-//Problem
 function changeProperties(selector, style, width, height, x, y) {
 	$("canvas").setLayer(selector, {
 		width: width,
@@ -512,7 +476,7 @@ function changeProperties(selector, style, width, height, x, y) {
 }
 
 function drawImage(){
-	$("#menu").html('<ul id="nav"> <li><a href="#" class="selected">Draw Image</a></li> <li onClick = "animatePage()"><a href="#">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><form action=""> DNA Sequence: <INPUT type="text" value="0" id="DNA"><br> <fieldset> color: <select id="color"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> shape: <select id="shape"> <option value="rectangle">rectangle</option> <option value="ellipse">ellipse</option> <option value="image">image</option> <option value="Nucleotides">Nucleotides</option> </select> <br> X: <INPUT type="text" value="0" id="X"><br> Y: <INPUT type="text" value="0" id="Y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> Image: <INPUT type="text" value="0" id="source"><br> Name: <INPUT type="text" value="0" id="name"><br> <input type="button" onClick="addRect()" value="Add Object"/> </fieldset> </div> </div>');
+	$("#menu").html('<ul id="nav"> <li><a href="#" class="selected">Draw Image</a></li> <li onClick = "animatePage()"><a href="#">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><form action=""> DNA Sequence: <INPUT type="text" value="0" id="DNA"><br> <fieldset> color: <select id="color"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> shape: <select id="shape"> <option value="rectangle">rectangle</option> <option value="ellipse">ellipse</option> <option value="image">image</option> <option value="Nucleotides">Nucleotides</option> </select> <br> X: <INPUT type="text" value="0" id="X"><br> Y: <INPUT type="text" value="0" id="Y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> Image: <INPUT type="text" value="0" id="source"><br> Name: <INPUT type="text" value="0" id="name"><br> <input type="button" onClick="addRect()" value="Add Object"/> <input type="button" onClick="reverseDNA()" value="Reverse DNA"/> </fieldset> </div> </div>');
 }
 
 var framePos;
@@ -587,7 +551,7 @@ function animatePage(){
 setInterval( 'getValue()',1000);
 
 function propertiesPage(){
-	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" onClick = "animatePage()">Animate</a></li><li><a href="#" class="selected">Properties</a></li> </ul><div id="menuWrapper"> <div id="selectedObject"></div> <fieldset id="properties"> color: <select id="colorProperty"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XProperty"><br> Y: <INPUT type="text" value="0" id="YProperty"><br> Width: <INPUT type="text" value="333" id="widthProperty"><br> Height: <INPUT type="text" value="333" id="heightProperty"><br> Rotation: <INPUT type="text" value="0" id="rotationProperty"><br> </fieldset> </div>');
+	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" onClick = "animatePage()">Animate</a></li><li><a href="#" class="selected">Properties</a></li> </ul><div id="menuWrapper"> <div id="selectedObject"></div> <fieldset id="properties"> <div id="selectedObject"></div> color: <select id="colorProperty"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XProperty"><br> Y: <INPUT type="text" value="0" id="YProperty"><br> Width: <INPUT type="text" value="333" id="widthProperty"><br> Height: <INPUT type="text" value="333" id="heightProperty"><br> Rotation: <INPUT type="text" value="0" id="rotationProperty"><br> </fieldset> </div>');
 	console.log("Hi");
 	propertiesPanelUpdate();
 }
@@ -638,6 +602,7 @@ function propertiesPanelUpdate() {
 	height.val($("canvas").getLayer(selectedObject).height);
 	rotation.val($("canvas").getLayer(selectedObject).rotation);
 	propertiesPanelParse();
+	$("#selectedObject").text(selectedObject);
 }
 
 setInterval(function() {
@@ -676,4 +641,5 @@ function save() {
 
 $(document).ready(function() {
 	addShape(new Shape("rectangle", "#e2e2e2", "delay", 1, 1, 0, 0));
+	$("#selectedObject").text("Unselected");
 });
