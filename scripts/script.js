@@ -630,4 +630,5 @@ function save() {
 $(document).ready(function() {
 	addShape(new Shape("rectangle", "#e2e2e2", "delay", 1, 1, 0, 0));
 	$("#selectedObject").text("Unselected");
+	animationArray[0] = new Frame([new AnimationStep("#delay", 0, 0, 333, 333, 0, "#000000", false, 1000)], "delay");
 });
