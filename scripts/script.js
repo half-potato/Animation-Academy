@@ -2,14 +2,12 @@
 var selectedObject = "hi";
 var animationArray = [];
 var layerArray = [];
-var currentFrame = 0;
 var propertiesObject = "hi";
 var needsUpdate = false;
 var NUCLEOTIDE_WIDTH = 50, NUCLEOTIDE_HEIGHT = 90;
-var previousSelectedFrame = "hi";
-var selectedFrame = "hi";
+var currentPanel;
 
-var stepHTML = '<div id = "name"></div> color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option><option value="#FFCC00">Orange</option><option value="#FFFF00">Yellow</option><option value="#00FF00">Green</option><option value="#0000FF">Blue</option><option value="#663366">Indigo</option><option value="#FF00FF">Violet</option></select> <br>X: <INPUT type="text" value="0" id="x"><br> Y: <INPUT type="text" value="0" id="y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br>'
+var stepHTML = '<div id = "name"></div> color: <select id="colorAnimation"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option><option value="#FFCC00">Orange</option><option value="#FFFF00">Yellow</option><option value="#00FF00">Green</option><option value="#0000FF">Blue</option><option value="#663366">Indigo</option><option value="#FF00FF">Violet</option></select> <br>X: <INPUT type="text" value="0" id="x"><br> Y: <INPUT type="text" value="0" id="y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br>';
 
 var shove = [];
 
@@ -67,6 +65,16 @@ function Frame(steps, objects) {
 	this.getClass = function() {
 		return "Frame";
 	}
+    
+    this.doesContain = function(n) {
+        this.autoObjects();
+        for (i in objects) {
+            if(steps[i].target === n) {
+                return true;
+            }
+            return false;
+        }
+    }
 }
 
 function Delay(delay)
@@ -226,11 +234,12 @@ function addShape(shape) {
 			draggable: true,
 			click: function() {
 				selectedObject = shape.objectName;
-				console.log(selectedObject);
                 shape.x = $("canvas").getLayer(selectedObject).x;
                 shape.y = $("canvas").getLayer(selectedObject).y;
                 shape.width = $("canvas").getLayer(selectedObject).width;
                 shape.height = $("canvas").getLayer(selectedObject).height;
+                layerArray[shape.arrayIndex] = shape;
+				needsUpdate = true;
 			}
 		}).drawLayers();
 	} else if (shape.type === "Nucleotides") {
@@ -289,7 +298,12 @@ function addShape(shape) {
 			draggable: true,
 			click: function() {
 				selectedObject = shape.objectName;
-				console.log(selectedObject);
+				shape.x = $("canvas").getLayer(selectedObject).x;
+                shape.y = $("canvas").getLayer(selectedObject).y;
+                shape.width = $("canvas").getLayer(selectedObject).width;
+                shape.height = $("canvas").getLayer(selectedObject).height;
+                layerArray[shape.arrayIndex] = shape;
+				needsUpdate = true;
 			}
 		}).drawLayers();
 	}	else {
@@ -328,8 +342,10 @@ function addShape(shape) {
 						});
                     }
                 });*/
-				shape.x = $("canvas").getLayer(selectedObject).x;
-				shape.y = $("canvas").getLayer(selectedObject).y;
+                shape.x = $("canvas").getLayer(selectedObject).x;
+                shape.y = $("canvas").getLayer(selectedObject).y;
+                shape.width = $("canvas").getLayer(selectedObject).width;
+                shape.height = $("canvas").getLayer(selectedObject).height;
 				layerArray[shape.arrayIndex] = shape;
 				needsUpdate = true;
 			}
@@ -442,107 +458,119 @@ function changeProperties(selector, style, width, height, x, y) {
 }
 
 function drawImage(){
+    currentPanel = "Draw";
 	$("#menu").html('<ul id="nav"> <li><a href="#" class="selected">Draw Image</a></li> <li onClick = "animatePage()"><a href="#">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><form action=""> DNA Sequence: <INPUT type="text" value="0" id="DNA"><br> <fieldset> color: <select id="color"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> shape: <select id="shape"> <option value="rectangle">rectangle</option> <option value="ellipse">ellipse</option> <option value="image">image</option> <option value="Nucleotides">Nucleotides</option> </select> <br> X: <INPUT type="text" value="0" id="X"><br> Y: <INPUT type="text" value="0" id="Y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br> Image: <INPUT type="text" value="0" id="source"><br> Name: <INPUT type="text" value="0" id="name"><br> <input type="button" onClick="addRect()" value="Add Object"/> <input type="button" onClick="reverseDNA()" value="Reverse DNA"/> </fieldset> </div> </div>');
 }
 
-var framePos;
+var stepHTML = '<div id = "name" value = "name"></div> color: <select id="color"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option><option value="#FFCC00">Orange</option><option value="#FFFF00">Yellow</option><option value="#00FF00">Green</option><option value="#0000FF">Blue</option><option value="#663366">Indigo</option><option value="#FF00FF">Violet</option></select><br>X:<INPUT type="text" value="0" id="X"><br> Y: <INPUT type="text" value="0" id="Y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br>';
+var previousSelectedFrame = "hi";
+var selectedFrame = 0;
 
-var stepHTMLname = '<div id = "'
-var stepHTMLcolor = '" value = "name"></div> color: <select id="';
-var stepHTMLx = '"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option><option value="#FFCC00">Orange</option><option value="#FFFF00">Yellow</option><option value="#00FF00">Green</option><option value="#0000FF">Blue</option><option value="#663366">Indigo</option><option value="#FF00FF">Violet</option></select><br>X:<INPUT type="text" value="0" id="';
-var stepHTMLy = '"><br> Y: <INPUT type="text" value="0" id="';
-var stepHTMLwidth = '"><br> Width: <INPUT type="text" value="333" id="';
-var stepHTMLheight = '"><br> Height: <INPUT type="text" value="333" id="';
-var stepHTMLend = '"><br>';
+//Set the previous frame when the current frame has changed
 
+//Call everytime the frame has changed; removes old frame if it was there and adds content of frame
+//Done
 function initAnimationPanel() {
-	$("#containercontainer").append("<div id = 'container'></div>");
-	for (var i in animationArray[currentFrame].steps) {
-		$("#container").append("<div id = 'step" + i + "'></div>");
-		$("#step" + i).append(stepHTML);
-		$("#container > #step" + i + " > #x").val(animationArray[currentFrame].steps[i].x);
-		$("#container > #step" + i + " > #y").val(animationArray[currentFrame].steps[i].y);
-		$("#container > #step" + i + " > #width").val(animationArray[currentFrame].steps[i].width);
-		$("#container > #step" + i + " > #height").val(animationArray[currentFrame].steps[i].height);
-		$("#container > #step" + i + " > #colorAnimation").val(animationArray[currentFrame].steps[i].color);
-		$("#container > #step" + i + " > #name").val(animationArray[currentFrame].steps[i].target);
+    //If this is not the first frame
+    if (previousSelectedFrame!="hi") {
+        //Clear the panel
+        for (var i in animationArray[previousSelectedFrame].steps) {
+            $("#containercontainer").remove("<div id = 'container" + i +"'></div>");
+        }
+    }
+    //Go through all of the steps and add them to the containercontainer, a container inside of the panel
+	for (var i in animationArray[selectedFrame].steps) {
+        $("#containercontainer").append("<div id = 'container" + i +"'></div>");
+		$("#container" + i).append(stepHTML);
+		$("#container" + i + " > #X").val(animationArray[selectedFrame].steps[i].x);
+		$("#container" + i + " > #Y").val(animationArray[selectedFrame].steps[i].y);
+		$("#container" + i + " > #width").val(animationArray[selectedFrame].steps[i].width);
+		$("#container" + i + " > #height").val(animationArray[selectedFrame].steps[i].height);
+		$("#container" + i + " > #colorAnimation").val(animationArray[selectedFrame].steps[i].color);
+		$("#container" + i + " > #name").val(animationArray[selectedFrame].steps[i].target);
 	}
 }
 
-//Goes through
+//Assigns the value of the textboxes to the animation array, only call once panel has been initiated
+//Done
 function parseAnimationPanel() {
-	var output = [];
-	for (var i in animationArray[currentFrame].steps) {
+	for (var i in animationArray[selectedFrame].steps) {
 		console.log($("#container > #step" + i + " > #x").val());
-		animationArray[currentFrame].steps[i].x = $("#container > #step" + i + " > #x").val();
-		animationArray[currentFrame].steps[i].y = $("#container > #step" + i + " > #y").val();
-		animationArray[currentFrame].steps[i].width = $("#container > #step" + i + " > #width").val();
-		animationArray[currentFrame].steps[i].height = $("#container > #step" + i + " > #height").val();
-		animationArray[currentFrame].steps[i].color = $("#container > #step" + i + " > #colorAnimation").val();
-		animationArray[currentFrame].steps[i].target = $("#container > #step" + i + " > #name").val();
-		output[i] = new AnimationStep(animationArray[currentFrame].steps[i].target, animationArray[currentFrame].steps[i].x, animationArray[currentFrame].steps[i].y, animationArray[currentFrame].steps[i].width, animationArray[currentFrame].steps[i].height, 0, animationArray[currentFrame].steps[i].color, false, 1000);
-	}
-	return output;
-}
-
-//Insert Frame.steps, execute on add step
-function updateAmountOfStepsAnimationPanel() {
-	$("#containercontainer").remove("#container");
-	$("#containercontainer").append("<div id = 'container'></div>");
-	for (var i in animationArray[currentFrame].steps) {
-		$("#container").append("<div id = 'step" + i + "'></div>");
-		$("#step" + i).append(stepHTMLname + currentFrame + "name" + i + stepHTMLcolor + currentFrame + "color" + i + stepHTMLx + currentFrame + "x" + i + stepHTMLy + currentFrame + "y" + i + stepHTMLwidth + currentFrame + "width" + i + stepHTMLheight + currentFrame + "height" + i + stepHTMLend);
-		$("#container > #step" + i + " > #x").val(animationArray[currentFrame].steps[i].x);
-		$("#container > #step" + i + " > #y").val(animationArray[currentFrame].steps[i].y);
-		$("#container > #step" + i + " > #width").val(animationArray[currentFrame].steps[i].width);
-		$("#container > #step" + i + " > #height").val(animationArray[currentFrame].steps[i].height);
-		$("#container > #step" + i + " > #colorAnimation").val(animationArray[currentFrame].steps[i].color);
-		$("#container > #step" + i + " > #name").val(animationArray[currentFrame].steps[i].target);
+		animationArray[selectedFrame].steps[i].x = $("#container" + i + " > #X").val();
+		animationArray[selectedFrame].steps[i].y = $("#container" + i + " > #Y").val();
+		animationArray[selectedFrame].steps[i].width = $("#container" + i + " > #width").val();
+		animationArray[selectedFrame].steps[i].height = $("#container" + i + " > #height").val();
+		animationArray[selectedFrame].steps[i].color = $("#container" + i + " > #colorAnimation").val();
+		animationArray[selectedFrame].steps[i].target = $("#container" + i + " > #name").val();
 	}
 }
 
-//Adds a blueprint to the selected frame. Also adjusts the slider length. Auto updates panel
-function animateObject(){
+//Changes frame, sets previous frame
+//Done
 
-	addStepTo(currentFrame, new AnimationStep(selectedObject, 0, 0, 333, 333, 0, "#000000", false, 1000));
-	$("#frames").prop("max", animationArray.length-1);
-	updateAmountOfStepsAnimationPanel(animationArray);
+function setFrameTo(frame) {
+    if(selectedFrame!=frame) {
+        previousSelectedFrame = selectedFrame;
+        selectedFrame = frame;
+        initAnimationPanel();
+    }
 }
 
-//Method on slider update update selected frame
+//Adds step with properties of currentSelectedObject (only if it is initialized)
+//Done, contains todo
 
-//Adds frame to the end
-function addFrame() {
-	if (animationArray[animationArray.length] == null) {
-		animationArray[animationArray.length] = new Frame([], []);
-	}
-
+function addStepAfterCurrent() {
+    if(selectedObject!="hi") {
+        var currentObject = $("canvas").getLayer(selectedObject);
+        var step = new AnimationStep(selectedObject, currentObject.x, currentObject.y, currentObject.width, currentObject.height, 0, 
+                                     currentObject.style, false, 20);
+        animationArray[currentFrame].steps[animationArray[currentFrame].steps.length] = step;
+    } else {
+        //Alert box show message
+    }
 }
 
-function addFrameToIndex(index) {
-	animationArray.splice(index, 0, new Frame([], []));
+//Adds frame after the current one and switches the view to that frame. Updates the frames slider.
+//Done, contains todo
+
+function addFrameAfterCurrent() {
+    if (selectedObject!="hi") {
+        selectedFrame = animationArray[currentFrame].steps.length;
+        previousSelectedFrame = animationArray[currentFrame].steps.length - 1;
+        var currentObject = $("canvas").getLayer(selectedObject);
+        var step = new AnimationStep(selectedObject, currentObject.x, currentObject.y, currentObject.width, currentObject.height, 0, 
+                                     currentObject.style, false, 20);
+        animationArray[currentFrame] = new Frame([step], [selectedObject]);
+    } else {
+        //Alert box show message
+    }
 }
 
-//Adds the step variables to the index frame
-function addStepTo(index, step) {
-	console.log(animationArray[index].steps);
-	animationArray[index].steps[animationArray[index].steps.length] = step;
+//Parses slider and calls setFrameTo
+//Done
+
+function parseSlider() {
+    if (previousSelectedFrame != $("#frames").slider("option", "value")) {
+        previousSelectedFrame = selectedFrame;
+        selectedFrame = $("#frames").slider("option", "value");
+        console.log(selectedFrame);
+        setFrameTo(selectedFrame);
+    }
 }
 
+//On first startup, animationArray must start with a blank step.
 function animatePage(){
-	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"><input type="image" class="arrow" id="saveform" src="left.png"/><input type="range" class="slider" name="frames" id="frames" min="0" max="50"><input type="image" class="arrow" id="saveform" src="right.png"/><br><div id = "containercontainer"></div><input type="button" onClick="animateObject()" value="Add Object"/><input type = "button" onClick = "animate(animationArray)" value = "Play"/></div>');
-		$("#frames").prop("max", animationArray.length-1);
-		setInterval(function() {
-			$("#frames").change( function(){
-				currentFrame = $("#frames").value;
-				initAnimationPanel(animationArray[currentFrame].steps);
-			});
-			//console.log("Parsing animation panel.");
-			parseAnimationPanel(animationArray[currentFrame].steps);
-		}, 1000);
+    currentPanel = "Animate";
+	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPage()">Properties</a></li> </ul><div id="menuWrapper"><div id="frames"></div><br><div id = "containercontainer"></div><input type="button" onClick="animateObject()" value="Add Step"/><input type = "button" onClick = "animate(animationArray)" value = "Play"/></div><input type = "button" onClick = "addFrameAfterCurrent()" value = "Add Frame"/></div>');
+    $( "#frames" ).slider({
+        slide: function( event, ui ) {parseSlider();},
+        max: animationArray.length - 1,
+        min: 0
+    });
 }
 
 function propertiesPage(){
+    currentPanel = "Properties";
 	$("#menu").html('<ul id="nav"> <li onClick = "drawImage()"><a href="#">Draw Image</a></li> <li><a href="#" onClick = "animatePage()">Animate</a></li><li><a href="#" class="selected">Properties</a></li> </ul><div id="menuWrapper"> <div id="selectedObject"></div> <fieldset id="properties"> <div id="selectedObject"></div> color: <select id="colorProperty"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option> <option value="#FFCC00">Orange</option> <option value="#FFFF00">Yellow</option> <option value="#00FF00">Green</option> <option value="#0000FF">Blue</option> <option value="#663366">Indigo</option> <option value="#FF00FF">Violet</option> </select> <br> X: <INPUT type="text" value="0" id="XProperty"><br> Y: <INPUT type="text" value="0" id="YProperty"><br> Width: <INPUT type="text" value="333" id="widthProperty"><br> Height: <INPUT type="text" value="333" id="heightProperty"><br> Rotation: <INPUT type="text" value="0" id="rotationProperty"><br> </fieldset> </div>');
 	propertiesPanelUpdate();
 }
@@ -597,21 +625,29 @@ function propertiesPanelUpdate() {
 }
 
 setInterval(function() {
-	if (needsUpdate) {
-		propertiesPanelUpdate();
-	}
-	//If nothing has been selected yet
-	if(selectedObject=="hi") {
-
-	//If its the first object selected
-	} else if(selectedObject!=="hi" && propertiesObject=="hi") {
-		propertiesPanelUpdate();
-	//If a different object has been selected
-	} else if(selectedObject!=="hi" && propertiesObject!=="hi" && propertiesObject!==selectedObject) {
-		propertiesPanelUpdate();
-	} else if(selectedObject!=="hi" && propertiesObject!=="hi" && propertiesObject==selectedObject) {
-		propertiesPanelParse();
-	}
+    switch(currentPanel) {
+            case "Properties":
+            if (needsUpdate) {
+                propertiesPanelUpdate();
+            }
+            //If nothing has been selected yet
+            if(selectedObject=="hi") {
+            //If its the first object selected
+            } else if(selectedObject!=="hi" && propertiesObject=="hi") {
+                propertiesPanelUpdate();
+            //If a different object has been selected                
+            } else if(selectedObject!=="hi" && propertiesObject!=="hi" && propertiesObject!==selectedObject) {
+                propertiesPanelUpdate();
+            } else if(selectedObject!=="hi" && propertiesObject!=="hi" && propertiesObject==selectedObject) {
+                propertiesPanelParse();
+            }
+            break;
+            case "Animate":
+            
+            break;
+            default:
+            break;
+    }
 }, 100);
 
 //
