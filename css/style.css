@@ -70,9 +70,10 @@ time, mark, audio, video {
 
 
 body {
-	background-color: #e2e2e2;
-	min-width: 960px;
-	margin: 0;
+	background-color: #2a2a2a;
+	width:1422px;
+	margin-left: auto ;
+    margin-right: auto ;
 }
 img {
 	display: block;
@@ -97,7 +98,7 @@ img {
 #header {
 	background:#0F0F0F;
 	padding: 40px 0 46px;
-	width:1342px;
+	width:100%;
 }
 /** logo **/
 .logo {
@@ -109,20 +110,18 @@ img {
 }
 /*------------ CONTENTS ------------*/
 #menu{
-	position:absolute;
-	top:118px;
-	left:920px;
-	float:left;
-	display:block;
+	margin-left:900px;
+	display:inline-block;
 	height:700px;
 	width:300px;
 	height:920px;
-	width:420px;
+	width:520px;
 	background-color:#8C0303;
 	border:1px solid #000000;
 	font-weight:bold;
 	font-family:Arial;
 }
+
 .contents{
   position:absolute;
 }
