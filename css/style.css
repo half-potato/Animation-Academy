@@ -191,3 +191,11 @@ p {
 	margin: 0 0 24px;
 }
 
+#readout {
+    border: 1px solid black;
+    position: absolute;
+    top: 0px;
+    background-color: white;
+    width: 920;
+}
+

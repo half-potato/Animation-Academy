@@ -1,16 +1,28 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-    <script src = "scripts/jquery.min.js"></script>
-    <script src = "scripts/jCanvas.min.js"></script>
+<head>    
     <script src = "scripts/script.js"></script>
-    <script src = "scripts/jquery-ui.min.js"></script>
+    <script src = "scripts/animate.js"></script>
+    
+    <script src = "scripts/classes/AnimationStep.js"></script>
+    <script src = "scripts/classes/Frame.js"></script>
+    <script src = "scripts/classes/Shape.js"></script>
+    <script src = "scripts/classes/Delay.js"></script>
+    
+    <script src = "scripts/include/jCanvas.min.js"></script>
+    <script src = "scripts/include/jquery-ui.min.js"></script>
+    <script src = "scripts/include/jquery.min.js"></script>
+    
+    <script src = "scripts/panels/animatePanel.js"></script>
+    <script src = "scripts/panels/propertiesPanel.js"></script>
+    <script src = "scripts/panels/objectPanel.js"></script>
+    
 	<meta charset="UTF-8">
 	<title>Animation Academy</title>
 	<link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="css/jquery-ui.css" type="text/css">
 </head>
-<body onload="drawImage()">
+<body onload="objectPanel()">
 	<div id="header">
 		<div class="title">
 			<div class="logo">
