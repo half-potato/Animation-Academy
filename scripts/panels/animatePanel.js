@@ -1,6 +1,7 @@
 var stepHTML = '<div id = "name" value = "name"></div> color: <select id="color"> <option value="#FFFFFF">White</option> <option value="#FF0000">Red</option><option value="#FFCC00">Orange</option><option value="#FFFF00">Yellow</option><option value="#00FF00">Green</option><option value="#0000FF">Blue</option><option value="#663366">Indigo</option><option value="#FF00FF">Violet</option></select><br>X:<INPUT type="text" value="0" id="X"><br> Y: <INPUT type="text" value="0" id="Y"><br> Width: <INPUT type="text" value="333" id="width"><br> Height: <INPUT type="text" value="333" id="height"><br>';
 var previousSelectedFrame = "hi";
 var selectedFrame = 0;
+var animationArray = [];
 
 function setFrameTo(frame) {
     if(selectedFrame!=frame) {
@@ -108,8 +109,7 @@ function parseSlider() {
 //On first startup, animationArray must start with a blank step.
 function animatePanel(){
     currentPanel = "Animate";
-	$("#menu").html(<ul id="nav"> <li onClick = "objectPanel()">
-                    <a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPanel()">Properties</a></li></ul><div id="menuWrapper"><div id="frames"></div><br><div id = "containercontainer"></div><input type="button" onClick="addStepAfterCurrent()" value="Add Step"/><input type = "button" onClick = "addFrameAfterCurrent()" value = "Add Frame"/><input type = "button" onClick = "animate(animationArray)" value = "Play"/></div>);
+	$("#menu").html('<ul id="nav"> <li onClick = "objectPanel()"><a href="#">Draw Image</a></li> <li><a href="#" class="selected">Animate</a></li><li><a href="#"onClick = "propertiesPanel()">Properties</a></li></ul>' + '<div id="menuWrapper"><div id="frames"></div><br><div id = "containercontainer"></div><input type="button" onClick="addStepAfterCurrent()" value="Add Step"/><input type = "button" onClick = "addFrameAfterCurrent()" value = "Add Frame"/><input type = "button" onClick = "animate(animationArray)" value = "Play"/></div>');
     $( "#frames" ).slider({
         slide: function( event, ui ) {parseSlider();},
         max: animationArray.length - 1,

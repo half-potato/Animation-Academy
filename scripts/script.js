@@ -1,6 +1,4 @@
-//TODO: Will take the animationArray and apply it the canvas
 var selectedObject = "hi";
-var animationArray = [];
 var layerArray = [];
 var propertiesObject = "hi";
 var needsUpdate = false;
@@ -55,13 +53,8 @@ function addShape(shape) {
 			}
 		}).drawLayers();
 	} else if (shape.type === "Nucleotides") {
-		DNA = document.getElementById("DNA");
-		dnaOutput = DNA.value;
-		for(var i = 0; i<dnaOutput.length; i++){
-			shove.push(dnaOutput[i]);
-		}
-		for (nucleo in shove) {;
-			switch (shove[nucleo]) {
+		for (nucleo in regularDNA()) {;
+			switch (regularDNA()[nucleo]) {
 				case "A":
 					addShape(new Shape("image", "media/A.png", "DNA" + shape.objectName + "" + nucleo, 50, 90, shape.x + (nucleo * NUCLEOTIDE_WIDTH), shape.y, 1));
 					break;
@@ -169,50 +162,48 @@ function addShape(shape) {
 //      Input Functions
 //
 
-function reverseDNA() {
-	var output = [], stringOutput;
-	DNA = document.getElementById("DNA");
-	dnaOutput = DNA.value;
-	for(var i = 0; i<dnaOutput.length; i++){
-		shove.push(dnaOutput[i]);
-	}
-
-	for (var n in shove) {
-		switch (shove[n]) {
+//Does not work
+function reversedDNA() {
+	var output;
+	var DNA = document.getElementById("DNA");
+	for (var n in DNA.value) {
+		switch (DNA.value[n]) {
 			case "A":
-				output[n] = T;
+				output.push("T");
 				break;
 			case "T":
-				output[n] = A;
+				output.push("A");
 				break;
 			case "a":
-				output[n] = T;
+				output.push("T");
 				break;
 			case "t":
-				output[n] = A;
+				output.push("A");
 				break;
 			case "C":
-				output[n] = G;
+				output.push("G");
 				break;
 			case "G":
-				output[n] = C;
+				output.push("C");
 				break;
 			case "G":
-				output[n] = C;
+				output.push("C");
 				break;
 			case "c":
-				output[n] = G;
+				output.push("G");
 				break;
 		}
 	}
+    return output;
+}
 
-	for (var n in output) {
-		if(n == output.length - 1) {
-			stringOutput += output[n];
-		} else {
-			stringOutput += output[n] + " ";
-		}
-	}
+function regularDNA() {
+    var DNA = document.getElementById("DNA");
+    var output;
+    for(var i = 0; i<DNA.value.length; i++){
+        output.push(DNA.value[i]);
+    }
+    return output;
 }
 
 //adds shapes to canvas
@@ -267,84 +258,11 @@ function changeScale(selector, topEdge, rightEdge, bottomEdge, leftEdge) {
 function alert(text) {
     $("#readout").text(text);
     $("#readout").effect("highlight");
+    setTimeout(function() {
+        $("#readout").effect("fade", 1000);
+    }, 1000);
 }
 
-<<<<<<< HEAD
-=======
-function propertiesPanelParse() {
-	var color = document.getElementById("colorProperty");
-	var x = document.getElementById("XProperty");
-	var y = document.getElementById("YProperty");
-	var width = document.getElementById("widthProperty");
-	var height = document.getElementById("heightProperty");
-	var rotation = document.getElementById("rotationProperty");
-
-	$("#colorProperty").change(function() {
-		changeProperties(selectedObject, color.value, parseInt(width.value), parseInt(height.value), parseInt(x.value), parseInt(y.value));
-	});
-	$("#XProperty").on("input", function() {
-		changeProperties(selectedObject, color.value, parseInt(width.value), parseInt(height.value), parseInt(x.value), parseInt(y.value));
-	});
-	$("#YProperty").on("input", function() {
-		changeProperties(selectedObject, color.value, parseInt(width.value), parseInt(height.value), parseInt(x.value), parseInt(y.value));
-	});
-	$("#widthProperty").on("input", function() {
-		changeProperties(selectedObject, color.value, parseInt(width.value), parseInt(height.value), parseInt(x.value), parseInt(y.value));
-	});
-	$("#heightProperty").on("input", function() {
-		changeProperties(selectedObject, color.value, parseInt(width.value), parseInt(height.value), parseInt(x.value), parseInt(y.value));
-	});
-	$("#rotationProperty").on("input", function() {
-		changeProperties(selectedObject, color.value, parseInt(width.value), parseInt(height.value), parseInt(x.value), parseInt(y.value));
-	});
-}
-
-function propertiesPanelUpdate() {
-	needsUpdate = false;
-	propertiesObject = selectedObject;
-	var color = $("#colorProperty");
-	var x = $("#XProperty");
-	var y = $("#YProperty");
-	var width = $("#widthProperty");
-	var height = $("#heightProperty");
-	var rotation = $("#rotationProperty");
-	color.val($("canvas").getLayer(selectedObject).fillStyle);
-	x.val($("canvas").getLayer(selectedObject).x);
-	y.val($("canvas").getLayer(selectedObject).y);
-	width.val($("canvas").getLayer(selectedObject).width);
-	height.val($("canvas").getLayer(selectedObject).height);
-	rotation.val($("canvas").getLayer(selectedObject).rotation);
-	propertiesPanelParse();
-	$("#selectedObject").text(selectedObject);
-}
-
-setInterval(function() {
-    switch(currentPanel) {
-            case "Properties":
-            if (needsUpdate) {
-                propertiesPanelUpdate();
-            }
-            //If nothing has been selected yet
-            if(selectedObject=="hi") {
-            //If its the first object selected
-            } else if(selectedObject!=="hi" && propertiesObject=="hi") {
-                propertiesPanelUpdate();
-            //If a different object has been selected                
-            } else if(selectedObject!=="hi" && propertiesObject!=="hi" && propertiesObject!==selectedObject) {
-                propertiesPanelUpdate();
-            } else if(selectedObject!=="hi" && propertiesObject!=="hi" && propertiesObject==selectedObject) {
-                propertiesPanelParse();
-            }
-            break;
-            case "Animate":
-            
-            break;
-            default:
-            break;
-    }
-}, 100);
-
->>>>>>> 3d64ee26e7873f34b083ae910dd96cfd732eb495
 //
 //     Saving
 //

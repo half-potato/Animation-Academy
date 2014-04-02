@@ -13,24 +13,22 @@ function propertiesPanelParse() {
 	var rotation = document.getElementById("rotationProperty");
 
 	$("#colorProperty").change(function() {
-
-		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
+		changeProperties(selectedObject, color.value, parseInt(width.value), parseInt(height.value), parseInt(x.value), parseInt(y.value));
 	});
 	$("#XProperty").on("input", function() {
-		console.log(document.getElementById("XProperty").value);
-		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
+		changeProperties(selectedObject, color.value, parseInt(width.value), parseInt(height.value), parseInt(x.value), parseInt(y.value));
 	});
 	$("#YProperty").on("input", function() {
-		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
+		changeProperties(selectedObject, color.value, parseInt(width.value), parseInt(height.value), parseInt(x.value), parseInt(y.value));
 	});
 	$("#widthProperty").on("input", function() {
-		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
+		changeProperties(selectedObject, color.value, parseInt(width.value), parseInt(height.value), parseInt(x.value), parseInt(y.value));
 	});
 	$("#heightProperty").on("input", function() {
-		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
+		changeProperties(selectedObject, color.value, parseInt(width.value), parseInt(height.value), parseInt(x.value), parseInt(y.value));
 	});
 	$("#rotationProperty").on("input", function() {
-		changeProperties(selectedObject, color.value, width.value, height.value, x.value, y.value);
+		changeProperties(selectedObject, color.value, parseInt(width.value), parseInt(height.value), parseInt(x.value), parseInt(y.value));
 	});
 }
 
