@@ -7,7 +7,7 @@
 We made this at a hackathon however weren't able to finish.  As of now, developement is continuing.
 Our goal is to make an in-browser animation software based of of Javascript html and css.
 
-<h2>About</h2>
+<h2>Software</h2>
 What we are using:<br>
 HTML5<br>
 JavaScript<br>
